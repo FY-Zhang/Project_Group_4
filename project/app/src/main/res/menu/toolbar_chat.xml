@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Camera"
+        android:id="@+id/chat_camera"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:title="Location"
+        android:id="@+id/chat_location"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:title="..."
+        android:id="@+id/chat_friend_info"
+        app:showAsAction="ifRoom"/>
+</menu>
