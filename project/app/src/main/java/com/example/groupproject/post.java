@@ -49,7 +49,7 @@ public class post extends AppCompatActivity {
                 String friendName = (String)parent.getItemAtPosition(position);
                 Intent intent = new Intent();
                 intent.putExtra(FRIEND_NAME, friendName);
-                intent.setClass(friendlistActivity.this,chat_nav.class);
+                intent.setClass(post.this,chat_nav.class);
                 startActivity(intent);
             }
 
