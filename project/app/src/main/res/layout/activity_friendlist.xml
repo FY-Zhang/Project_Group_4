@@ -52,7 +52,7 @@
             android:text="Friends" />
 
         <Button
-            android:id="@+id/channel"
+            android:id="@+id/btn_back_modify"
             style="android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -61,7 +61,7 @@
             android:text="Channel" />
 
         <Button
-            android:id="@+id/setting"
+            android:id="@+id/btn_back_allpost_setting"
             style="android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

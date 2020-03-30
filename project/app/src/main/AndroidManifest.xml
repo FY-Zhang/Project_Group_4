@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".chat_nav"></activity>
+        <activity android:name=".setting_main"></activity>
+        <activity android:name=".chat_nav" />
         <activity android:name=".friendlistActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
