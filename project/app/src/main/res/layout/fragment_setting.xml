@@ -41,16 +41,25 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_username" />
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar_setting"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#3872AA"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_map"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:text="Map"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_setting" />
 
     <LinearLayout
+        android:id="@+id/linearLayout_setting"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="#707070"
@@ -59,7 +68,7 @@
         app:layout_editor_absoluteX="0dp">
 
         <Button
-            android:id="@+id/friendlist"
+            android:id="@+id/btn_friendlist_setting"
             style="android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -68,7 +77,7 @@
             android:text="Friends" />
 
         <Button
-            android:id="@+id/btn_back_modify"
+            android:id="@+id/btn_channel_setting"
             style="android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -77,7 +86,7 @@
             android:text="Channel" />
 
         <Button
-            android:id="@+id/btn_back_allpost_setting"
+            android:id="@+id/btn_setting_setting"
             style="android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -87,7 +96,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_allpost"
+        android:id="@+id/btn_allpost_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="96dp"
@@ -115,7 +124,7 @@
         android:text="Username:"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_setting" />
 
     <TextView
         android:id="@+id/txt_phone"
@@ -137,9 +146,18 @@
         android:text="dis_name"
         android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/txt_username"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_setting" />
 
-
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Setting"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_setting" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

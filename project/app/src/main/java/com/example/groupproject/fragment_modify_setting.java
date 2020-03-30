@@ -3,11 +3,15 @@ package com.example.groupproject;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 /**
@@ -28,4 +32,24 @@ public class fragment_modify_setting extends Fragment {
         return inflater.inflate(R.layout.fragment_modify, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Button btn_back_modify = view.findViewById(R.id.btn_back_modify); //click back
+        btn_back_modify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_modify_to_setting);
+            }
+        });
+
+        Button btn_submit = view.findViewById(R.id.btn_submit); // click submit
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_modify_to_setting);
+            }
+        });
+    }
 }

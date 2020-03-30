@@ -8,7 +8,7 @@
     tools:context=".fragment_allpost_setting">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar_allpost_setting"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#3872AA"
@@ -18,7 +18,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout_allpost_setting"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="#707070"
@@ -29,7 +29,7 @@
         <Button
             android:id="@+id/btn_back_allpost_setting"
             style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#707070"

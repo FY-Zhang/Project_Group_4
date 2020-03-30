@@ -8,7 +8,7 @@
     tools:context=".fragment_modify_setting">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar_modify"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:background="#3872AA"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayout_modify"
         android:layout_width="0dp"
         android:layout_height="80dp"
         android:background="#707070"
@@ -39,7 +39,7 @@
             android:text="back" />
 
         <Button
-            android:id="@+id/btn_back_allpost_setting"
+            android:id="@+id/btn_submit"
             style="android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -56,6 +56,7 @@
         android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="Password"
+        android:autofillHints="Password"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_username_modify" />
@@ -68,6 +69,7 @@
         android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="E-mail"
+        android:autofillHints="E-mail"
         android:inputType="textEmailAddress"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_password_modify" />
@@ -80,6 +82,7 @@
         android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="Phone"
+        android:autofillHints="Phone"
         android:inputType="phone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_email_modify" />
@@ -92,8 +95,9 @@
         android:layout_marginTop="81dp"
         android:ems="10"
         android:hint="Username"
+        android:autofillHints="Username"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_modify" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

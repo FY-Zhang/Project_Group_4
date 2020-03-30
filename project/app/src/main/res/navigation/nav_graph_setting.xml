@@ -3,23 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_setting"
-    app:startDestination="@id/modify">
+    app:startDestination="@id/setting">
 
     <fragment
         android:id="@+id/modify"
         android:name="com.example.groupproject.fragment_modify_setting"
         android:label="fragment_modify"
-        tools:layout="@layout/fragment_modify" />
+        tools:layout="@layout/fragment_modify" >
+        <action
+            android:id="@+id/action_modify_to_setting"
+            app:destination="@id/setting" />
+    </fragment>
     <fragment
-        android:id="@+id/btn_back_allpost_setting"
-        android:name="com.example.groupproject.setting"
+        android:id="@+id/setting"
+        android:name="com.example.groupproject.fragment_setting_setting"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" >
         <action
             android:id="@+id/action_setting2_to_modify"
-            app:destination="@id/modify" />
-        <action
-            android:id="@+id/action_setting2_to_modify2"
             app:destination="@id/modify" />
         <action
             android:id="@+id/action_setting_to_fragment_map_setting"
@@ -32,10 +33,18 @@
         android:id="@+id/map"
         android:name="com.example.groupproject.fragment_map_setting"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_map_setting" />
+        tools:layout="@layout/fragment_map_setting" >
+        <action
+            android:id="@+id/action_map_to_setting"
+            app:destination="@id/setting" />
+    </fragment>
     <fragment
         android:id="@+id/allpost_setting"
         android:name="com.example.groupproject.fragment_allpost_setting"
         android:label="fragment_allpost_setting"
-        tools:layout="@layout/fragment_allpost_setting" />
+        tools:layout="@layout/fragment_allpost_setting" >
+        <action
+            android:id="@+id/action_allpost_setting_to_setting"
+            app:destination="@id/setting" />
+    </fragment>
 </navigation>
