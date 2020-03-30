@@ -2,6 +2,7 @@
 <menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
         android:title="Camera"
         android:id="@+id/chat_camera"

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,8 +22,9 @@ import java.util.List;
 public class friendlistActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    private ListView lv;
+    private ListView listview;
     private ArrayList<String> list = new ArrayList<String>();
+    public static final String FRIEND_NAME = "com.example.groupproject.FRIEND_NAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,19 +33,22 @@ public class friendlistActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        lv = (ListView)findViewById(R.id.item);
+        listview = (ListView)findViewById(R.id.item);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_expandable_list_item_1,
                 getData());
-        lv.setAdapter(adapter);
+        listview.setAdapter(adapter);
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView arg0, View arg1, int arg2,
-                                    long arg3) {
+            public void onItemClick(AdapterView parent, View view, int position,
+                                    long id) {
 
+                String friendName = (String)parent.getItemAtPosition(position);
                 Intent intent = new Intent();
+                intent.putExtra(FRIEND_NAME, friendName);
                 intent.setClass(friendlistActivity.this,chat_nav.class);
                 startActivity(intent);
             }
@@ -55,6 +60,28 @@ public class friendlistActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.toolbar_friendlist,menu);
         return true;
     }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent();
+        switch (item.getItemId()) {
+            case R.id.chat_camera:
+                intent.setClass(this, chat_camera.class);
+                startActivity(intent);
+                return true;
+            case R.id.chat_location:
+                intent.setClass(this, chat_location.class);
+                startActivity(intent);
+                return true;
+            case R.id.chat_friend_info:
+                return true;
+            case R.id.friend_map:
+                intent.setClass(this, map_friends.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    
     private ArrayList<String> getData()
     {
         list.add("friend_1");
