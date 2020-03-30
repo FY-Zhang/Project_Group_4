@@ -7,6 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".fragment_modify_setting">
 
+    <Switch
+        android:id="@+id/switch3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="24dp"
+        android:text="display"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch2" />
+
+    <Switch
+        android:id="@+id/switch2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="168dp"
+        android:layout_marginEnd="24dp"
+        android:text="display"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_modify" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_modify"
         android:layout_width="0dp"
@@ -44,61 +64,89 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:onClick="onClickStoreData_setting"
             android:background="#707070"
+            android:onClick="onClickStoreData_setting"
             android:text="submit" />
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/txt_password_modify"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="Password"
-        android:autofillHints="Password"
-        android:inputType="textPassword"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_username_modify" />
-
-    <EditText
-        android:id="@+id/txt_email_modify"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="E-mail"
-        android:autofillHints="E-mail"
-        android:inputType="textEmailAddress"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_password_modify" />
 
     <EditText
         android:id="@+id/txt_phone_modify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
+        android:layout_marginStart="76dp"
         android:layout_marginTop="32dp"
+        android:autofillHints="Phone"
         android:ems="10"
         android:hint="Phone"
-        android:autofillHints="Phone"
         android:inputType="phone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_email_modify" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_username_modify" />
+
+    <EditText
+        android:id="@+id/txt_age_modify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="32dp"
+        android:autofillHints="Phone"
+        android:ems="10"
+        android:hint="Age"
+        android:inputType="phone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_phone_modify" />
 
     <EditText
         android:id="@+id/txt_username_modify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="81dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="84dp"
+        android:autofillHints="Username"
         android:ems="10"
         android:hint="Username"
-        android:autofillHints="Username"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_modify" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="24dp"
+        android:text="display"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch3" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="97dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_age_modify">
+
+        <RadioButton
+            android:id="@+id/rb0"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text="Female"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioButton
+            android:id="@+id/rb1"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="10dp"
+            android:text="Male"
+            app:layout_constraintEnd_toStartOf="@+id/rb0"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
