@@ -44,8 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:text="Channel 1 "
             android:onClick="toPost"
+            android:text="Channel 1 "
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
 
