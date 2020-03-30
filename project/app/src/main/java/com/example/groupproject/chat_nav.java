@@ -43,7 +43,7 @@ public class chat_nav extends AppCompatActivity {
             case R.id.chat_friend_info:
                 return true;
             case R.id.friend_map:
-                intent.setClass(this, fragment_map_setting.class);
+                intent.setClass(this, map.class);
                 startActivity(intent);
                 return true;
             default:

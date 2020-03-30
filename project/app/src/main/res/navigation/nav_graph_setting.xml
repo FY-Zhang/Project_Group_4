@@ -23,20 +23,8 @@
             android:id="@+id/action_setting2_to_modify"
             app:destination="@id/modify" />
         <action
-            android:id="@+id/action_setting_to_fragment_map_setting"
-            app:destination="@id/map" />
-        <action
             android:id="@+id/action_setting_to_fragment_allpost_setting"
             app:destination="@id/allpost_setting" />
-    </fragment>
-    <fragment
-        android:id="@+id/map"
-        android:name="com.example.groupproject.fragment_map_setting"
-        android:label="fragment_map"
-        tools:layout="@layout/fragment_map_setting" >
-        <action
-            android:id="@+id/action_map_to_setting"
-            app:destination="@id/setting" />
     </fragment>
     <fragment
         android:id="@+id/allpost_setting"

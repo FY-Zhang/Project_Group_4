@@ -74,7 +74,7 @@ public class friendlistActivity extends AppCompatActivity {
             case R.id.chat_friend_info:
                 return true;
             case R.id.friend_map:
-                intent.setClass(this, map_friends.class);
+                intent.setClass(this, map.class);
                 startActivity(intent);
                 return true;
             default:

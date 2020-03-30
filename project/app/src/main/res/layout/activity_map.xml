@@ -2,10 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment_map_setting">
+    tools:context=".map">
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
@@ -17,10 +16,10 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_map_setting" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_map" />
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_map_setting"
+        android:id="@+id/toolbar_map"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#3872AA"
@@ -30,7 +29,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <LinearLayout
-        android:id="@+id/linearLayout_map_setting"
+        android:id="@+id/linearLayout_map"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="#707070"
