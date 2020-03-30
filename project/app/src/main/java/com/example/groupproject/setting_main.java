@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class setting_main extends AppCompatActivity {
 
     @Override
@@ -13,4 +16,11 @@ public class setting_main extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
     }
 
+    public void onClickStoreData_setting(View view) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        CollectionReference username = db.collection("username");
+
+        
+    }
 }
