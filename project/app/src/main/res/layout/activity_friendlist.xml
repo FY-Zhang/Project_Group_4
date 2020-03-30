@@ -21,17 +21,17 @@
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
         android:layout_marginBottom="80dp"
-        android:background="#FFFFFF"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintVertical_bias="0.6">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <ListView
+            android:id="@+id/item"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
+        </ListView>
     </LinearLayout>
 
     <LinearLayout
@@ -49,24 +49,27 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#707070"
+            android:onClick="toFriendlist"
             android:text="Friends" />
 
         <Button
-            android:id="@+id/btn_back_modify"
+            android:id="@+id/channel"
             style="android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#707070"
+            android:onClick="toChannel"
             android:text="Channel" />
 
         <Button
-            android:id="@+id/btn_back_allpost_setting"
+            android:id="@+id/setting"
             style="android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#707070"
+            android:onClick="toSetting"
             android:text="Setting" />
     </LinearLayout>
 

@@ -37,6 +37,6 @@
                 android:layout_height="wrap_content"
                 android:text="Share" />
 
-        </LinearLayou>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

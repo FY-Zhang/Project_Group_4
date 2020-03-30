@@ -12,8 +12,6 @@ public class post extends AppCompatActivity {
 
     private ListView mListView;
     private String[] posts;
-    for(int i = 0;i < 10;i++)
-        posts[i] = "Post " + i + 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +20,8 @@ public class post extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.post_list);
         MyBaseAdapter mAdapter = new MyBaseAdapter();
         mListView.setAdapter(mAdapter);
+        for(int i = 0;i < 10;i++)
+            posts[i] = "Post " + i + 1;
     }
     class MyBaseAdapter extends BaseAdapter {
         @Override

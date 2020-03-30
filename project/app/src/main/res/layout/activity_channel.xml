@@ -20,139 +20,156 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="40sp"
         android:text="Channel"
-        tools:layout_editor_absoluteX="150dp"
-        tools:layout_editor_absoluteY="75dp" />
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:layout_editor_absoluteX="150dp" />
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="90dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteY="150dp">
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <Button
             android:id="@+id/channel1"
             android:layout_width="wrap_content"
             android:layout_height="90dp"
-            android:text="Channel 1"
+            android:layout_weight="1"
+            android:text="Channel 1 "
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="116dp"
-            android:layout_weight="1"/>
+            tools:layout_editor_absoluteY="116dp" />
 
         <Button
             android:id="@+id/channel2"
             android:layout_width="wrap_content"
             android:layout_height="90dp"
-            android:text="Channel 2"
+            android:layout_weight="1"
+            android:text="Channel 2 "
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="116dp"
-            android:layout_weight="1"/>
+            tools:layout_editor_absoluteY="116dp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteY="240dp">
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
         <Button
             android:id="@+id/channel3"
             android:layout_width="wrap_content"
             android:layout_height="90dp"
-            android:text="Channel 3"
+            android:layout_weight="1"
+            android:text="Channel 3 "
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="116dp"
-            android:layout_weight="1"/>
+            tools:layout_editor_absoluteY="116dp" />
 
         <Button
             android:id="@+id/channel4"
             android:layout_width="wrap_content"
             android:layout_height="90dp"
-            android:text="Channel 4"
+            android:layout_weight="1"
+            android:text="Channel 4 "
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="116dp"
-            android:layout_weight="1"/>
+            tools:layout_editor_absoluteY="116dp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteY="330dp">
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
         <Button
             android:id="@+id/channel5"
             android:layout_width="wrap_content"
             android:layout_height="90dp"
-            android:text="Channel 5"
+            android:layout_weight="1"
+            android:text="Channel 5 "
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="116dp"
-            android:layout_weight="1"/>
+            tools:layout_editor_absoluteY="116dp" />
 
         <Button
             android:id="@+id/channel6"
             android:layout_width="wrap_content"
             android:layout_height="90dp"
-            android:text="Channel 6"
+            android:layout_weight="1"
+            android:text="Channel 6 "
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="116dp"
-            android:layout_weight="1"/>
+            tools:layout_editor_absoluteY="116dp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout6"
         android:layout_width="match_parent"
         android:layout_height="90dp"
+        android:layout_marginBottom="1dp"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteY="420dp">
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
         <Button
             android:id="@+id/channel7"
             android:layout_width="wrap_content"
             android:layout_height="90dp"
-            android:text="Channel 7"
+            android:layout_weight="1"
+            android:text="Channel 7 "
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="116dp"
-            android:layout_weight="1"/>
+            tools:layout_editor_absoluteY="116dp" />
 
         <Button
             android:id="@+id/channel8"
             android:layout_width="wrap_content"
             android:layout_height="90dp"
-            android:text="Channel 8"
+            android:layout_weight="1"
+            android:text="Channel 8 "
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="116dp"
-            android:layout_weight="1"/>
+            tools:layout_editor_absoluteY="116dp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout7"
         android:layout_width="match_parent"
         android:layout_height="90dp"
+        android:layout_marginBottom="51dp"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteY="510dp">
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
         <Button
             android:id="@+id/channel9"
             android:layout_width="wrap_content"
             android:layout_height="90dp"
-            android:text="Channel 9"
+            android:layout_weight="1"
+            android:text="Channel 9 "
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="116dp"
-            android:layout_weight="1"/>
+            tools:layout_editor_absoluteY="116dp" />
 
         <Button
             android:id="@+id/channel10"
             android:layout_width="wrap_content"
             android:layout_height="90dp"
+            android:layout_weight="1"
             android:text="Channel 10"
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="116dp"
-            android:layout_weight="1"/>
+            tools:layout_editor_absoluteY="116dp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="#707070"
