@@ -54,6 +54,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#707070"
+            android:onClick="toBack"
             android:text="Back" />
 
         <Button
@@ -63,6 +64,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#707070"
+            android:onClick="toNewPost"
             android:text="New Post" />
     </LinearLayout>
 
