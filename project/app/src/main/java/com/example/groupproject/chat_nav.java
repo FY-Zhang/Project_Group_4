@@ -19,6 +19,11 @@ public class chat_nav extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Intent intent = getIntent();
+        String friendName = intent.getStringExtra(friendlistActivity.FRIEND_NAME);
+
+        toolbar.setTitle(friendName);
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_chat,menu);
@@ -36,6 +41,10 @@ public class chat_nav extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.chat_friend_info:
+                return true;
+            case R.id.friend_map:
+                intent.setClass(this, map_friends.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
