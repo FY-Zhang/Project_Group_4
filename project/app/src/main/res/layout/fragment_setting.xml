@@ -77,34 +77,28 @@
             android:background="#707070"
             android:text="Channel" />
 
-        <Button
-            android:id="@+id/btn_setting_setting"
-            style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#707070"
-            android:text="Setting" />
     </LinearLayout>
 
     <Button
         android:id="@+id/btn_allpost_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="43dp"
         android:text="all  post"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_phone" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_modify" />
 
     <Button
         android:id="@+id/btn_modify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="96dp"
+        android:layout_marginTop="47dp"
         android:text="modify"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dis_phone" />
 
     <TextView
