@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".channel"></activity>
+        <activity android:name=".new_post"></activity>
+        <activity android:name=".post" />
+        <activity android:name=".channel" />
         <activity android:name=".setting_main" />
         <activity android:name=".chat_nav" />
         <activity android:name=".friendlistActivity">
