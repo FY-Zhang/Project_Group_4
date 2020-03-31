@@ -24,7 +24,6 @@
         android:layout_height="34dp"
         android:layout_marginTop="27dp"
         android:layout_marginEnd="110dp"
-        android:text="dis_age"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dis_gender" />
@@ -35,7 +34,6 @@
         android:layout_height="34dp"
         android:layout_marginTop="22dp"
         android:layout_marginEnd="75dp"
-        android:text="dis_gender"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dis_phone" />
@@ -96,7 +94,6 @@
         android:layout_height="34dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="84dp"
-        android:text="dis_name"
         android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/txt_username"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_setting" />
@@ -107,7 +104,6 @@
         android:layout_height="34dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
-        android:text="dis_phone"
         android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/txt_phone"
         app:layout_constraintTop_toBottomOf="@+id/dis_email" />
@@ -140,7 +136,6 @@
         android:layout_height="34dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="28dp"
-        android:text="dis_email"
         android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/txt_email"
         app:layout_constraintTop_toBottomOf="@+id/dis_username" />
