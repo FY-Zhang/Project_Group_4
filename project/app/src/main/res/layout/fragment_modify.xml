@@ -8,17 +8,17 @@
     tools:context=".fragment_modify_setting">
 
     <Switch
-        android:id="@+id/switch3"
+        android:id="@+id/sw_age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         android:layout_marginEnd="24dp"
         android:text="display"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch2" />
+        app:layout_constraintTop_toBottomOf="@+id/sw_phone" />
 
     <Switch
-        android:id="@+id/switch2"
+        android:id="@+id/sw_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="168dp"
@@ -65,7 +65,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#707070"
-            
+
             android:text="submit" />
     </LinearLayout>
 
@@ -109,17 +109,17 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar_modify" />
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/sw_gender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="24dp"
         android:text="display"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch3" />
+        app:layout_constraintTop_toBottomOf="@+id/sw_age" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/radioGroup"
+        android:id="@+id/rg_sex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="97dp"
@@ -133,6 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:text="Female"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -148,5 +149,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RadioGroup
+        android:layout_width="249dp"
+        android:layout_height="122dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginBottom="172dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="87dp"
+            android:layout_height="wrap_content"
+            android:text="RadioButton" />
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="81dp"
+            android:text="RadioButton" />
+
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
