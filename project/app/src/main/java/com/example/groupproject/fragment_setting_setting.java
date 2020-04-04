@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,14 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import static com.firebase.ui.auth.AuthUI.TAG;
 
 
 /**
@@ -91,9 +97,11 @@ public class fragment_setting_setting extends Fragment {
     }
 
     public void showInfo_setting(final View view){
+        String user_id = "10000001"; //cookie之类的记录登录信息
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("users")
+                .whereEqualTo("id", user_id)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -114,6 +122,7 @@ public class fragment_setting_setting extends Fragment {
 
                                 TextView tv5 = view.findViewById(R.id.dis_age);
                                 tv5.setText(document.getString("age"));
+
                                 System.out.println(document.getString("username"));
                                 System.out.println(document.getData());
                             }
