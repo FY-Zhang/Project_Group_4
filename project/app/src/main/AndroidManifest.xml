@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Login"></activity>
+        <activity android:name=".Login" />
         <activity android:name=".map" />
         <activity android:name=".chat_camera" />
         <activity android:name=".chat_location" />
@@ -18,7 +18,8 @@
         <activity android:name=".channel" />
         <activity android:name=".setting_main" />
         <activity android:name=".chat_nav" />
-        <activity android:name=".friendlistActivity">
+        <activity android:name=".friendlistActivity"/>
+        <activity android:name=".initial_page">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

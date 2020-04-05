@@ -2,7 +2,6 @@ package com.example.groupproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import android.app.Activity;
-import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -26,14 +22,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.example.groupproject.functionsAndParameters.userFriends;
+import static com.example.groupproject.functionsAndParameters.username;
+
 public class friendlistActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     private ListView listview;
     private ArrayList<String> list = new ArrayList<String>();
     public static final String FRIEND_NAME = "com.example.groupproject.FRIEND_NAME";
-
-    private  static final int RC_SIGN_IN = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,57 +87,16 @@ public class friendlistActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    public void onClickSignIn(View view){
-        List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build()
-        );
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .build(),RC_SIGN_IN);
-    }
-
-    protected  void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == RC_SIGN_IN){
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-
-            if(resultCode == RESULT_OK){
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                System.out.println("Sign in successfully!\n");
-            }else {
-                if(response == null){
-                    System.out.println("Sign in cancelled");
-                    return;
-                }
-                if(response.getError().getErrorCode() == ErrorCodes.NO_NETWORK){
-                    System.out.println("No internet connection");
-                    return;
-                }
-            }
-        }
-    }
-    
     private ArrayList<String> getData()
     {
-        list.add("friend_1");
-        list.add("friend_2");
-        list.add("friend_3");
-        list.add("friend_4");
-        list.add("friend_5");
-        list.add("friend_1");
-        list.add("friend_2");
-        list.add("friend_3");
-        list.add("friend_4");
-        list.add("friend_5");
-        list.add("friend_1");
-        list.add("friend_2");
-        list.add("friend_3");
-        list.add("friend_4");
-        list.add("friend_5");
+        //list.add(functionsAndParameters.userID);
+
+        for(int index = 0; index < functionsAndParameters.userFriends.size(); index++) {
+            list.add(functionsAndParameters.userFriends.get(index));
+        }
+
         return list;
+
     }
     public void toFriendlist(View view){
         Intent intent = new Intent();
