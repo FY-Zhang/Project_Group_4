@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -14,6 +16,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class functionsAndParameters {
     public static String username = new String();
@@ -37,12 +40,14 @@ public class functionsAndParameters {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
+                            Map<String,Object> data = new HashMap<>();
                             for(QueryDocumentSnapshot document : task.getResult()){
                                 if(userID.equals(document.getId())){
-                                    Map<String, Object> data  = new HashMap<>(document.getData());
+                                    data = document.getData();
                                     if(data.isEmpty()){
                                         break;
                                     }else {
+                                        System.out.println("listener");
                                         userGender = data.get("gender").toString();
                                         username = data.get("username").toString();
                                         userBirthday = data.get("birthday").toString();
@@ -56,5 +61,6 @@ public class functionsAndParameters {
                         }
                     }
                 });
+
     }
 }

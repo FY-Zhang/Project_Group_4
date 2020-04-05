@@ -89,8 +89,6 @@ public class friendlistActivity extends AppCompatActivity {
     }
     private ArrayList<String> getData()
     {
-        //list.add(functionsAndParameters.userID);
-
         for(int index = 0; index < functionsAndParameters.userFriends.size(); index++) {
             list.add(functionsAndParameters.userFriends.get(index));
         }

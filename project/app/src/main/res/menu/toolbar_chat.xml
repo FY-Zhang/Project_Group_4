@@ -6,13 +6,16 @@
     <item
         android:title="Camera"
         android:id="@+id/chat_camera"
+        android:icon="@drawable/icon_camera"
         app:showAsAction="ifRoom"/>
     <item
         android:title="Location"
         android:id="@+id/chat_location"
+        android:icon="@drawable/icon_location"
         app:showAsAction="ifRoom"/>
     <item
         android:title="..."
         android:id="@+id/chat_friend_info"
+        android:icon="@drawable/icon_profile"
         app:showAsAction="ifRoom"/>
 </menu>

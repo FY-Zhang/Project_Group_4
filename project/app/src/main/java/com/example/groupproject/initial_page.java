@@ -46,7 +46,7 @@ public class initial_page extends AppCompatActivity {
             if(resultCode == RESULT_OK){
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 initializeInfo(user);
-                toFriendlist();
+                toTemp();
                 return;
             }else {
                 if(response == null){
@@ -65,10 +65,10 @@ public class initial_page extends AppCompatActivity {
     {
         getUserInfo(user);
     }
-    protected void toFriendlist()
+    protected void toTemp()
     {
         Intent intent = new Intent();
-        intent.setClass(this, friendlistActivity.class);
+        intent.setClass(this, temp.class);
         startActivity(intent);
     }
 
