@@ -8,46 +8,45 @@
     tools:context=".fragment_setting_setting">
 
     <TextView
-        android:id="@+id/txt_age"
-        android:layout_width="115dp"
-        android:layout_height="34dp"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="26dp"
-        android:text="Age:"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_gender" />
-
-    <TextView
-        android:id="@+id/dis_age"
+        android:id="@+id/dis_email"
         android:layout_width="wrap_content"
         android:layout_height="34dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="110dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dis_gender" />
+        app:layout_constraintStart_toEndOf="@+id/txt_email_set"
+        app:layout_constraintTop_toBottomOf="@+id/dis_username" />
 
     <TextView
         android:id="@+id/dis_gender"
         android:layout_width="wrap_content"
         android:layout_height="34dp"
-        android:layout_marginTop="22dp"
-        android:layout_marginEnd="75dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dis_phone" />
+        app:layout_constraintStart_toEndOf="@+id/txt_gender_set"
+        app:layout_constraintTop_toBottomOf="@+id/dis_birthday" />
 
     <TextView
-        android:id="@+id/txt_gender"
+        android:id="@+id/dis_birthday"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/txt_birthday_set"
+        app:layout_constraintTop_toBottomOf="@+id/dis_email" />
+
+    <TextView
+        android:id="@+id/txt_gender_set"
         android:layout_width="115dp"
         android:layout_height="34dp"
         android:layout_marginStart="72dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="32dp"
         android:text="Gender:"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_email" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_birthday_set" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_setting"
@@ -89,76 +88,45 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/dis_username"
-        android:layout_width="wrap_content"
-        android:layout_height="34dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="84dp"
-        android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/txt_username"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_setting" />
-
-    <TextView
-        android:id="@+id/dis_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="34dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/txt_phone"
-        app:layout_constraintTop_toBottomOf="@+id/dis_email" />
-
-    <TextView
-        android:id="@+id/txt_phone"
+        android:id="@+id/txt_birthday_set"
         android:layout_width="115dp"
         android:layout_height="34dp"
         android:layout_marginStart="72dp"
-        android:layout_marginTop="24dp"
-        android:text="Phone:"
+        android:layout_marginTop="32dp"
+        android:text="Birthday:"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_email" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_email_set" />
 
     <TextView
-        android:id="@+id/txt_email"
+        android:id="@+id/txt_email_set"
         android:layout_width="115dp"
         android:layout_height="34dp"
         android:layout_marginStart="72dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="32dp"
         android:text="Email:"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_username" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_username_set" />
 
     <TextView
-        android:id="@+id/dis_email"
+        android:id="@+id/dis_username"
         android:layout_width="wrap_content"
         android:layout_height="34dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="84dp"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/txt_email"
-        app:layout_constraintTop_toBottomOf="@+id/dis_username" />
+        app:layout_constraintStart_toEndOf="@+id/txt_username_set"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_setting" />
 
     <TextView
-        android:id="@+id/txt_username"
+        android:id="@+id/txt_username_set"
         android:layout_width="115dp"
         android:layout_height="34dp"
         android:layout_marginStart="72dp"
         android:layout_marginTop="84dp"
         android:text="Username:"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_setting" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Setting"
-        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_setting" />
 
@@ -169,7 +137,7 @@
         android:layout_marginTop="16dp"
         android:text="log out"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_allpost_setting" />
 
@@ -177,11 +145,12 @@
         android:id="@+id/btn_modify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="163dp"
-        android:layout_marginTop="372dp"
+        android:layout_marginTop="56dp"
         android:text="modify"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_setting" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_gender_set" />
 
     <Button
         android:id="@+id/btn_allpost_setting"
@@ -190,6 +159,7 @@
         android:layout_marginTop="16dp"
         android:text="all  post"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_modify" />
 
