@@ -127,13 +127,14 @@ public class fragment_modify_setting extends Fragment {
 
         //modify - setting
             //show current info
-        String user_id = "10000001"; //cookie之类的记录登录信息 (邮箱登录,然后存储id -- 是否直接使用邮箱为主键?)
-        String user_name = "Auth01";
-        String user_email = "text01@x.com";
-        final String user_psw = "100866";
-        String user_birthday = "01/02/1999";
-        String user_sex = "Female";
+        String user_id = appCookies.userID; //cookie之类的记录登录信息 (邮箱登录,然后存储id -- 是否直接使用邮箱为主键?)
+        String user_name = appCookies.username;
+        String user_email = appCookies.userEmail;
+        final String user_psw = "111111";
+        String user_birthday = appCookies.userBirthday;
+        String user_sex = appCookies.userGender;
 
+        //initial original display
         txt_username = view.findViewById(R.id.txt_username_til);
         EditText txt_username_txt = view.findViewById(R.id.txt_username_txt);
         txt_username_txt.setText(user_name);
@@ -150,12 +151,12 @@ public class fragment_modify_setting extends Fragment {
         txt_birthday_txt.setText(user_birthday);
 
 
-            //change info
+        //change info
         Button btn_submit = view.findViewById(R.id.btn_submit); // click submit
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user_id = "10000001";
+                String user_id = appCookies.userID;
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 DocumentReference userRef = db.collection("users").document(user_id);
 
@@ -163,6 +164,7 @@ public class fragment_modify_setting extends Fragment {
                 EditText txt_username_txt = view.findViewById(R.id.txt_username_txt);
                 String user_name = txt_username_txt.getText().toString();
                 userRef.update("username", user_name);
+                appCookies.username = user_name; //使用set/get函数?
 
                 EditText txt_password_txt = view.findViewById(R.id.txt_password_txt);
                 String user_psw = txt_password_txt.getText().toString();

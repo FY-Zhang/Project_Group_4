@@ -3,17 +3,16 @@ package com.example.groupproject;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -90,12 +89,12 @@ public class fragment_setting_setting extends Fragment {
     }
 
     private void showInfo_setting(final View view){
-        String user_id = "10000001"; //cookie之类的记录登录信息
+        String user_id = appCookies.userID;//cookie之类的记录登录信息
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        System.out.println("Access!");
+        System.out.println("Access!" + user_id);
 
         db.collection("users")
-                .whereEqualTo("id", user_id)
+                .whereEqualTo("UID", user_id)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -104,19 +103,19 @@ public class fragment_setting_setting extends Fragment {
                             for(QueryDocumentSnapshot document : task.getResult()) { //show info
                                 TextView tv1 = view.findViewById(R.id.dis_username);
                                 tv1.setText(document.getString("username"));
-                                //System.out.println(document.getString("username"));
+                                System.out.println(document.getString("username"));
 
                                 TextView tv2 = view.findViewById(R.id.dis_email);
                                 tv2.setText(document.getString("email"));
-                                //System.out.println(document.getString("email"));
+                                System.out.println(document.getString("email"));
 
                                 TextView tv3 = view.findViewById(R.id.dis_gender);
                                 tv3.setText(document.getString("gender"));
-                                //System.out.println(document.getString("gender"));
+                                System.out.println(document.getString("gender"));
 
                                 TextView tv4 = view.findViewById(R.id.dis_birthday);
                                 tv4.setText(document.getString("birthday"));
-                                //System.out.println(document.getString("birthday"));
+                                System.out.println(document.getString("birthday"));
                             }
                         }
                     }

@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.example.groupproject.functionsAndParameters.*;
+import static com.example.groupproject.appCookies.*;
 
 public class initial_page extends AppCompatActivity {
 

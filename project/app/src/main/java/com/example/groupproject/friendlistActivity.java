@@ -12,18 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.ErrorCodes;
-import com.firebase.ui.auth.IdpResponse;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static com.example.groupproject.functionsAndParameters.userFriends;
-import static com.example.groupproject.functionsAndParameters.username;
 
 public class friendlistActivity extends AppCompatActivity {
 
@@ -89,8 +78,8 @@ public class friendlistActivity extends AppCompatActivity {
     }
     private ArrayList<String> getData()
     {
-        for(int index = 0; index < functionsAndParameters.userFriends.size(); index++) {
-            list.add(functionsAndParameters.userFriends.get(index));
+        for(int index = 0; index < appCookies.userFriends.size(); index++) {
+            list.add(appCookies.userFriends.get(index));
         }
 
         return list;
