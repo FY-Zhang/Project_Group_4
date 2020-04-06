@@ -4,7 +4,7 @@
 
     <item
         android:title="Map"
-        android:id="@+id/friend_map"
+        android:id="@+id/map_check"
         android:icon="@drawable/icon_map"
         app:showAsAction="ifRoom"
         />
