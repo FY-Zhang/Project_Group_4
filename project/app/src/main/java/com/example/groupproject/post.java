@@ -1,29 +1,30 @@
 package com.example.groupproject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-
-import static com.example.groupproject.friendlistActivity.FRIEND_NAME;
 
 public class post extends AppCompatActivity {
 
     Toolbar toolbar;
     private ListView listview;
-    private ArrayList<String> list = new ArrayList<String>();
+    public ArrayList<String> list = new ArrayList<String>();
+    public static final String POST_NAME = "com.example.groupproject.POST_NAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +41,15 @@ public class post extends AppCompatActivity {
                 getData());
         listview.setAdapter(adapter);
 
-        /* 待修改 */
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position,
                                     long id) {
 
-                String friendName = (String)parent.getItemAtPosition(position);
+                String postName = (String)parent.getItemAtPosition(position);
                 Intent intent = new Intent();
-                intent.putExtra(FRIEND_NAME, friendName);
-                intent.setClass(post.this,chat_nav.class);
+                intent.putExtra(POST_NAME, postName);
+                intent.setClass(post.this,post_display.class);
                 startActivity(intent);
             }
 
@@ -58,21 +58,32 @@ public class post extends AppCompatActivity {
 
     private ArrayList<String> getData()
     {
-        list.add("Post_1");
-        list.add("Post_2");
-        list.add("Post_3");
-        list.add("Post_4");
-        list.add("Post_5");
-        list.add("Post_1");
-        list.add("Post_2");
-        list.add("Post_3");
-        list.add("Post_4");
-        list.add("Post_5");
-        list.add("Post_1");
-        list.add("Post_2");
-        list.add("Post_3");
-        list.add("Post_4");
-        list.add("Post_5");
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("post")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        String id = getIntent().getStringExtra("id");
+                        if(task.isSuccessful()) {
+                            for(QueryDocumentSnapshot document: task.getResult()) {
+                                String channel = document.get("channel").toString();
+                                String title = document.get("title").toString();
+                                String content = document.get("content").toString();
+                                String author = document.get("author").toString();
+
+                                if(id.equals(channel)) {
+                                    list.add(title);
+                                    list.add("12");
+                                }
+                            }
+                        }
+                    }
+                });
+
+//        if(id.equals("channel1"))
+//            list.add("Post_1");
+        list.add("AAAAAAAAAA");
         return list;
     }
     public void toBack(View view){

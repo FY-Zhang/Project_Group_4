@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".temp"></activity>
+        <activity android:name=".post_display"></activity>
+        <activity android:name=".temp" />
         <activity android:name=".Login" />
         <activity android:name=".map" />
         <activity android:name=".chat_camera" />
