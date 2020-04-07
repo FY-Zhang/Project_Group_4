@@ -58,18 +58,8 @@ public class friendlistActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent();
         switch (item.getItemId()) {
-            case R.id.chat_camera:
-                intent.setClass(this, chat_camera.class);
-                startActivity(intent);
-                return true;
-            case R.id.chat_location:
-                intent.setClass(this, chat_location.class);
-                startActivity(intent);
-                return true;
-            case R.id.chat_friend_info:
-                return true;
-            case R.id.friend_map:
-                intent.setClass(this, map.class);
+            case R.id.map_check:
+                intent.setClass(this, map_main.class);
                 startActivity(intent);
                 return true;
             default:

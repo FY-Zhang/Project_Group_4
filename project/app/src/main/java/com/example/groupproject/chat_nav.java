@@ -90,7 +90,7 @@ public class chat_nav extends AppCompatActivity {
                 return true;
             case R.id.chat_friend_info:
                 return true;
-            case R.id.friend_map:
+            case R.id.map_check:
                 intent.setClass(chat_nav.this, map.class);
                 startActivity(intent);
                 return true;
