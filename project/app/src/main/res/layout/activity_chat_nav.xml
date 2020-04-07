@@ -18,61 +18,37 @@
         app:title="friend name"
         tools:layout_editor_absoluteX="0dp" />
 
-
-    <RelativeLayout
-        android:onClick="onClick"
-        android2:id="@+id/activity_main"
-        android2:layout_height="match_parent"
-        android2:layout_width="match_parent"
-        android2:layout_marginBottom="0dp"
-        android2:layout_marginTop="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+    <LinearLayout
+        android:id="@+id/textBox"
+        android:layout_width="match_parent"
+        android:layout_height="609dp"
+        android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="1.0"
-        tools:context="com.tutsplus.mychatapp.MainActivity">
+        app:layout_constraintTop_toBottomOf="@id/toolbar"></LinearLayout>
 
-        <android.support.design.widget.FloatingActionButton
-            android2:clickable="true"
-            android2:id="@+id/fab"
-            android2:layout_alignParentBottom="true"
-            android2:layout_alignParentEnd="true"
-            android2:layout_height="wrap_content"
-            android2:layout_width="wrap_content"
-            android2:src="@drawable/icon_send"
-            android2:tint="@android:color/white"
-            app:fabSize="mini" />
+    <LinearLayout
+        android:id="@+id/keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textBox">
 
-        <android.support.design.widget.TextInputLayout
-            android2:layout_alignParentBottom="true"
-            android2:layout_alignParentStart="true"
-            android2:layout_height="wrap_content"
-            android2:layout_toLeftOf="@id/fab"
-            android2:layout_width="match_parent">
+        <EditText
+            android:id="@+id/inputBox"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:ems="10"
+            android:hint="Message"
+            android:inputType="textPersonName" />
 
-            <EditText
-                android2:hint="Input"
-                android2:id="@+id/input"
-                android2:layout_height="wrap_content"
-                android2:layout_width="match_parent" />
-        </android.support.design.widget.TextInputLayout>
-
-        <ListView
-            android2:divider="@android:color/transparent"
-            android2:dividerHeight="16dp"
-            android2:id="@+id/list_of_messages"
-            android2:layout_above="@id/fab"
-            android2:layout_alignParentStart="true"
-            android2:layout_alignParentTop="true"
-            android2:layout_height="match_parent"
-            android2:layout_marginBottom="16dp"
-            android2:layout_width="match_parent" />
-    </RelativeLayout>
-
-
+        <Button
+            android:id="@+id/sendMessage"
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Send" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

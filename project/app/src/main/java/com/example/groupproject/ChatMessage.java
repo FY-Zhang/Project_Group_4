@@ -1,48 +1,38 @@
 package com.example.groupproject;
 
-import java.util.Date;
+import com.google.firebase.database.DatabaseReference;
 
 public class ChatMessage {
 
-        private String messageText;
-        private String messageUser;
-        private long messageTime;
+    String message;
+    String send_id;
+    String receive_id;
+    String time;
 
-        public ChatMessage(String messageText, String messageUser) {
-            this.messageText = messageText;
-            this.messageUser = messageUser;
+    public ChatMessage(){
 
-            // Initialize to current time
-            messageTime = new Date().getTime();
-        }
+    }
 
-        public ChatMessage(){
+    public ChatMessage(String message, String send_id, String receive_id, String time) {
+        this.message = message;
+        this.send_id = send_id;
+        this.receive_id = receive_id;
+        this.time = time;
+    }
 
-        }
+    public String getMessage() {
+        return message;
+    }
 
-        public String getMessageText() {
-            return messageText;
-        }
+    public String getSend_id() {
+        return send_id;
+    }
 
-        public void setMessageText(String messageText) {
-            this.messageText = messageText;
-        }
+    public String getReceive_id() {
+        return receive_id;
+    }
 
-        public String getMessageUser() {
-            return messageUser;
-        }
-
-        public void setMessageUser(String messageUser) {
-            this.messageUser = messageUser;
-        }
-
-        public long getMessageTime() {
-            return messageTime;
-        }
-
-        public void setMessageTime(long messageTime) {
-            this.messageTime = messageTime;
-        }
-
+    public String getTime() {
+        return time;
+    }
 }
-

@@ -1,8 +1,5 @@
 package com.example.groupproject;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,15 +10,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.example.groupproject.ChatMessage;
-import com.example.groupproject.appCookies;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class chat_nav extends AppCompatActivity {
+public class chat_nav_copy extends AppCompatActivity {
 
     Toolbar toolbar;
 
@@ -81,17 +79,17 @@ public class chat_nav extends AppCompatActivity {
         Intent intent = new Intent();
         switch (item.getItemId()){
             case R.id.chat_camera:
-                intent.setClass(chat_nav.this, chat_camera.class);
+                intent.setClass(chat_nav_copy.this, chat_camera.class);
                 startActivity(intent);
                 return true;
             case R.id.chat_location:
-                intent.setClass(chat_nav.this, chat_location.class);
+                intent.setClass(chat_nav_copy.this, chat_location.class);
                 startActivity(intent);
                 return true;
             case R.id.chat_friend_info:
                 return true;
             case R.id.friend_map:
-                intent.setClass(chat_nav.this, map.class);
+                intent.setClass(chat_nav_copy.this, map.class);
                 startActivity(intent);
                 return true;
             default:
