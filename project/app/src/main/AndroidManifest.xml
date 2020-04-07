@@ -30,7 +30,8 @@
         <activity
             android:name=".map_main"
             android:label="@string/title_activity_map_main" />
-        <activity android:name=".temp" />
+        <activity android:name=".post_display"/>
+        <activity android:name=".completeLogin" />
         <activity android:name=".Login" />
         <activity android:name=".map" />
         <activity android:name=".chat_camera" />
