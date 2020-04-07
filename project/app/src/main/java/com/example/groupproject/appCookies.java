@@ -27,7 +27,8 @@ public class appCookies {
     //public static String userPhone = new String();
     public static ArrayList<String> userFriends = new ArrayList<String>();
 
-    public static void getUserInfo(FirebaseUser user){
+    public static boolean getUserInfo(FirebaseUser user){
+        Map<String,Object> data = new HashMap<>();
         userID = user.getUid();
         userEmail = user.getEmail();
 
@@ -37,6 +38,7 @@ public class appCookies {
         db.collection("users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
@@ -47,20 +49,24 @@ public class appCookies {
                                     if(data.isEmpty()){
                                         break;
                                     }else {
-                                        System.out.println("listener:");
-                                        userGender = data.get("gender").toString();
-                                        username = data.get("username").toString();
-                                        userBirthday = data.get("birthday").toString();
-                                        //userPhone = data.get("phone").toString();
-                                        userFriends = (ArrayList<String>)data.get("friends");
+                                        getDataFromFirestore(data);
                                     }
                                 }
                             }
+
                         }else{
                             Log.w("tag", "Error getting document.",task.getException());
                         }
                     }
                 });
+        return true;
+    }
 
+    public static void getDataFromFirestore(Map<String, Object> data){
+        userGender = data.get("gender").toString();
+        username = data.get("username").toString();
+        userBirthday = data.get("birthday").toString();
+        //userPhone = data.get("phone").toString();
+        userFriends = (ArrayList<String>)data.get("friends");
     }
 }

@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.example.groupproject.appCookies.*;
+import static com.example.groupproject.storeUserInfo.*;
 
 public class initial_page extends AppCompatActivity {
 
@@ -46,7 +47,7 @@ public class initial_page extends AppCompatActivity {
             if(resultCode == RESULT_OK){
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 initializeInfo(user);
-                toTemp();
+                toCompleteLogin();
                 return;
             }else {
                 if(response == null){
@@ -61,14 +62,14 @@ public class initial_page extends AppCompatActivity {
         }
     }
 
-    protected void initializeInfo(FirebaseUser user)
-    {
+    protected void initializeInfo(FirebaseUser user) {
+        storeInfo(user);
         getUserInfo(user);
     }
-    protected void toTemp()
+    protected void toCompleteLogin()
     {
         Intent intent = new Intent();
-        intent.setClass(this, temp.class);
+        intent.setClass(this, completeLogin.class);
         startActivity(intent);
     }
 

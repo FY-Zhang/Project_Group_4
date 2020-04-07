@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android2="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,52 +18,60 @@
         app:title="friend name"
         tools:layout_editor_absoluteX="0dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="80dp"
-        android:orientation="vertical"
+
+    <RelativeLayout
+        android:onClick="onClick"
+        android2:id="@+id/activity_main"
+        android2:layout_height="match_parent"
+        android2:layout_width="match_parent"
+        android2:layout_marginBottom="0dp"
+        android2:layout_marginTop="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="0dp"></LinearLayout>
+        tools:context="com.tutsplus.mychatapp.MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="#707070"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_editor_absoluteX="0dp">
+        <android.support.design.widget.FloatingActionButton
+            android2:clickable="true"
+            android2:id="@+id/fab"
+            android2:layout_alignParentBottom="true"
+            android2:layout_alignParentEnd="true"
+            android2:layout_height="wrap_content"
+            android2:layout_width="wrap_content"
+            android2:src="@drawable/icon_send"
+            android2:tint="@android:color/white"
+            app:fabSize="mini" />
 
-        <Button
-            android:id="@+id/friendlist"
-            style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#707070"
-            android:text="Friends" />
+        <android.support.design.widget.TextInputLayout
+            android2:layout_alignParentBottom="true"
+            android2:layout_alignParentStart="true"
+            android2:layout_height="wrap_content"
+            android2:layout_toLeftOf="@id/fab"
+            android2:layout_width="match_parent">
 
-        <Button
-            android:id="@+id/channel"
-            style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#707070"
-            android:text="Channel" />
+            <EditText
+                android2:hint="Input"
+                android2:id="@+id/input"
+                android2:layout_height="wrap_content"
+                android2:layout_width="match_parent" />
+        </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/setting"
-            style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#707070"
-            android:text="Setting" />
-    </LinearLayout>
+        <ListView
+            android2:divider="@android:color/transparent"
+            android2:dividerHeight="16dp"
+            android2:id="@+id/list_of_messages"
+            android2:layout_above="@id/fab"
+            android2:layout_alignParentStart="true"
+            android2:layout_alignParentTop="true"
+            android2:layout_height="match_parent"
+            android2:layout_marginBottom="16dp"
+            android2:layout_width="match_parent" />
+    </RelativeLayout>
+
 
 
 

@@ -41,20 +41,21 @@
 
         <Button
             android:id="@+id/channel1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:onClick="toPost"
-            android:text="Channel 1 "
+            android:onClick="toPost1"
+            android:text="Technology"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
 
         <Button
             android:id="@+id/channel2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:text="Channel 2 "
+            android:onClick="toPost2"
+            android:text="Digital"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
     </LinearLayout>
@@ -69,19 +70,21 @@
 
         <Button
             android:id="@+id/channel3"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:text="Channel 3 "
+            android:onClick="toPost3"
+            android:text="Life"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
 
         <Button
             android:id="@+id/channel4"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:text="Channel 4 "
+            android:onClick="toPost4"
+            android:text="Fashion"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
     </LinearLayout>
@@ -96,19 +99,21 @@
 
         <Button
             android:id="@+id/channel5"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:text="Channel 5 "
+            android:onClick="toPost5"
+            android:text="Food"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
 
         <Button
             android:id="@+id/channel6"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:text="Channel 6 "
+            android:onClick="toPost6"
+            android:text="Film &#038; TV"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
     </LinearLayout>
@@ -124,19 +129,21 @@
 
         <Button
             android:id="@+id/channel7"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:text="Channel 7 "
+            android:onClick="toPost7"
+            android:text="Game"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
 
         <Button
             android:id="@+id/channel8"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:text="Channel 8 "
+            android:onClick="toPost8"
+            android:text="Animation &#038; Comic"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
     </LinearLayout>
@@ -152,19 +159,21 @@
 
         <Button
             android:id="@+id/channel9"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:text="Channel 9 "
+            android:onClick="toPost9"
+            android:text="Tourism"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
 
         <Button
             android:id="@+id/channel10"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:text="Channel 10"
+            android:onClick="toPost10"
+            android:text="Photography"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
     </LinearLayout>
