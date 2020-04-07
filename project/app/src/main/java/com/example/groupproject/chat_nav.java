@@ -1,5 +1,6 @@
 package com.example.groupproject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -9,17 +10,24 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.example.groupproject.ChatMessage;
 import com.example.groupproject.appCookies;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class chat_nav extends AppCompatActivity {
 
@@ -28,6 +36,8 @@ public class chat_nav extends AppCompatActivity {
     EditText messageSend;
     Button send;
     DatabaseReference dbMessage;
+    ListView textBox;
+    List<ChatMessage> messageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +54,7 @@ public class chat_nav extends AppCompatActivity {
         toolbar.setTitle(friendName);
 
         //send message
-        dbMessage = FirebaseDatabase.getInstance().getReference("com.example.groupproject.ChatMessage");
+        dbMessage = FirebaseDatabase.getInstance().getReference("ChatMessage");
         messageSend = (EditText)findViewById(R.id.inputBox);
         send = (Button)findViewById(R.id.sendMessage);
 
@@ -55,6 +65,36 @@ public class chat_nav extends AppCompatActivity {
             }
         });
 
+        //retrieve message
+        textBox = (ListView)findViewById(R.id.textBox);
+        messageList = new ArrayList<>();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        dbMessage.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                messageList.clear();
+
+                for(DataSnapshot messageSnapshot : dataSnapshot.getChildren()){
+                    ChatMessage chatMessage = messageSnapshot.getValue(ChatMessage.class);
+
+                    messageList.add(chatMessage);
+                }
+
+                MessageList adapter = new MessageList(chat_nav.this, messageList);
+                textBox.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void addToRealtimeDatabase(){
@@ -69,6 +109,10 @@ public class chat_nav extends AppCompatActivity {
             String id = dbMessage.push().getKey();
 
             ChatMessage messageInfo = new ChatMessage(message, appCookies.userID, "send_id",sdf.format(date) );
+
+            dbMessage.child(id).setValue(messageInfo);
+
+            Toast.makeText(this, "Message added", Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(this, "Message cant't be null", Toast.LENGTH_LONG).show();
         }
