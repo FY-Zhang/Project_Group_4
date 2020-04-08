@@ -88,10 +88,10 @@ public class chat_nav_copy extends AppCompatActivity {
                 return true;
             case R.id.chat_friend_info:
                 return true;
-            case R.id.friend_map:
+           /* case R.id.friend_map:
                 intent.setClass(chat_nav_copy.this, map.class);
                 startActivity(intent);
-                return true;
+                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }
