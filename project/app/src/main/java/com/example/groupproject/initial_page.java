@@ -27,6 +27,7 @@ public class initial_page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_page);
     }
+
     public void onClickSignIn(View view){
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build()
@@ -45,8 +46,6 @@ public class initial_page extends AppCompatActivity {
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if(resultCode == RESULT_OK){
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                initializeInfo(user);
                 toCompleteLogin();
                 return;
             }else {
@@ -62,14 +61,10 @@ public class initial_page extends AppCompatActivity {
         }
     }
 
-    protected void initializeInfo(FirebaseUser user) {
-        storeInfo(user);
-        getUserInfo(user);
-    }
     protected void toCompleteLogin()
     {
         Intent intent = new Intent();
-        intent.setClass(this, completeLogin.class);
+        intent.setClass(this, friendlistActivity.class);
         startActivity(intent);
     }
 

@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -20,14 +19,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.example.groupproject.ChatMessage;
-import com.example.groupproject.appCookies;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.example.groupproject.appCookies.*;
 
 public class chat_nav extends AppCompatActivity {
 
@@ -39,6 +38,9 @@ public class chat_nav extends AppCompatActivity {
     ListView textBox;
     List<ChatMessage> messageList;
 
+    String friendName;
+    String friendID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +51,20 @@ public class chat_nav extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
-        String friendName = intent.getStringExtra(friendlistActivity.FRIEND_NAME);
+        friendName = intent.getStringExtra("friend_name");
+        friendID = intent.getStringExtra("friend_id");
 
         toolbar.setTitle(friendName);
 
         //send message
-        dbMessage = FirebaseDatabase.getInstance().getReference("ChatMessage");
+        String dbName;
+        if(userID.compareTo(friendID) > 0) {
+            dbName  = "ChatMessage_"+userID+"-"+friendID;
+        }else {
+            dbName = "ChatMessage_"+friendID+"_"+userID;
+        }
+
+            dbMessage = FirebaseDatabase.getInstance().getReference(dbName);
         messageSend = (EditText)findViewById(R.id.inputBox);
         send = (Button)findViewById(R.id.sendMessage);
 
@@ -82,11 +92,10 @@ public class chat_nav extends AppCompatActivity {
 
                 for(DataSnapshot messageSnapshot : dataSnapshot.getChildren()){
                     ChatMessage chatMessage = messageSnapshot.getValue(ChatMessage.class);
-
-                    messageList.add(chatMessage);
+                        messageList.add(chatMessage);
                 }
 
-                MessageList adapter = new MessageList(chat_nav.this, messageList);
+                MessageList adapter = new MessageList(chat_nav.this, messageList, friendName, friendID);
                 textBox.setAdapter(adapter);
             }
 
@@ -95,26 +104,26 @@ public class chat_nav extends AppCompatActivity {
 
             }
         });
+
     }
+
 
     private void addToRealtimeDatabase(){
         String message = messageSend.getText().toString();
-        SimpleDateFormat sdf = new SimpleDateFormat();// 格式化时间
-        sdf.applyPattern("yyyy-MM-dd HH:mm:ss a");// a为am/pm的标记
-        Date date = new Date();// 获取当前时间
-        //System.out.println("现在时间：" + sdf.format(date)); // 输出已经格式化的现在时间（24小时制）
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        sdf.applyPattern("yyyy-MM-dd_HH:mm_ss_a");
+        Date date = new Date();
 
         if(!TextUtils.isEmpty(message)){
 
             String id = dbMessage.push().getKey();
 
-            ChatMessage messageInfo = new ChatMessage(message, appCookies.userID, "send_id",sdf.format(date) );
+            ChatMessage messageInfo = new ChatMessage(message, userID,sdf.format(date) );
 
             dbMessage.child(id).setValue(messageInfo);
 
-            Toast.makeText(this, "Message added", Toast.LENGTH_LONG).show();
         }else{
-            Toast.makeText(this, "Message cant't be null", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Message cant't be null", Toast.LENGTH_SHORT).show();
         }
     }
     public boolean onCreateOptionsMenu(Menu menu) {
