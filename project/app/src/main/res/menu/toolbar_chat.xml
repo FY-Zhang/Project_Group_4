@@ -4,10 +4,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="Camera"
         android:id="@+id/chat_camera"
         android:icon="@drawable/icon_camera"
-        app:showAsAction="ifRoom"/>
+        android:title="Camera"
+        app:showAsAction="ifRoom" />
     <item
         android:title="Location"
         android:id="@+id/chat_location"
