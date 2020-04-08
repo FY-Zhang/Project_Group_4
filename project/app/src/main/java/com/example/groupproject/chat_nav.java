@@ -108,7 +108,7 @@ public class chat_nav extends AppCompatActivity {
 
             String id = dbMessage.push().getKey();
 
-            ChatMessage messageInfo = new ChatMessage(message, appCookies.userID, "send_id",sdf.format(date) );
+            ChatMessage messageInfo = new ChatMessage(message, "xxx", "send_id",sdf.format(date) );
 
             dbMessage.child(id).setValue(messageInfo);
 

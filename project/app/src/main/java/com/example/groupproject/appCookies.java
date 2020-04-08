@@ -24,11 +24,21 @@ public class appCookies {
     public static String userEmail = new String();
     public static String userGender = new String();
     public static String userBirthday = new String();
-    //public static String userPhone = new String();
-    public static ArrayList<String> userFriends = new ArrayList<String>();
 
-    public static boolean getUserInfo(FirebaseUser user){
-        Map<String,Object> data = new HashMap<>();
+    public static ArrayList<String> userFriendsID = new ArrayList<String>();
+    public static ArrayList<Map<String,Object>> allUser = new ArrayList<>();
+    public static Map<String, Object> friends = new HashMap<>();
+
+    public static void storeData(String name, String ID, String Email, String Gender, String Birthday){
+        username = new String(name);
+        userID = new String(ID);
+        userEmail = new  String(Email);
+        userGender = new String (Gender);
+        userBirthday = new String(Birthday);
+
+    }
+
+    /*public static boolean getUserInfo(FirebaseUser user){
         userID = user.getUid();
         userEmail = user.getEmail();
 
@@ -42,17 +52,22 @@ public class appCookies {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
-                            Map<String,Object> data = new HashMap<>();
+
+                            Map<String,Object> temp = new HashMap<>();
                             for(QueryDocumentSnapshot document : task.getResult()){
+                                temp = document.getData();
+                                storeAllUserInfo(temp);
+
                                 if(userID.equals(document.getId())){
-                                    data = document.getData();
-                                    if(data.isEmpty()){
+                                    if(temp.isEmpty()){
                                         break;
                                     }else {
-                                        getDataFromFirestore(data);
+                                        storeUserInfo(temp);
                                     }
                                 }
                             }
+
+                            //storeFriendsInfo();
 
                         }else{
                             Log.w("tag", "Error getting document.",task.getException());
@@ -62,11 +77,30 @@ public class appCookies {
         return true;
     }
 
-    public static void getDataFromFirestore(Map<String, Object> data){
+    protected static void storeUserInfo(Map<String, Object> data){
         userGender = data.get("gender").toString();
         username = data.get("username").toString();
         userBirthday = data.get("birthday").toString();
         //userPhone = data.get("phone").toString();
-        userFriends = (ArrayList<String>)data.get("friends");
+        userFriendsID = (ArrayList<String>)data.get("friends");
     }
+
+    protected static void storeAllUserInfo(Map<String, Object> data){
+        allUser.add(data);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+    }*/
+
+    /*protected static void storeFriendsInfo(){
+
+        for(int i=0; i<userFriendsID.size(); i++){
+            for(int j=0; j<allUser.size(); j++){
+                String friendID = userFriendsID.get(i);
+                if(allUser.get(j).get("UID") == friendID ){
+                    Map<String, Object> temp = new HashMap<>(allUser.get(j));
+                    friends.put(temp.get("UID"), );
+                }
+            }
+        }
+
+    }*/
 }
