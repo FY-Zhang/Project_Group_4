@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.groupproject.ChatMessage;
+import static com.example.groupproject.appCookies.*;
 
 import java.util.List;
 
@@ -18,11 +19,16 @@ public class MessageList extends ArrayAdapter<ChatMessage> {
 
     private Activity context;
     private List<ChatMessage> messageList;
+    private String friendName;
+    private String userName;
+    private String friendID;
 
-    public MessageList (Activity context, List<ChatMessage> messageList){
+    public MessageList (Activity context, List<ChatMessage> messageList, String friendName, String friendID){
         super(context, R.layout.message_chat, messageList);
         this.context = context;
         this.messageList = messageList;
+        this.friendName = friendName;
+        this.friendID = friendID;
     }
 
     @NonNull
@@ -37,8 +43,14 @@ public class MessageList extends ArrayAdapter<ChatMessage> {
         TextView textViewTime = (TextView) textBox.findViewById(R.id.time);
 
         ChatMessage chatMessage = messageList.get(position);
+        String send_name;
+        if(userID.equals(chatMessage.getSend_id())){
+            send_name = username;
+        }else {
+            send_name = friendName;
+        }
 
-        textViewUsername.setText(chatMessage.getSend_id());
+        textViewUsername.setText(send_name);
         textViewMessage.setText(chatMessage.getMessage());
         textViewTime.setText(chatMessage.getTime());
 

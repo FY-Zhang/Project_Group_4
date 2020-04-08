@@ -44,8 +44,6 @@ public class friendlistActivity extends AppCompatActivity {
     private ListView listview;
     private ArrayList<String> list = new ArrayList<String>();
 
-    public static final String FRIEND_NAME = "com.example.groupproject.FRIEND_NAME";
-
     private String username = new String();
     private String userID = new String();
     private String userEmail = new String();
@@ -82,10 +80,11 @@ public class friendlistActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView parent, View view, int position,
                                     long id) {
-
                 String friendName = (String)parent.getItemAtPosition(position);
+
                 Intent intent = new Intent();
-                intent.putExtra(FRIEND_NAME, friendName);
+                intent.putExtra("friend_name", friendName);
+                intent.putExtra("friend_id", userFriends.get(position).get("UID").toString());
                 intent.setClass(friendlistActivity.this,chat_nav.class);
                 startActivity(intent);
             }
@@ -185,9 +184,6 @@ public class friendlistActivity extends AppCompatActivity {
         }
     }
     public void toFriendlist(View view){
-        Intent intent = new Intent();
-        intent.setClass(this, friendlistActivity.class);
-        startActivity(intent);
     }
     public void toChannel(View view){
         Intent intent = new Intent();

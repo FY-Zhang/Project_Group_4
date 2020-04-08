@@ -6,17 +6,15 @@ public class ChatMessage {
 
     String message;
     String send_id;
-    String receive_id;
     String time;
 
     public ChatMessage(){
 
     }
 
-    public ChatMessage(String message, String send_id, String receive_id, String time) {
+    public ChatMessage(String message, String send_id, String time) {
         this.message = message;
         this.send_id = send_id;
-        this.receive_id = receive_id;
         this.time = time;
     }
 
@@ -28,9 +26,6 @@ public class ChatMessage {
         return send_id;
     }
 
-    public String getReceive_id() {
-        return receive_id;
-    }
 
     public String getTime() {
         return time;
