@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -30,7 +33,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import  com.example.groupproject.appCookies.*;
+
+import static com.example.groupproject.appCookies.storeData;
 
 
 public class friendlistActivity extends AppCompatActivity {
@@ -49,9 +53,11 @@ public class friendlistActivity extends AppCompatActivity {
     private String userBirthday = new String();
 
     private ArrayList<String> userFriendsID = new ArrayList<String>();
-    private ArrayList<Map<String,Object>> allUser = new ArrayList<>();
-    private Map<String, Object> friends = new HashMap<>();
+    private ArrayList<Map<String,Object>> userFriends = new ArrayList<>();
     private ArrayAdapter<String> adapter;
+
+    private ArrayList<String> allUsername = new ArrayList<>();
+    private ArrayList<String> userFriendsName = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +69,8 @@ public class friendlistActivity extends AppCompatActivity {
         listview = (ListView)findViewById(R.id.item);
 
         //storeData(username, userID, userEmail, userGender, userBirthday);
+        if(adapter != null)
+            adapter.clear();
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         getUserInfo(user);
@@ -91,29 +99,25 @@ public class friendlistActivity extends AppCompatActivity {
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference userRef = db.collection("users").document(userID);
-
-        userRef.get()
+        db.collection("users").document(userID)
+                .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if(documentSnapshot.exists()){
-                            storeUserInfo(documentSnapshot);
-                            storeFriendsInfo();
-                        }else{
-                            Toast.makeText(friendlistActivity.this, "document does not exist",Toast.LENGTH_SHORT).show();;
-                        }
+                        storeUserInfo(documentSnapshot);
+                        storeFriendsInfo();
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
+                        Log.w("Error", "Error getting document.", e);
                     }
                 });
-        //Log.w("tag", "Error getting document.",task.getException());
     }
 
+    //function used to store user's information
     protected void storeUserInfo(DocumentSnapshot data){
         userGender = data.getString("gender");
         username = data.getString("username");
@@ -122,22 +126,46 @@ public class friendlistActivity extends AppCompatActivity {
         userFriendsID = (ArrayList<String>)data.get("friends");
     }
 
+    //function used to store all information of all user's friend;
     protected void storeFriendsInfo(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference friendRef = db.collection("users").document(userFriendsID.get(0));
-        friendRef.get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onFailure(@NonNull Exception e) {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(int i=0; i<userFriendsID.size(); i++){
+                                for(QueryDocumentSnapshot document : task.getResult()){
+                                    Map<String, Object> temp = new HashMap<>(document.getData());
+                                    if(temp.get("UID") != null && temp.get("UID").toString().equals(userFriendsID.get(i))){
+                                        System.out.println(temp.get("username"));
+                                        userFriends.add(temp);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        else{
+                            Log.w("tag", "Error getting document.", task.getException());
+                        }
 
+                        ArrayList<String> list = setListAdapter();
+                        adapter.addAll(list);
+                        storeData(username, userID, userEmail, userGender, userBirthday, userFriends);
                     }
                 });
+    }
+
+    private ArrayList<String> setListAdapter(){
+        ArrayList<String> list = new ArrayList<>();
+        for(int i=0; i<userFriends.size(); i++){
+            System.out.println(" "+i);
+            String temp = new String(userFriends.get(i).get("username").toString());
+            list.add(temp);
+        }
+        return list;
     }
 
     @Override
