@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.bumptech.glide.util.Util;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -39,6 +40,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.maps.android.SphericalUtil;
+import com.google.maps.android.geometry.Bounds;
+
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -72,11 +77,9 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
             this.description = description;
             clickCount = 0;
         }
-
         public void incrementClickCount() {
             clickCount++;
         }
-
         @Override
         public String toString() {
             return "The " + description + " has been clicked " + clickCount + " times.";
@@ -84,15 +87,15 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
     }
 
     private static final LatLng ADELAIDE = new LatLng(-34.92873, 138.59995);
-    private static final LatLng BRISBANE = new LatLng(-27.47093, 153.0235);
-    private static final LatLng DARWIN = new LatLng(-12.425892, 130.86327);
-    private static final LatLng PERTH = new LatLng(-31.952854, 115.857342);
     private static final LatLng SYDNEY = new LatLng(-33.87365, 151.20689);
 
+    private double cur_lat = 52.601238; //default
+    private double cur_lng = -8.123021;
+    private LatLng cur_loc = new LatLng(cur_lat, cur_lng);
     private Circle mAdelaideCircle;
+    private Circle mULCircle;
+    private Polyline mCurPL;
     private GroundOverlay mSydneyGroundOverlay;
-    private Polygon mDarwinPolygon;
-    private Polyline mPolyline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,15 +113,6 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -151,11 +145,9 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 20));
     }
 
-    public void map_GetCurrentLocation(View view) { //onclick fun on btn_Current // 获取经纬度
-        //Toast.makeText(map_main.this, "in get ", Toast.LENGTH_SHORT).show();
-        if (mMap == null) {
-            return;
-        }
+    public void map_GetCurrentLocation(View view) {
+        //onclick fun on btn_Current // 获取经纬度
+        if (mMap == null) { return; }
 
         getLocationPermission();//check again
 
@@ -163,40 +155,37 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
             getDeviceLocation();
             if (mLocationPermissionGranted) { //if permission established
 
-                double lat;
-                double lng;
-
                 getDeviceLocation();
 
                 if(mLastKnownLocation == null){
                     int try_t = 0;
-                    lat = 52;
-                    lng = -8;
+                    cur_lat = 52.00;
+                    cur_lng = -8.00;
                     Toast.makeText(map_main.this, "Getting address ..." , Toast.LENGTH_SHORT).show();
 
                     while(mLastKnownLocation == null && try_t < 10) { //try to get location
                         getDeviceLocation();
-                        lat = 52;
-                        lng = -8;
+                        System.out.println("Location: " + mLastKnownLocation);
                         try_t++;
                     }
 
                     if(mLastKnownLocation == null) { // if still fail
                         Toast.makeText(map_main.this, "Please try again!", Toast.LENGTH_SHORT).show();
                     } else { // if success
-                        lat = mLastKnownLocation.getLatitude();
-                        lng = mLastKnownLocation.getLongitude();
-                        Toast.makeText(map_main.this, "Lat: " + lat + ". Lng: " + lng, Toast.LENGTH_SHORT).show();
+                        cur_lat = mLastKnownLocation.getLatitude();
+                        cur_lng = mLastKnownLocation.getLongitude();
+                        Toast.makeText(map_main.this, "Lat: " + cur_lat + ". Lng: " + cur_lng, Toast.LENGTH_SHORT).show();
+                        System.out.println("1 Lat: " + cur_lat + ". Lng: " + cur_lng);
                     }
                 } else {
-                    lat = mLastKnownLocation.getLatitude();
-                    lng = mLastKnownLocation.getLongitude();
-                    Log.i(TAG, "success want to get lt.");
-                    Toast.makeText(map_main.this, "Lat: " + lat + ". Lng: " + lng, Toast.LENGTH_SHORT).show();
+                    cur_lat = mLastKnownLocation.getLatitude();
+                    cur_lng = mLastKnownLocation.getLongitude();
+                    Toast.makeText(map_main.this, "Lat: " + cur_lat + ". Lng: " + cur_lng, Toast.LENGTH_SHORT).show();
+                    System.out.println("2 Lat: " + cur_lat + ". Lng: " + cur_lng);
                 }
 
-                LatLng cur_p = new LatLng(lat, lng);
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(cur_p));
+                cur_loc = new LatLng(cur_lat, cur_lng);
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(cur_loc));
             } else {
                 Log.i(TAG, "Please grant location permission.");
                 Toast.makeText(map_main.this, "Please grant location permission", Toast.LENGTH_SHORT).show();
@@ -212,9 +201,13 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
     }
 
     public void map_CheckPoints(View view) {
-        //符合条件则将官方标签变色
-        Toast.makeText(map_main.this, "Check Successfully!", Toast.LENGTH_SHORT).show();
-        //Toast.makeText(map_main.this, "No nearby check points!", Toast.LENGTH_SHORT).show();
+        map_GetCurrentLocation(view);
+        if(checkBounds(cur_loc, mULCircle)) {
+            Toast.makeText(map_main.this, "Check Successfully!", Toast.LENGTH_SHORT).show();
+            
+        } else {
+            Toast.makeText(map_main.this, "No nearby check points!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void map_listView(View view) {
@@ -237,32 +230,13 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
                 .clickable(true));
         mAdelaideCircle.setTag(new CustomTag("Adelaide circle"));
 
-        // A ground overlay at Sydney.
-        mSydneyGroundOverlay = mMap.addGroundOverlay(new GroundOverlayOptions()
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.icon_camera))
-                .position(SYDNEY, 700000)
+        mULCircle = mMap.addCircle(new CircleOptions()
+                .center(UL)
+                .radius(2000)
+                .fillColor(Color.argb(150, 66, 173, 244))
+                .strokeColor(Color.rgb(66, 173, 244))
                 .clickable(true));
-        mSydneyGroundOverlay.setTag(new CustomTag("Sydney ground overlay"));
-
-        // A polygon centered at Darwin.
-        mDarwinPolygon = mMap.addPolygon(new PolygonOptions()
-                .add(
-                        new LatLng(DARWIN.latitude + 3, DARWIN.longitude - 3),
-                        new LatLng(DARWIN.latitude + 3, DARWIN.longitude + 3),
-                        new LatLng(DARWIN.latitude - 3, DARWIN.longitude + 3),
-                        new LatLng(DARWIN.latitude - 3, DARWIN.longitude - 3))
-                .fillColor(Color.argb(150, 34, 173, 24))
-                .strokeColor(Color.rgb(34, 173, 24))
-                .clickable(true));
-        mDarwinPolygon.setTag(new CustomTag("Darwin polygon"));
-
-        // A polyline from Perth to Brisbane.
-        mPolyline = mMap.addPolyline(new PolylineOptions()
-                .add(PERTH, BRISBANE)
-                .color(Color.rgb(103, 24, 173))
-                .width(30)
-                .clickable(true));
-        mPolyline.setTag(new CustomTag("Perth to Brisbane polyline"));
+        mULCircle.setTag(new CustomTag("UL circle"));
     }
 
     private void getLocationPermission() {
@@ -361,5 +335,16 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
         return gps;
     } //check gps open
 
-
+    public boolean checkBounds(LatLng cur_location, Circle checkpoint) {
+        /*LatLng l1 = new LatLng(52.6793304,-8.577171); //52.6793304   //-8.577171;
+        LatLng l2 = new LatLng(52.6738590,-8.5723265);*/
+        double distance = SphericalUtil.computeDistanceBetween(cur_location, checkpoint.getCenter());
+        System.out.println("cur: " + cur_location + ". cen:" + checkpoint.getCenter() + ". r: " + checkpoint.getRadius() + ". Distance:R " + distance);
+        if(distance <= checkpoint.getRadius()) {
+            return true;
+        } else {
+            Toast.makeText(map_main.this, "Sorry, you are not in the checking area", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
 }

@@ -51,13 +51,26 @@ public class fragment_setting_setting extends Fragment {
         });
 
         Button btn_channel_setting = view.findViewById(R.id.btn_channel_setting); //jump to channel
-        btn_channel_setting .setOnClickListener(new View.OnClickListener()
+        btn_channel_setting.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), channel.class);
                 startActivity(intent);
+            }
+        });
+
+        Button btn_logout = view.findViewById(R.id.btn_logout); //jump to channel
+        btn_logout.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                /*Intent intent = new Intent();
+                intent.setClass(getActivity(), Login.class);
+                startActivity(intent);*/
+                map_main map_t = new map_main();
+                map_t.map_GetCurrentLocation(view);
             }
         });
 
