@@ -45,32 +45,22 @@
         <Button
             android:id="@+id/friendlist"
             style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#707070"
-            android:onClick="toFriendlist"
-            android:text="Friends" />
+            android:onClick="toBack"
+            android:text="Back" />
 
         <Button
             android:id="@+id/channel"
             style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#707070"
-            android:onClick="toChannel"
-            android:text="Channel" />
-
-        <Button
-            android:id="@+id/setting"
-            style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#707070"
-            android:onClick="toSetting"
-            android:text="Setting" />
+            android:onClick="toNewPost"
+            android:text="New Post" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

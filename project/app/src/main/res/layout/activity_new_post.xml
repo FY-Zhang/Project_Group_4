@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Title"
-            android:inputType="textPassword"
+            android:inputType="text"
             tools:layout_editor_absoluteY="180dp" />
     </LinearLayout>
 
@@ -60,7 +60,7 @@
             android:layout_height="200dp"
             android:ems="10"
             android:hint="Content"
-            android:inputType="textPassword"
+            android:inputType="textMultiLine"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_username_modify"
             tools:layout_editor_absoluteY="250dp" />
@@ -81,7 +81,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#707070"
-            android:text="Back" />
+            android:onClick="toBack"
+            android:text="Back"
+            tools:ignore="OnClick" />
 
         <Button
             android:id="@+id/submit"
@@ -90,7 +92,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#707070"
-            android:text="Submit" />
+            android:onClick="toSubmit"
+            android:text="Submit"
+            tools:ignore="OnClick" />
     </LinearLayout>
 
 

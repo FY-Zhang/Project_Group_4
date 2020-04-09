@@ -6,18 +6,27 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+
+import static com.example.groupproject.channel.posts;
 
 public class post extends AppCompatActivity {
 
@@ -56,30 +65,50 @@ public class post extends AppCompatActivity {
         });
     }
 
-    private ArrayList<String> getData()
+    public ArrayList<String> getData()
     {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("post")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        String id = getIntent().getStringExtra("id");
-                        if(task.isSuccessful()) {
-                            for(QueryDocumentSnapshot document: task.getResult()) {
-                                String channel = document.get("channel").toString();
-                                String title = document.get("title").toString();
-                                String content = document.get("content").toString();
-                                String author = document.get("author").toString();
 
-                                if(id.equals(channel)) {
-                                    list.add(title);
-                                    list.add("12");
-                                }
-                            }
-                        }
-                    }
-                });
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        db.collection("post")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        String id = getIntent().getStringExtra("id");
+//                        if(task.isSuccessful()) {
+//                            for(QueryDocumentSnapshot document: task.getResult()) {
+//                                String channel = document.get("channel").toString();
+//                                String title = document.get("title").toString();
+//                                String content = document.get("content").toString();
+//                                String author = document.get("author").toString();
+//
+//                                if(id.equals(channel)) {
+//                                    public BaseAdapter
+//                                    list.add(title);
+//                                    list.add("12");
+//                                }
+//                            }
+//                        }
+//                    }
+//                });
+        list.clear();
+        String id = getIntent().getStringExtra("id");
+        for(int i = 1;i <= 10;i++) {
+            String channel = "channel" + i;
+            if (channel.equals(id)) {
+                for (String title : posts.get(i - 1))
+                    list.add(title);
+                break;
+            }
+        }
+//        for(ArrayList<String> array: posts) {
+//            for(String s: array) {
+//                list.add("BBBBB");
+//                list.add(s);
+//            }
+//        }
+//            }
+//        }
 
 //        if(id.equals("channel1"))
 //            list.add("Post_1");
@@ -93,6 +122,8 @@ public class post extends AppCompatActivity {
     }
     public void toNewPost(View view){
         Intent intent = new Intent();
+        String channel = getIntent().getStringExtra("id");
+        intent.putExtra("id", channel);
         intent.setClass(this, new_post.class);
         startActivity(intent);
     }
