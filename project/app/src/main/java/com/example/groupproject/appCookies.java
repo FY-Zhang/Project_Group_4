@@ -30,4 +30,7 @@ public class appCookies {
         userFriends = new ArrayList<Map<String, Object>>(Friends);
     }
 
+<<<<<<< HEAD
+
+>>>>>>> d77ce497873beeb4198c4fb0d84a3538be574b40
 }

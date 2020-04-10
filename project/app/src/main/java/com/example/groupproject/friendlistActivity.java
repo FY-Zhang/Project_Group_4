@@ -121,12 +121,33 @@ public class friendlistActivity extends AppCompatActivity {
 
     //function used to store user's information
     protected void storeUserInfo(DocumentSnapshot data){
+<<<<<<< HEAD
         userGender = data.getString("gender");
         username = data.getString("username");
         userBirthday = data.getString("birthday");
         userEmail = data.getString("email");
         userFriendsID = (ArrayList<String>)data.get("friends");
         userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
+
+        if(data.getString("gender") != null){
+            userGender = data.getString("gender");
+        }
+        if(data.getString("username")!=null){
+            username = data.getString("username");
+        }
+        if(data.getString("birthday")!=null) {
+            userBirthday = data.getString("birthday");
+        }
+        if(data.getString("email") != null) {
+            userEmail = data.getString("email");
+        }
+        if((ArrayList<String>)data.get("friends") != null) {
+            userFriendsID = (ArrayList<String>) data.get("friends");
+        }
+		if((ArrayList<GeoPoint>) data.get("checkPoint") != null) {
+			userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
+		}
+>>>>>>> d77ce497873beeb4198c4fb0d84a3538be574b40
     }
 
     //function used to store all information of all user's friend;
@@ -139,24 +160,20 @@ public class friendlistActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
-                            for(int i=0; i<userFriendsID.size(); i++){ // friends array
-                                for(QueryDocumentSnapshot document : task.getResult()){
-                                    Map<String, Object> temp = new HashMap<>(document.getData());
-                                    if(temp.get("UID") != null && temp.get("UID").toString().equals(userFriendsID.get(i))){
-                                        System.out.println(temp.get("username"));
-                                        userFriends.add(temp);
-                                        break;
+<<<<<<< HEAD
+                            if(userFriendsID != null) {
+                                for (int i = 0; i < userFriendsID.size(); i++) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Map<String, Object> temp = new HashMap<>(document.getData());
+                                        if (temp.get("UID") != null && temp.get("UID").toString().equals(userFriendsID.get(i))) {
+                                            System.out.println(temp.get("username"));
+                                            userFriends.add(temp);
+                                            break;
+                                        }
+>>>>>>> d77ce497873beeb4198c4fb0d84a3538be574b40
                                     }
                                 }
                             }
-                            //System.out.println("tpsc: " + userCheckedPoints);
-                           /* for(int j = 0; j < userCheckedPoints.size(); j++) { // points array
-                                for(QueryDocumentSnapshot document : task.getResult()) {
-                                    Map<String, Object> tempPoints = new HashMap<>(document.getData());
-                                    System.out.println("tpp: " + tempPoints.get("checkPoint"));
-                                    userChecked.add(tempPoints);
-                                }
-                            }*/
                         }
                         else{
                             Log.w("tag", "Error getting document.", task.getException());
