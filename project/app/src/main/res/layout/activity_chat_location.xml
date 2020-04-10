@@ -6,13 +6,54 @@
     android:layout_height="match_parent"
     tools:context=".chat_location">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#3872AA"
+        app:title="Camera"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
-    <TextView
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="60dp"
+        android:id="@+id/fragment_chat_location"
+        android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#707070"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_editor_absoluteX="0dp">
+
+
+
+    <Button
+        android:onClick="onBackClick"
+        android:id="@+id/dropBtn"
+        style="android:attr/buttonBarButtonStyle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="300dp"
-        android:text="Location_under development page"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#707070"
+        android:text="Back" />
+
+    <Button
+        android:onClick="onSendClick"
+        android:id="@+id/reTakeBtn"
+        style="android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#707070"
+        android:text="Send" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

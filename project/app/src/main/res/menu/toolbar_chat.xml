@@ -4,18 +4,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/chat_camera"
-        android:icon="@drawable/icon_camera"
-        android:title="Camera"
-        app:showAsAction="ifRoom" />
+        android:title="Picture"
+        android:id="@+id/chat_picture">
+        <menu>
+            <item
+                android:id="@+id/chat_camera"
+                android:title="Camera" />
+            <item
+                android:id="@+id/chat_album"
+                android:title="Choose from album" />
+        </menu>
+    </item>
     <item
         android:title="Location"
         android:id="@+id/chat_location"
-        android:icon="@drawable/icon_location"
-        app:showAsAction="ifRoom"/>
+        android:icon="@drawable/icon_location"/>
     <item
-        android:title="..."
+        android:title="profile"
         android:id="@+id/chat_friend_info"
-        android:icon="@drawable/icon_profile"
-        app:showAsAction="ifRoom"/>
+        android:icon="@drawable/icon_profile"/>
 </menu>

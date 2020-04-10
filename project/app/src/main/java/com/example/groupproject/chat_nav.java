@@ -3,6 +3,8 @@ package com.example.groupproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -32,14 +33,19 @@ public class chat_nav extends AppCompatActivity {
 
     Toolbar toolbar;
 
-    EditText messageSend;
-    Button send;
-    DatabaseReference dbMessage;
-    ListView textBox;
-    List<ChatMessage> messageList;
-
     String friendName;
     String friendID;
+    String dbName;
+
+    //Message send
+    private EditText messageSend;
+    private Button send;
+    private DatabaseReference dbMessage;
+    private RecyclerView textBox;
+
+    //Picture send
+    private ChatMessageAdapter imageAdapter;
+    private List<ChatMessage> chatList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,14 +63,13 @@ public class chat_nav extends AppCompatActivity {
         toolbar.setTitle(friendName);
 
         //send message
-        String dbName;
         if(userID.compareTo(friendID) > 0) {
             dbName  = "ChatMessage_"+userID+"-"+friendID;
         }else {
             dbName = "ChatMessage_"+friendID+"_"+userID;
         }
 
-            dbMessage = FirebaseDatabase.getInstance().getReference(dbName);
+        dbMessage = FirebaseDatabase.getInstance().getReference(dbName);
         messageSend = (EditText)findViewById(R.id.inputBox);
         send = (Button)findViewById(R.id.sendMessage);
 
@@ -76,8 +81,11 @@ public class chat_nav extends AppCompatActivity {
         });
 
         //retrieve message
-        textBox = (ListView)findViewById(R.id.textBox);
-        messageList = new ArrayList<>();
+        textBox = (RecyclerView) findViewById(R.id.textBox);
+        textBox.setHasFixedSize(true);
+        textBox.setLayoutManager(new LinearLayoutManager(this));
+
+        chatList = new ArrayList<>();
     }
 
     @Override
@@ -88,20 +96,21 @@ public class chat_nav extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                messageList.clear();
+                chatList.clear();
 
-                for(DataSnapshot messageSnapshot : dataSnapshot.getChildren()){
-                    ChatMessage chatMessage = messageSnapshot.getValue(ChatMessage.class);
-                        messageList.add(chatMessage);
+                for(DataSnapshot chatSnapshot : dataSnapshot.getChildren()){
+                    ChatMessage chatMessage = chatSnapshot.getValue(ChatMessage.class);
+                    chatList.add(chatMessage);
                 }
 
-                MessageList adapter = new MessageList(chat_nav.this, messageList, friendName, friendID);
-                textBox.setAdapter(adapter);
+                imageAdapter = new ChatMessageAdapter(chat_nav.this, chatList, friendName);
+
+                textBox.setAdapter(imageAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(chat_nav.this, databaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -118,7 +127,7 @@ public class chat_nav extends AppCompatActivity {
 
             String id = dbMessage.push().getKey();
 
-            ChatMessage messageInfo = new ChatMessage(message, userID,sdf.format(date) );
+            ChatMessage messageInfo = new ChatMessage("", userID, sdf.format(date), 1, message);
 
             dbMessage.child(id).setValue(messageInfo);
 
@@ -135,16 +144,25 @@ public class chat_nav extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.chat_camera:
                 intent.setClass(chat_nav.this, chat_camera.class);
+                intent.putExtra("friend_name", friendName);
+                intent.putExtra("friend_id", friendID);
+                intent.putExtra("database_name", dbName);
                 startActivity(intent);
                 return true;
             case R.id.chat_location:
                 intent.setClass(chat_nav.this, chat_location.class);
+                intent.putExtra("friend_name", friendName);
+                intent.putExtra("friend_id", friendID);
+                intent.putExtra("database_name", dbName);
                 startActivity(intent);
                 return true;
             case R.id.chat_friend_info:
                 return true;
-            case R.id.map_check:
-                intent.setClass(chat_nav.this, map.class);
+            case R.id.chat_album:
+                intent.setClass(chat_nav.this, chat_album.class);
+                intent.putExtra("friend_name", friendName);
+                intent.putExtra("friend_id", friendID);
+                intent.putExtra("database_name", dbName);
                 startActivity(intent);
                 return true;
             default:
