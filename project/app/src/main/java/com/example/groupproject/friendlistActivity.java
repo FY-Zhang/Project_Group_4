@@ -51,7 +51,7 @@ public class friendlistActivity extends AppCompatActivity {
     private String userEmail = new String();
     private String userGender = new String();
     private String userBirthday = new String();
-    private boolean userDisplay = false;
+    private String userDisplay = "false";
 
     private ArrayList<String> userFriendsID = new ArrayList<>();
     private ArrayList<Map<String,Object>> userFriends = new ArrayList<>();
@@ -127,7 +127,7 @@ public class friendlistActivity extends AppCompatActivity {
         username = data.getString("username");
         userBirthday = data.getString("birthday");
         userEmail = data.getString("email");
-        userDisplay = data.getBoolean("display");
+        userDisplay = data.getString("display");
         userFriendsID = (ArrayList<String>)data.get("friends");
         userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
 
@@ -142,6 +142,9 @@ public class friendlistActivity extends AppCompatActivity {
         }
         if(data.getString("email") != null) {
             userEmail = data.getString("email");
+        }
+        if(data.getString("email") != null) {
+            userDisplay = data.getString("display");
         }
         if((ArrayList<String>)data.get("friends") != null) {
             userFriendsID = (ArrayList<String>) data.get("friends");

@@ -113,21 +113,6 @@ public class fragment_modify_setting extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //click back
-        Switch sw_gender = view.findViewById(R.id.sw_gender);
-        sw_gender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) { //trigger detect
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                if(buttonView.isChecked()) {//display
-                    appCookies.userDisplay = true;
-                    db.collection("users").document(appCookies.userID).
-                            update("display", 1);
-                } else { //not display
-                    appCookies.userDisplay = false;
-                    db.collection("users").document(appCookies.userID).
-                            update("display", 0);
-                }}
-        });
-
         Button btn_back_modify = view.findViewById(R.id.btn_back_modify);
         btn_back_modify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,6 +129,7 @@ public class fragment_modify_setting extends Fragment {
         final String user_psw = "111111";
         String user_birthday = appCookies.userBirthday;
         String user_sex = appCookies.userGender;
+        String user_display = appCookies.userDisplay;
 
         //initial original display
         txt_username = view.findViewById(R.id.txt_username_til);
@@ -165,6 +151,11 @@ public class fragment_modify_setting extends Fragment {
             RadioButton rb_sex1 = view.findViewById(R.id.rb1);
             //RadioButton rb_sex0 = view.findViewById(R.id.rb0);
             rb_sex1.setChecked(true);
+        }
+
+        if(user_display.equals("true")) {
+            Switch sw_gender = view.findViewById(R.id.sw_gender);
+            sw_gender.setChecked(true);
         }
 
         //change info
@@ -220,6 +211,19 @@ public class fragment_modify_setting extends Fragment {
                 userRef.update("gender",user_sex);
 
                 Switch sw_gender = view.findViewById(R.id.sw_gender);
+                sw_gender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) { //trigger detect
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        if(buttonView.isChecked()) {//display
+                            appCookies.userDisplay = "true";
+                            db.collection("users").document(appCookies.userID).
+                                    update("display", 1);
+                        } else { //not display
+                            appCookies.userDisplay = "false";
+                            db.collection("users").document(appCookies.userID).
+                                    update("display", 0);
+                        }}
+                });
 
                 if(validateUsername(user_name) && validateEmail(user_email) && validatePassword(user_psw)) {
                     Navigation.findNavController(v).navigate(R.id.action_modify_to_setting);
