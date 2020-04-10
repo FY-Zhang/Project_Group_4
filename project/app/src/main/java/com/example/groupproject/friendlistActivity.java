@@ -51,6 +51,7 @@ public class friendlistActivity extends AppCompatActivity {
     private String userEmail = new String();
     private String userGender = new String();
     private String userBirthday = new String();
+    private boolean userDisplay = false;
 
     private ArrayList<String> userFriendsID = new ArrayList<>();
     private ArrayList<Map<String,Object>> userFriends = new ArrayList<>();
@@ -121,11 +122,12 @@ public class friendlistActivity extends AppCompatActivity {
 
     //function used to store user's information
     protected void storeUserInfo(DocumentSnapshot data){
-<<<<<<< HEAD
+
         userGender = data.getString("gender");
         username = data.getString("username");
         userBirthday = data.getString("birthday");
         userEmail = data.getString("email");
+        userDisplay = data.getBoolean("display");
         userFriendsID = (ArrayList<String>)data.get("friends");
         userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
 
@@ -147,7 +149,6 @@ public class friendlistActivity extends AppCompatActivity {
 		if((ArrayList<GeoPoint>) data.get("checkPoint") != null) {
 			userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
 		}
->>>>>>> d77ce497873beeb4198c4fb0d84a3538be574b40
     }
 
     //function used to store all information of all user's friend;
@@ -160,7 +161,6 @@ public class friendlistActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
-<<<<<<< HEAD
                             if(userFriendsID != null) {
                                 for (int i = 0; i < userFriendsID.size(); i++) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
@@ -170,7 +170,6 @@ public class friendlistActivity extends AppCompatActivity {
                                             userFriends.add(temp);
                                             break;
                                         }
->>>>>>> d77ce497873beeb4198c4fb0d84a3538be574b40
                                     }
                                 }
                             }
@@ -181,7 +180,7 @@ public class friendlistActivity extends AppCompatActivity {
 
                         ArrayList<String> list = setListAdapter();
                         adapter.addAll(list);
-                        storeData(username, userID, userEmail, userGender, userBirthday, userFriends, userCheckedPoints);
+                        storeData(username, userID, userEmail, userGender, userBirthday, userDisplay, userFriends, userCheckedPoints);
                     }
                 });
     }

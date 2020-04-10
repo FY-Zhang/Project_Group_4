@@ -92,11 +92,10 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
     private Circle WashingtonCircle;
     private Circle BerlinCircle;
 
-    private Polyline CurPL;
-    private GroundOverlay SydneyGroundOverlay;
+    //private Polyline CurPL;
+    //private GroundOverlay SydneyGroundOverlay;
 
-    //private ArrayList<GeoPoint> gp_checkPoint = new ArrayList<>();
-    private ArrayList<GeoPoint> gp_myPoint = new ArrayList<>();
+    private ArrayList<GeoPoint> gp_myPoint = new ArrayList<>(); // custom design points
 
     private static class CustomTag {
         private final String description;
@@ -120,7 +119,6 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
-            //mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -141,23 +139,20 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
 
         getLocationPermission();
         updateLocationUI();
-        getDeviceLocation();
+        //getDeviceLocation();
 
         View map_view = findViewById(R.id.btn_check_map);
         map_GetCurrentLocation(map_view);
-        System.out.println("************* 1 ***************");
-        System.out.println("************** 2 **************");
-        System.out.println("array: " + appCookies.userCheckedPoints);
-        System.out.println("************** 3 **************");
+        System.out.println("***array: " + appCookies.userCheckedPoints);
 
         updateMarkers();
     }
 
     private void addOfficialMarkers() { // official check points
-        mkrBeijing = mMap.addMarker(new MarkerOptions().position(Beijing).title("Beijing, Capital of China \uD83C\uDDE8\uD83C\uDDF3."));
-        mkrUL = mMap.addMarker(new MarkerOptions().position(UL).title("University of Limerick."));
-        mkrWashington = mMap.addMarker(new MarkerOptions().position(Washington).title("Washington, Capital of USA."));
-        mkrSydney = mMap.addMarker(new MarkerOptions().position(Sydney).title("Sydney, Capital of Sydney."));
+        mkrBeijing = mMap.addMarker(new MarkerOptions().position(Beijing).title("Beijing, Capital of China. \uD83C\uDDE8\uD83C\uDDF3."));
+        mkrUL = mMap.addMarker(new MarkerOptions().position(UL).title("University of Limerick, Ireland. \uD83C\uDDEE\uD83C\uDDEA"));
+        mkrWashington = mMap.addMarker(new MarkerOptions().position(Washington).title("Washington, Capital of USA. \uD83C\uDDFA\uD83C\uDDF8"));
+        mkrSydney = mMap.addMarker(new MarkerOptions().position(Sydney).title("Sydney, Capital of Sydney. \uD83C\uDDE6\uD83C\uDDFA"));
         mkrBerlin = mMap.addMarker(new MarkerOptions().position(Berlin).title("Berlin, Capital of Germany \uD83C\uDDE9\uD83C\uDDEA."));
 
         markerList.add(mkrBeijing);
@@ -175,11 +170,10 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
                 .include(UL)
                 .include(Berlin);
         // Move camera to show all markers and locations
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 100));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 200));
     }
 
     public void map_GetCurrentLocation(View view) {
-        //onclick fun on btn_Current // 获取经纬度
         if (mMap == null) { return; }
 
         getLocationPermission();//check again
@@ -190,7 +184,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
 
                 getDeviceLocation();
 
-                if(mLastKnownLocation == null){
+                if(mLastKnownLocation == null){ //待改善
                     int try_t = 0;
                     cur_lat = 52.00;
                     cur_lng = -8.00;
@@ -235,7 +229,6 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
 
     public void map_CheckPoints(View view) { // once button, all check
         map_GetCurrentLocation(view);
-
         updateMarkers();
 
         int num = 0;
@@ -262,39 +255,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
         }
         if(num == 0) { Toast.makeText(map_main.this, "No nearby check points!", Toast.LENGTH_SHORT).show(); }
     }
-/*
-    protected void searchPoints(){
-        System.out.println("-------------------------------------");
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users").document("10000001")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        System.out.println("&& Go to get points");
 
-                        gp_checkPoint = (ArrayList<GeoPoint>) documentSnapshot.get("checkPoint");
-                        System.out.println("Now the gp_c: " + gp_checkPoint);
-
-                        //getPoints(documentSnapshot);//here to get points into gp_c list
-                        System.out.println("&& End to get points");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("Error", "Error getting document.", e);
-                        System.out.println("Error happened! ");
-                    }});
-        System.out.println("-------------------------------------");
-    }
-
-    protected void getPoints(DocumentSnapshot data){ // copy points from db
-        gp_checkPoint = (ArrayList<GeoPoint>) data.get("checkPoint");
-        //System.out.println("Get points: " + gp_checkPoint.get(0).getLatitude());
-        System.out.println("Now the gp_c: " + gp_checkPoint);
-    }
-*/
     public void map_listView(View view) {
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("new!!!!"));
@@ -375,7 +336,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Toast.makeText(map_main.this, "in the on request location.", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(map_main.this, "in the on request location.", Toast.LENGTH_SHORT).show();
         System.out.println("in the request location");
         mLocationPermissionGranted = false;
         switch (requestCode) {
@@ -391,8 +352,6 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
     }
 
     private void updateLocationUI() {
-        //Toast.makeText(map_main.this, "update UI.", Toast.LENGTH_SHORT).show();
-
         if (mMap == null) {
             return;
         }
@@ -428,8 +387,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
 
                 if(lat1 == lat2 && lng1 == lng2){
                     markerList.get(j).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-                    System.out.println("the in m: " + markerList.get(j).getTitle());
-                    System.out.println("))))))CHANGE((((((((");
+                    //System.out.println("the in m: " + markerList.get(j).getTitle());
                 }
             }
         }
