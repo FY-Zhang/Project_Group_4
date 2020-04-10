@@ -118,11 +118,21 @@ public class friendlistActivity extends AppCompatActivity {
 
     //function used to store user's information
     protected void storeUserInfo(DocumentSnapshot data){
-        userGender = data.getString("gender");
-        username = data.getString("username");
-        userBirthday = data.getString("birthday");
-        userEmail = data.getString("email");
-        userFriendsID = (ArrayList<String>)data.get("friends");
+        if(data.getString("gender") != null){
+            userGender = data.getString("gender");
+        }
+        if(data.getString("username")!=null){
+            username = data.getString("username");
+        }
+        if(data.getString("birthday")!=null) {
+            userBirthday = data.getString("birthday");
+        }
+        if(data.getString("email") != null) {
+            userEmail = data.getString("email");
+        }
+        if((ArrayList<String>)data.get("friends") != null) {
+            userFriendsID = (ArrayList<String>) data.get("friends");
+        }
     }
 
     //function used to store all information of all user's friend;
@@ -135,13 +145,15 @@ public class friendlistActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
-                            for(int i=0; i<userFriendsID.size(); i++){
-                                for(QueryDocumentSnapshot document : task.getResult()){
-                                    Map<String, Object> temp = new HashMap<>(document.getData());
-                                    if(temp.get("UID") != null && temp.get("UID").toString().equals(userFriendsID.get(i))){
-                                        System.out.println(temp.get("username"));
-                                        userFriends.add(temp);
-                                        break;
+                            if(userFriendsID != null) {
+                                for (int i = 0; i < userFriendsID.size(); i++) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Map<String, Object> temp = new HashMap<>(document.getData());
+                                        if (temp.get("UID") != null && temp.get("UID").toString().equals(userFriendsID.get(i))) {
+                                            System.out.println(temp.get("username"));
+                                            userFriends.add(temp);
+                                            break;
+                                        }
                                     }
                                 }
                             }

@@ -15,6 +15,7 @@
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
+
     <ImageView
         android:id="@+id/picture"
         android:layout_width="match_parent"
