@@ -3,9 +3,9 @@ package com.example.groupproject;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.provider.FontsContractCompat;
 import androidx.fragment.app.FragmentActivity;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,9 +16,9 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.util.Util;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,28 +27,33 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.GroundOverlay;
-import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polygon;
-import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.maps.android.SphericalUtil;
-import com.google.maps.android.geometry.Bounds;
 
 import java.lang.reflect.Array;
-import java.util.Arrays;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-
-import static android.provider.SettingsSlicesContract.KEY_LOCATION;
 
 public class map_main extends FragmentActivity implements OnMapReadyCallback {
 
@@ -63,11 +68,35 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
     private static final String KEY_LOCATION = "location";
 
     private final LatLng mDefaultLocation = new LatLng(-33.8523341, 151.2106085);
-    private static final LatLng UL = new LatLng(52.673829, -8.572475);
+    private double cur_lat = 52.601238; //default
+    private double cur_lng = -8.123021;
+    private LatLng cur_loc = new LatLng(cur_lat, cur_lng);
+
     private static final LatLng Beijing = new LatLng(39.901389, 116.4214707);
-    private static final LatLng Dublin = new LatLng(53.331876, -6.257069);
+    private static final LatLng UL = new LatLng(52.673829, -8.572475);
     private static final LatLng Washington = new LatLng(38.907757, -77.035599);
-    private static final LatLng Sydney = new LatLng(-34, 151);
+    private static final LatLng Sydney = new LatLng(-33.868819, 151.2092955);
+    private static final LatLng Berlin = new LatLng(52.520006, 13.404954);
+
+    private ArrayList<Marker> markerList = new ArrayList<Marker>();
+    private Marker mkrBeijing;
+    private Marker mkrUL;
+    private Marker mkrWashington;
+    private Marker mkrSydney;
+    private Marker mkrBerlin;
+
+    private ArrayList<Circle> circlesList = new ArrayList<Circle>();
+    private Circle BeijingCircle;
+    private Circle ULCircle;
+    private Circle SydneyCircle;
+    private Circle WashingtonCircle;
+    private Circle BerlinCircle;
+
+    private Polyline CurPL;
+    private GroundOverlay SydneyGroundOverlay;
+
+    //private ArrayList<GeoPoint> gp_checkPoint = new ArrayList<>();
+    private ArrayList<GeoPoint> gp_myPoint = new ArrayList<>();
 
     private static class CustomTag {
         private final String description;
@@ -85,17 +114,6 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
             return "The " + description + " has been clicked " + clickCount + " times.";
         }
     }
-
-    private static final LatLng ADELAIDE = new LatLng(-34.92873, 138.59995);
-    private static final LatLng SYDNEY = new LatLng(-33.87365, 151.20689);
-
-    private double cur_lat = 52.601238; //default
-    private double cur_lng = -8.123021;
-    private LatLng cur_loc = new LatLng(cur_lat, cur_lng);
-    private Circle mAdelaideCircle;
-    private Circle mULCircle;
-    private Polyline mCurPL;
-    private GroundOverlay mSydneyGroundOverlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,33 +134,48 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
         addOfficialMarkers();
         addObjectsToMap();
-        showIreland(null);
+        showEurope(null);
 
         getLocationPermission();
         updateLocationUI();
         getDeviceLocation();
+
+        View map_view = findViewById(R.id.btn_check_map);
+        map_GetCurrentLocation(map_view);
+        System.out.println("************* 1 ***************");
+        System.out.println("************** 2 **************");
+        System.out.println("array: " + appCookies.userCheckedPoints);
+        System.out.println("************** 3 **************");
+
+        updateMarkers();
     }
 
     private void addOfficialMarkers() { // official check points
-        mMap.addMarker(new MarkerOptions().position(UL).title("University of Limerick."));
-        mMap.addMarker(new MarkerOptions().position(Beijing).title("Beijing, Capital of China."));
-        mMap.addMarker(new MarkerOptions().position(Dublin).title("Dublin, Capital of Ireland."));
-        mMap.addMarker(new MarkerOptions().position(Washington).title("Washington, Capital of USA."));
-        mMap.addMarker(new MarkerOptions().position(Sydney).title("Sydney, Capital of Sydney."));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(Dublin));
+        mkrBeijing = mMap.addMarker(new MarkerOptions().position(Beijing).title("Beijing, Capital of China \uD83C\uDDE8\uD83C\uDDF3."));
+        mkrUL = mMap.addMarker(new MarkerOptions().position(UL).title("University of Limerick."));
+        mkrWashington = mMap.addMarker(new MarkerOptions().position(Washington).title("Washington, Capital of USA."));
+        mkrSydney = mMap.addMarker(new MarkerOptions().position(Sydney).title("Sydney, Capital of Sydney."));
+        mkrBerlin = mMap.addMarker(new MarkerOptions().position(Berlin).title("Berlin, Capital of Germany \uD83C\uDDE9\uD83C\uDDEA."));
+
+        markerList.add(mkrBeijing);
+        markerList.add(mkrUL);
+        markerList.add(mkrWashington);
+        markerList.add(mkrSydney);
+        markerList.add(mkrBerlin);
     }
 
-    public void showIreland(View v) {
+    public void showEurope(View v) {
         if (mMap == null)
             return;
         // Create bounds that include all locations of the map
         LatLngBounds.Builder bounds = LatLngBounds.builder()
-                .include(Dublin)
-                .include(UL);
+                .include(UL)
+                .include(Berlin);
         // Move camera to show all markers and locations
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 20));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 100));
     }
 
     public void map_GetCurrentLocation(View view) {
@@ -200,20 +233,75 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
-    public void map_CheckPoints(View view) {
+    public void map_CheckPoints(View view) { // once button, all check
         map_GetCurrentLocation(view);
-        if(checkBounds(cur_loc, mULCircle)) {
-            Toast.makeText(map_main.this, "Check Successfully!", Toast.LENGTH_SHORT).show();
-            
-        } else {
-            Toast.makeText(map_main.this, "No nearby check points!", Toast.LENGTH_SHORT).show();
+
+        updateMarkers();
+
+        int num = 0;
+        for(int i = 0; i < circlesList.size(); i++){
+            if (checkBounds(cur_loc, circlesList.get(i))) { //get circle center
+                double lat = circlesList.get(i).getCenter().latitude;
+                double lng = circlesList.get(i).getCenter().longitude;
+                //System.out.println("=======N:" + i + "# Cur lat: " + cur_lat + "Cur lng: " + cur_lng);
+                //System.out.println("# o lat: " + lat + "o lng: " + lng);
+                if(isChecked(lat, lng)){ //if checked
+                    Toast.makeText(map_main.this, "You have checked!", Toast.LENGTH_SHORT).show();
+                } else { //if new, insert
+                    //String user_id = appCookies.userID;
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db.collection("users").document(appCookies.userID)
+                            .update("checkPoint", FieldValue.arrayUnion(new GeoPoint(lat, lng))); //add into db
+                    appCookies.userCheckedPoints.add(new GeoPoint(lat, lng));
+                    Toast.makeText(map_main.this, "You checked successfully!", Toast.LENGTH_SHORT).show();
+                    System.out.println("success check * -- =");
+                    updateMarkers();
+                }
+                num++;
+            }
         }
+        if(num == 0) { Toast.makeText(map_main.this, "No nearby check points!", Toast.LENGTH_SHORT).show(); }
+    }
+/*
+    protected void searchPoints(){
+        System.out.println("-------------------------------------");
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document("10000001")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        System.out.println("&& Go to get points");
+
+                        gp_checkPoint = (ArrayList<GeoPoint>) documentSnapshot.get("checkPoint");
+                        System.out.println("Now the gp_c: " + gp_checkPoint);
+
+                        //getPoints(documentSnapshot);//here to get points into gp_c list
+                        System.out.println("&& End to get points");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Error", "Error getting document.", e);
+                        System.out.println("Error happened! ");
+                    }});
+        System.out.println("-------------------------------------");
     }
 
+    protected void getPoints(DocumentSnapshot data){ // copy points from db
+        gp_checkPoint = (ArrayList<GeoPoint>) data.get("checkPoint");
+        //System.out.println("Get points: " + gp_checkPoint.get(0).getLatitude());
+        System.out.println("Now the gp_c: " + gp_checkPoint);
+    }
+*/
     public void map_listView(View view) {
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("new!!!!"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        System.out.println("in list ^^^: (point list) " + appCookies.userCheckedPoints);
+
         /*
         Intent intent = new Intent();
         intent.setClass(this, pointsList.class);
@@ -221,22 +309,52 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
     }
 
     private void addObjectsToMap() {
-        // A circle centered on Adelaide.
-        mAdelaideCircle = mMap.addCircle(new CircleOptions()
-                .center(ADELAIDE)
-                .radius(500000)
+
+        BeijingCircle = mMap.addCircle(new CircleOptions()
+                .center(Beijing)
+                .radius(50000)
                 .fillColor(Color.argb(150, 66, 173, 244))
                 .strokeColor(Color.rgb(66, 173, 244))
                 .clickable(true));
-        mAdelaideCircle.setTag(new CustomTag("Adelaide circle"));
+        BeijingCircle.setTag(new CustomTag("Beijing, China"));
 
-        mULCircle = mMap.addCircle(new CircleOptions()
+        SydneyCircle = mMap.addCircle(new CircleOptions()
+                .center(Sydney)
+                .radius(50000)
+                .fillColor(Color.argb(150, 66, 173, 244))
+                .strokeColor(Color.rgb(66, 173, 244))
+                .clickable(true));
+        SydneyCircle.setTag(new CustomTag("Sydney, Australia"));
+
+        ULCircle = mMap.addCircle(new CircleOptions()
                 .center(UL)
                 .radius(2000)
                 .fillColor(Color.argb(150, 66, 173, 244))
                 .strokeColor(Color.rgb(66, 173, 244))
                 .clickable(true));
-        mULCircle.setTag(new CustomTag("UL circle"));
+        ULCircle.setTag(new CustomTag("UL, Ireland"));
+
+        WashingtonCircle = mMap.addCircle(new CircleOptions()
+                .center(Washington)
+                .radius(50000)
+                .fillColor(Color.argb(150, 66, 173, 244))
+                .strokeColor(Color.rgb(66, 173, 244))
+                .clickable(true));
+        WashingtonCircle.setTag(new CustomTag("Washington, USA"));
+
+        BerlinCircle = mMap.addCircle(new CircleOptions()
+                .center(Berlin)
+                .radius(50000)
+                .fillColor(Color.argb(150, 66, 173, 244))
+                .strokeColor(Color.rgb(66, 173, 244))
+                .clickable(true));
+        WashingtonCircle.setTag(new CustomTag("Berlin, Germany"));
+
+        circlesList.add(BeijingCircle); //store these circles in list
+        circlesList.add(ULCircle);
+        circlesList.add(WashingtonCircle);
+        circlesList.add(SydneyCircle);
+        circlesList.add(BerlinCircle);
     }
 
     private void getLocationPermission() {
@@ -256,9 +374,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         Toast.makeText(map_main.this, "in the on request location.", Toast.LENGTH_SHORT).show();
         System.out.println("in the request location");
         mLocationPermissionGranted = false;
@@ -275,7 +391,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
     }
 
     private void updateLocationUI() {
-        Toast.makeText(map_main.this, "update UI.", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(map_main.this, "update UI.", Toast.LENGTH_SHORT).show();
 
         if (mMap == null) {
             return;
@@ -295,6 +411,30 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
+    private void updateMarkers(){ //change colour for checked circle -- warning: used after getPoint()
+        Toast.makeText(map_main.this, "Update markers", Toast.LENGTH_SHORT).show();
+        double lat1, lat2, lng1, lng2;
+        System.out.println("The size: " + appCookies.userCheckedPoints.size());
+        for(int i = 0; i < appCookies.userCheckedPoints.size(); i++) {
+            lat1 = appCookies.userCheckedPoints.get(i).getLatitude();
+            lng1 = appCookies.userCheckedPoints.get(i).getLongitude();
+            System.out.println(">> lat1: " + lat1 + " lng1: " + lng1);
+            for(int j = 0; j < markerList.size(); j++) {
+                lat2 = markerList.get(j).getPosition().latitude;
+                lng2 = markerList.get(j).getPosition().longitude;
+
+                System.out.println(">> lat2: " + lat2 + " lng2: " + lng2);
+                System.out.println("the out m: " + markerList.get(j));
+
+                if(lat1 == lat2 && lng1 == lng2){
+                    markerList.get(j).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                    System.out.println("the in m: " + markerList.get(j).getTitle());
+                    System.out.println("))))))CHANGE((((((((");
+                }
+            }
+        }
+    }
+
     private void getDeviceLocation() {
         try {
             if (mLocationPermissionGranted) {
@@ -303,9 +443,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
                         if (task.isSuccessful()) {
-                            // Set the map's camera position to the current location of the device.
-                            //Toast.makeText(map_main.this, "Get device location", Toast.LENGTH_SHORT).show();
-                            System.out.println("get device location");
+                            //System.out.println("get device location");
                             mLastKnownLocation = task.getResult();
                             if (mLastKnownLocation != null) {
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
@@ -328,23 +466,27 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
-    public static final boolean isOPen(final Context context) {
+    public static boolean isOPen(final Context context) {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-        return gps;
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     } //check gps open
 
     public boolean checkBounds(LatLng cur_location, Circle checkpoint) {
-        /*LatLng l1 = new LatLng(52.6793304,-8.577171); //52.6793304   //-8.577171;
-        LatLng l2 = new LatLng(52.6738590,-8.5723265);*/
         double distance = SphericalUtil.computeDistanceBetween(cur_location, checkpoint.getCenter());
-        System.out.println("cur: " + cur_location + ". cen:" + checkpoint.getCenter() + ". r: " + checkpoint.getRadius() + ". Distance:R " + distance);
-        if(distance <= checkpoint.getRadius()) {
-            return true;
-        } else {
-            Toast.makeText(map_main.this, "Sorry, you are not in the checking area", Toast.LENGTH_SHORT).show();
-            return false;
+        System.out.println("cur: " + cur_location + ". cen:" + checkpoint.getCenter() + ". r: " + checkpoint.getRadius() + ". Distance: " + distance);
+        return distance <= checkpoint.getRadius();
+    }
+
+    public boolean isChecked(double lat, double lng) {
+        for(int i = 0; i < appCookies.userCheckedPoints.size(); i++) { //check whether the latlng exists in the copy array
+            if(lat == appCookies.userCheckedPoints.get(i).getLatitude()
+                    && lng == appCookies.userCheckedPoints.get(i).getLongitude()){
+                //System.out.println("now pass: " + lat + " ~ " + lng);
+                //System.out.println("now in arr: " + gp_checkPoint.get(i).getLatitude() + " ~ " + gp_checkPoint.get(i).getLongitude());
+                return true;
+            }
         }
+        System.out.println("Not existed.");
+        return false;
     }
 }

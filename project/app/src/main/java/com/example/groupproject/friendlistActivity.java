@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -35,6 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.groupproject.appCookies.storeData;
+import static com.example.groupproject.appCookies.userChecked;
 
 
 public class friendlistActivity extends AppCompatActivity {
@@ -50,9 +52,12 @@ public class friendlistActivity extends AppCompatActivity {
     private String userGender = new String();
     private String userBirthday = new String();
 
-    private ArrayList<String> userFriendsID = new ArrayList<String>();
+    private ArrayList<String> userFriendsID = new ArrayList<>();
     private ArrayList<Map<String,Object>> userFriends = new ArrayList<>();
     private ArrayAdapter<String> adapter;
+
+    private ArrayList<GeoPoint> userCheckedPoints = new ArrayList<>();
+    private ArrayList<Map<String,Object>> userChecked = new ArrayList<>();
 
     private ArrayList<String> allUsername = new ArrayList<>();
     private ArrayList<String> userFriendsName = new ArrayList<>();
@@ -96,7 +101,6 @@ public class friendlistActivity extends AppCompatActivity {
         userID = user.getUid();
         userEmail = user.getEmail();
 
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").document(userID)
                 .get()
@@ -105,7 +109,6 @@ public class friendlistActivity extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         storeUserInfo(documentSnapshot);
                         storeFriendsInfo();
-
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -123,6 +126,7 @@ public class friendlistActivity extends AppCompatActivity {
         userBirthday = data.getString("birthday");
         userEmail = data.getString("email");
         userFriendsID = (ArrayList<String>)data.get("friends");
+        userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
     }
 
     //function used to store all information of all user's friend;
@@ -135,7 +139,7 @@ public class friendlistActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
-                            for(int i=0; i<userFriendsID.size(); i++){
+                            for(int i=0; i<userFriendsID.size(); i++){ // friends array
                                 for(QueryDocumentSnapshot document : task.getResult()){
                                     Map<String, Object> temp = new HashMap<>(document.getData());
                                     if(temp.get("UID") != null && temp.get("UID").toString().equals(userFriendsID.get(i))){
@@ -145,6 +149,14 @@ public class friendlistActivity extends AppCompatActivity {
                                     }
                                 }
                             }
+                            //System.out.println("tpsc: " + userCheckedPoints);
+                           /* for(int j = 0; j < userCheckedPoints.size(); j++) { // points array
+                                for(QueryDocumentSnapshot document : task.getResult()) {
+                                    Map<String, Object> tempPoints = new HashMap<>(document.getData());
+                                    System.out.println("tpp: " + tempPoints.get("checkPoint"));
+                                    userChecked.add(tempPoints);
+                                }
+                            }*/
                         }
                         else{
                             Log.w("tag", "Error getting document.", task.getException());
@@ -152,7 +164,7 @@ public class friendlistActivity extends AppCompatActivity {
 
                         ArrayList<String> list = setListAdapter();
                         adapter.addAll(list);
-                        storeData(username, userID, userEmail, userGender, userBirthday, userFriends);
+                        storeData(username, userID, userEmail, userGender, userBirthday, userFriends, userCheckedPoints);
                     }
                 });
     }
