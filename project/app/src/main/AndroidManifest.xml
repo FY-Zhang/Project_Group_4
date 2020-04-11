@@ -4,6 +4,10 @@
 
     <uses-feature
         android:name="android.hardware.camera2"
+
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
         android:required="true"
         />
     <!--
@@ -25,7 +29,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".chat_album"></activity>
+        <activity android:name=".post_my"></activity>
+        <activity android:name=".chat_album" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

@@ -56,7 +56,11 @@ public class friendlistActivity extends AppCompatActivity {
     private String userEmail = new String();
     private String userGender = new String();
     private String userBirthday = new String();
+<<<<<<< HEAD
     private boolean userDisplay = false;
+=======
+    private boolean userDisplay;
+>>>>>>> c927dabb3408cd5473ebaa6f7e105963c23c6b2b
 
     private ArrayList<String> userFriendsID = new ArrayList<>();
     private ArrayList<Map<String,Object>> userFriends = new ArrayList<>();
@@ -162,28 +166,6 @@ public class friendlistActivity extends AppCompatActivity {
         if((ArrayList<GeoPoint>) data.get("checkPoint") != null) {
             userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
         }
-
-        if(data.getString("gender") != null){
-            userGender = data.getString("gender");
-        }
-        if(data.getString("username")!=null){
-            username = data.getString("username");
-        }
-        if(data.getString("birthday")!=null) {
-            userBirthday = data.getString("birthday");
-        }
-        if(data.getString("email") != null) {
-            userEmail = data.getString("email");
-        }
-        if(data.getString("email") != null) {
-            userDisplay = data.getBoolean("display");
-        }
-        if((ArrayList<String>)data.get("friends") != null) {
-            userFriendsID = (ArrayList<String>) data.get("friends");
-        }
-		if((ArrayList<GeoPoint>) data.get("checkPoint") != null) {
-			userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
-		}
     }
 
     //function used to store all information of all user's friend;
