@@ -161,6 +161,7 @@ public class chat_nav extends AppCompatActivity {
                 intent.putExtra("friend_name", friendName);
                 intent.putExtra("friend_id", friendID);
                 intent.putExtra("database_name", dbName);
+                intent.putExtra("type", "friends");
                 intent.putExtra("UID", friendID);
                 startActivity(intent);
 
