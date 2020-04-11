@@ -44,7 +44,6 @@ public class initial_page extends AppCompatActivity {
 
         if(requestCode == RC_SIGN_IN){
             IdpResponse response = IdpResponse.fromResultIntent(data);
-
             if(resultCode == RESULT_OK){
                 toCompleteLogin();
                 return;
