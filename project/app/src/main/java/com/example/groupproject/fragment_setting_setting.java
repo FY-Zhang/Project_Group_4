@@ -88,7 +88,9 @@ public class fragment_setting_setting extends Fragment {
         btn_allpost_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_setting_to_fragment_allpost_setting);
+                //Navigation.findNavController(v).navigate(R.id.action_setting_to_fragment_allpost_setting);
+                Intent intent = new Intent(getActivity(), post_my.class);
+                startActivity(intent);
             }
         });
 

@@ -79,6 +79,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
             time = itemView.findViewById(R.id.sendTime);
             imageView = itemView.findViewById(R.id.sendPicture);
             message = itemView.findViewById(R.id.sendMessage);
+            imageView.setAdjustViewBounds(true);
         }
     }
 }
