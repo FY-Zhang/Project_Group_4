@@ -3,11 +3,15 @@ package com.example.groupproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +20,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -51,7 +56,7 @@ public class friendlistActivity extends AppCompatActivity {
     private String userEmail = new String();
     private String userGender = new String();
     private String userBirthday = new String();
-    private String userDisplay = "false";
+    private boolean userDisplay = false;
 
     private ArrayList<String> userFriendsID = new ArrayList<>();
     private ArrayList<Map<String,Object>> userFriends = new ArrayList<>();
@@ -60,8 +65,7 @@ public class friendlistActivity extends AppCompatActivity {
     private ArrayList<GeoPoint> userCheckedPoints = new ArrayList<>();
     private ArrayList<Map<String,Object>> userChecked = new ArrayList<>();
 
-    private ArrayList<String> allUsername = new ArrayList<>();
-    private ArrayList<String> userFriendsName = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +100,20 @@ public class friendlistActivity extends AppCompatActivity {
             }
 
         });
+        TextView textView = findViewById(R.id.notifications);
+        textView.setOnClickListener(new View.OnClickListener() {
+            Fragment fragment;
+
+            @Override
+            public void onClick(View v) {
+                fragment = new fragment_notifications();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_place, fragment);
+                fragmentTransaction.commit();
+            }
+        });
+
     }
 
     private void getUserInfo(FirebaseUser user){
@@ -123,13 +141,27 @@ public class friendlistActivity extends AppCompatActivity {
     //function used to store user's information
     protected void storeUserInfo(DocumentSnapshot data){
 
-        userGender = data.getString("gender");
-        username = data.getString("username");
-        userBirthday = data.getString("birthday");
-        userEmail = data.getString("email");
-        userDisplay = data.getString("display");
-        userFriendsID = (ArrayList<String>)data.get("friends");
-        userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
+        if(data.getString("gender") != null){
+            userGender = data.getString("gender");
+        }
+        if(data.getString("username") != null){
+            username = data.getString("username");
+        }
+        if(data.getString("birthday") != null){
+            userBirthday = data.getString("birthday");
+        }
+        if(data.getString("email") != null){
+            userEmail = data.getString("email");
+        }
+        if(data.getBoolean("display") != null){
+            userDisplay = data.getBoolean("display");
+        }
+        if((ArrayList<String>)data.get("friends") != null){
+            userFriendsID = (ArrayList<String>)data.get("friends");
+        }
+        if((ArrayList<GeoPoint>) data.get("checkPoint") != null) {
+            userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
+        }
 
         if(data.getString("gender") != null){
             userGender = data.getString("gender");
@@ -144,7 +176,7 @@ public class friendlistActivity extends AppCompatActivity {
             userEmail = data.getString("email");
         }
         if(data.getString("email") != null) {
-            userDisplay = data.getString("display");
+            userDisplay = data.getBoolean("display");
         }
         if((ArrayList<String>)data.get("friends") != null) {
             userFriendsID = (ArrayList<String>) data.get("friends");

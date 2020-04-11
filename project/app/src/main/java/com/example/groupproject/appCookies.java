@@ -12,13 +12,13 @@ public class appCookies {
     public static String userEmail = new String();
     public static String userGender = new String();
     public static String userBirthday = new String();
-    public static String userDisplay;
+    public static boolean userDisplay;
     public static ArrayList<Map<String,Object>> userFriends = new ArrayList<>();
     public static ArrayList<Map<String,Object>> userChecked = new ArrayList<>();
     public static ArrayList<GeoPoint> userCheckedPoints = new ArrayList<>();
 
     public static void storeData(String name, String ID, String email, String gender, String birthday,
-                                 String display, ArrayList<Map<String, Object>> Friends, ArrayList<GeoPoint>checkedPoints){
+                                 boolean display, ArrayList<Map<String, Object>> Friends, ArrayList<GeoPoint>checkedPoints){
         username = name;
         userID = ID;
         userEmail = email;

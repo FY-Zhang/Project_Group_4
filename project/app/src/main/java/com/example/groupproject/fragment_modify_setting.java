@@ -129,7 +129,7 @@ public class fragment_modify_setting extends Fragment {
         final String user_psw = "111111";
         String user_birthday = appCookies.userBirthday;
         String user_sex = appCookies.userGender;
-        String user_display = appCookies.userDisplay;
+        Boolean user_display = appCookies.userDisplay;
 
         //initial original display
         txt_username = view.findViewById(R.id.txt_username_til);
