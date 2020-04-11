@@ -54,7 +54,7 @@ public class profile extends AppCompatActivity {
                 }
             }
         }else if(type.equals("request")){
-            button1.text
+            //button1.text
 
         }else if(type.equals("unknown")){
 

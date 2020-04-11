@@ -50,10 +50,6 @@ public class post extends AppCompatActivity {
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
         getData();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_expandable_list_item_1,
-                arrayList);
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
