@@ -1,6 +1,7 @@
 package com.example.groupproject;
 
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
@@ -107,6 +108,27 @@ public class fragment_modify_setting extends Fragment {
         return inflater.inflate(R.layout.fragment_modify, container, false);
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Switch sw_gender = getView().findViewById(R.id.sw_gender);
+        System.out.println("Now the dp: " + appCookies.userDisplay);
+        sw_gender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) { //trigger detect
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                if(isChecked) {//display
+                    appCookies.userDisplay = true;
+                    System.out.println("if1 the dp: " + appCookies.userDisplay);
+                    db.collection("users").document(appCookies.userID).
+                            update("display", true);
+                } else { //not display
+                    appCookies.userDisplay = false;
+                    System.out.println("if2 the dp: " + appCookies.userDisplay);
+                    db.collection("users").document(appCookies.userID).
+                            update("display", false);
+                }}
+        });
+    }
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
@@ -129,7 +151,7 @@ public class fragment_modify_setting extends Fragment {
         final String user_psw = "111111";
         String user_birthday = appCookies.userBirthday;
         String user_sex = appCookies.userGender;
-        String user_display = appCookies.userDisplay;
+        boolean user_display = appCookies.userDisplay;
 
         //initial original display
         txt_username = view.findViewById(R.id.txt_username_til);
@@ -153,7 +175,7 @@ public class fragment_modify_setting extends Fragment {
             rb_sex1.setChecked(true);
         }
 
-        if(user_display.equals("true")) {
+        if(user_display) {
             Switch sw_gender = view.findViewById(R.id.sw_gender);
             sw_gender.setChecked(true);
         }
@@ -205,25 +227,13 @@ public class fragment_modify_setting extends Fragment {
 
                 RadioGroup rg_sex = view.findViewById(R.id.rg_sex);//RadioGroup
                 int sex = rg_sex.getCheckedRadioButtonId();
-                String user_sex = "Female";
-                if(sex == R.id.rb1)
-                    user_sex = "Male";
-                userRef.update("gender",user_sex);
-
-                Switch sw_gender = view.findViewById(R.id.sw_gender);
-                sw_gender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) { //trigger detect
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        if(buttonView.isChecked()) {//display
-                            appCookies.userDisplay = "true";
-                            db.collection("users").document(appCookies.userID).
-                                    update("display", 1);
-                        } else { //not display
-                            appCookies.userDisplay = "false";
-                            db.collection("users").document(appCookies.userID).
-                                    update("display", 0);
-                        }}
-                });
+                if(sex == R.id.rb1){
+                    userRef.update("gender","Male");
+                    appCookies.userGender = "Male";
+                } else {
+                    userRef.update("gender","Female");
+                    appCookies.userGender = "Female";
+                }
 
                 if(validateUsername(user_name) && validateEmail(user_email) && validatePassword(user_psw)) {
                     Navigation.findNavController(v).navigate(R.id.action_modify_to_setting);

@@ -51,7 +51,7 @@ public class friendlistActivity extends AppCompatActivity {
     private String userEmail = new String();
     private String userGender = new String();
     private String userBirthday = new String();
-    private String userDisplay = "false";
+    private boolean userDisplay;
 
     private ArrayList<String> userFriendsID = new ArrayList<>();
     private ArrayList<Map<String,Object>> userFriends = new ArrayList<>();
@@ -127,7 +127,7 @@ public class friendlistActivity extends AppCompatActivity {
         username = data.getString("username");
         userBirthday = data.getString("birthday");
         userEmail = data.getString("email");
-        userDisplay = data.getString("display");
+        userDisplay = data.getBoolean("display");
         userFriendsID = (ArrayList<String>)data.get("friends");
         userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
 
@@ -143,15 +143,15 @@ public class friendlistActivity extends AppCompatActivity {
         if(data.getString("email") != null) {
             userEmail = data.getString("email");
         }
-        if(data.getString("email") != null) {
-            userDisplay = data.getString("display");
+        if(data.getBoolean("display") != null) {
+            userDisplay = data.getBoolean("display");
         }
         if((ArrayList<String>)data.get("friends") != null) {
             userFriendsID = (ArrayList<String>) data.get("friends");
         }
 		if((ArrayList<GeoPoint>) data.get("checkPoint") != null) {
 			userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
-		}
+		}//----------如果为null怎么办?
     }
 
     //function used to store all information of all user's friend;
