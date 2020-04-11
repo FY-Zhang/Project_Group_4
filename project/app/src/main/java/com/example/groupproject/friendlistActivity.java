@@ -114,7 +114,7 @@ public class friendlistActivity extends AppCompatActivity {
 
                         Intent intent = new Intent();
                         intent.putExtra("friend_name", friendName);
-                        intent.putExtra("friend_id", userFriends.get(position).get("UID").toString());
+                        intent.putExtra("friend_id", userFriends.get(position-1).get("UID").toString());
                         intent.setClass(friendlistActivity.this, chat_nav.class);
                         startActivity(intent);
                     }
@@ -248,7 +248,7 @@ public class friendlistActivity extends AppCompatActivity {
 
                         notificationContent.add(0,"<-Friends List");
                         notificationAdapter.addAll(notificationContent);
-                        storeData(username, userID, userEmail, userGender, userBirthday, userDisplay, userFriends, userCheckedPoints);
+                        storeData(username, userID, userEmail, userGender, userBirthday, userDisplay, userFriends, userCheckedPoints, userFriendsID);
                     }
                 });
     }

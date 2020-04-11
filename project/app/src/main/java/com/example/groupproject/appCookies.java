@@ -14,11 +14,12 @@ public class appCookies {
     public static String userBirthday = new String();
     public static boolean userDisplay;
     public static ArrayList<Map<String,Object>> userFriends = new ArrayList<>();
+    public static ArrayList<String> userFriendsID = new ArrayList<>();
     public static ArrayList<Map<String,Object>> userChecked = new ArrayList<>();
     public static ArrayList<GeoPoint> userCheckedPoints = new ArrayList<>();
 
     public static void storeData(String name, String ID, String email, String gender, String birthday,
-                                 boolean display, ArrayList<Map<String, Object>> Friends, ArrayList<GeoPoint>checkedPoints){
+                                 boolean display, ArrayList<Map<String, Object>> Friends, ArrayList<GeoPoint>checkedPoints, ArrayList<String> friendsID){
         username = name;
         userID = ID;
         userEmail = email;
@@ -27,6 +28,7 @@ public class appCookies {
         userDisplay = display;
         userFriends = new ArrayList<>(Friends);
         userCheckedPoints = new ArrayList<>(checkedPoints);
+        userFriendsID = friendsID;
     }
     public static void storeFriendsInfo( ArrayList<Map<String, Object>> Friends){
         userFriends = new ArrayList<Map<String, Object>>(Friends);
