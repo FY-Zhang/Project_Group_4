@@ -18,38 +18,11 @@ import java.util.ArrayList;
 
 public class channel extends AppCompatActivity {
 
-    public static ArrayList<ArrayList<String>> posts = new ArrayList<ArrayList<String>>();
-    public ArrayList<String> titles = new ArrayList<String>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel);
 
-        posts.clear();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("post")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (int i = 0; i < 10; i++) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    String channel = document.get("channel").toString();
-                                    String title = document.get("title").toString();
-                                    String id = "channel" + i;
-                                    if (id.equals(channel))
-                                        titles.add(title);
-//                                    else
-//                                        titles.add("" + i);
-                                }
-                                posts.add(titles);
-                                titles.clear();
-                            }
-                        }
-                    }
-                });
     }
 
     public void toPost1(View view){
