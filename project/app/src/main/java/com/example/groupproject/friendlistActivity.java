@@ -56,11 +56,7 @@ public class friendlistActivity extends AppCompatActivity {
     private String userEmail = new String();
     private String userGender = new String();
     private String userBirthday = new String();
-<<<<<<< HEAD
     private boolean userDisplay = false;
-=======
-    private boolean userDisplay;
->>>>>>> c927dabb3408cd5473ebaa6f7e105963c23c6b2b
 
     private ArrayList<String> userFriendsID = new ArrayList<>();
     private ArrayList<Map<String,Object>> userFriends = new ArrayList<>();
