@@ -99,6 +99,16 @@ public class fragment_setting_setting extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_setting2_to_modify);
             }
         });
+
+        Button btn_logout = view.findViewById(R.id.btn_logout);//logout
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //appCookies.storeData(null, null, null, null, null, null, null);//clear cookies
+                Intent intent = new Intent(getActivity(), Login.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void showInfo_setting(final View view){

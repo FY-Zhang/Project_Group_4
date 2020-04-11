@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -35,6 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.groupproject.appCookies.storeData;
+import static com.example.groupproject.appCookies.userChecked;
 
 
 public class friendlistActivity extends AppCompatActivity {
@@ -49,10 +51,14 @@ public class friendlistActivity extends AppCompatActivity {
     private String userEmail = new String();
     private String userGender = new String();
     private String userBirthday = new String();
+    private String userDisplay = "false";
 
-    private ArrayList<String> userFriendsID = new ArrayList<String>();
+    private ArrayList<String> userFriendsID = new ArrayList<>();
     private ArrayList<Map<String,Object>> userFriends = new ArrayList<>();
     private ArrayAdapter<String> adapter;
+
+    private ArrayList<GeoPoint> userCheckedPoints = new ArrayList<>();
+    private ArrayList<Map<String,Object>> userChecked = new ArrayList<>();
 
     private ArrayList<String> allUsername = new ArrayList<>();
     private ArrayList<String> userFriendsName = new ArrayList<>();
@@ -96,7 +102,6 @@ public class friendlistActivity extends AppCompatActivity {
         userID = user.getUid();
         userEmail = user.getEmail();
 
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").document(userID)
                 .get()
@@ -105,7 +110,6 @@ public class friendlistActivity extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         storeUserInfo(documentSnapshot);
                         storeFriendsInfo();
-
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -118,6 +122,15 @@ public class friendlistActivity extends AppCompatActivity {
 
     //function used to store user's information
     protected void storeUserInfo(DocumentSnapshot data){
+
+        userGender = data.getString("gender");
+        username = data.getString("username");
+        userBirthday = data.getString("birthday");
+        userEmail = data.getString("email");
+        userDisplay = data.getString("display");
+        userFriendsID = (ArrayList<String>)data.get("friends");
+        userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
+
         if(data.getString("gender") != null){
             userGender = data.getString("gender");
         }
@@ -130,9 +143,15 @@ public class friendlistActivity extends AppCompatActivity {
         if(data.getString("email") != null) {
             userEmail = data.getString("email");
         }
+        if(data.getString("email") != null) {
+            userDisplay = data.getString("display");
+        }
         if((ArrayList<String>)data.get("friends") != null) {
             userFriendsID = (ArrayList<String>) data.get("friends");
         }
+		if((ArrayList<GeoPoint>) data.get("checkPoint") != null) {
+			userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
+		}
     }
 
     //function used to store all information of all user's friend;
@@ -164,7 +183,7 @@ public class friendlistActivity extends AppCompatActivity {
 
                         ArrayList<String> list = setListAdapter();
                         adapter.addAll(list);
-                        storeData(username, userID, userEmail, userGender, userBirthday, userFriends);
+                        storeData(username, userID, userEmail, userGender, userBirthday, userDisplay, userFriends, userCheckedPoints);
                     }
                 });
     }
