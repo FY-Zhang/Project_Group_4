@@ -99,7 +99,6 @@ public class post extends AppCompatActivity {
             String temp = new String(list.get(i).get("title").toString());
             arrayList.add(temp);
         }
-        arrayList.add("1234567");
         return arrayList;
     }
 
