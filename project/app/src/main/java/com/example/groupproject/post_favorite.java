@@ -56,68 +56,76 @@ public class post_favorite extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         userFavPost = (ArrayList<String>) documentSnapshot.get("favorite");
-                        //System.out.println("The list for:-- " + userFavPost);
-                        for(int i = 0; i < userFavPost.size(); i++) {
-                            String favPostID = userFavPost.get(i);
-                            System.out.println("My fav: " + favPostID);
-                            FirebaseFirestore ff = FirebaseFirestore.getInstance();//get post by id
-                            ff.collection("post")
-                                    .document(favPostID)
-                                    .get()
-                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                            Map<String, Object> post= new HashMap<>();
+                        System.out.println("The list for:-- " + userFavPost);
 
-                                            post.put("title", documentSnapshot.getString("title") + " by: " + documentSnapshot.getString("author"));
-                                            post.put("content", documentSnapshot.getString("content"));
-                                            //Date date = documentSnapshot.getDate("datetime");
-                                            post.put("dtc", documentSnapshot.getString("channel") + " / " + documentSnapshot.getDate("datetime"));
-                                            System.out.println("The post item: " + post);
-                                            if(post.get("content") != null) {
-                                                postList.add(post);
-                                                docId.add(documentSnapshot.getId());
+                        if (userFavPost.size() == 0) {
+                            SimpleAdapter simpleAdapter_t = new SimpleAdapter(post_favorite.this, postList, R.layout.post_fav_item, form, to);
+                            ListView listView_t = findViewById(R.id.lv_post_fav);
+                            listView_t.setAdapter(simpleAdapter_t);
+                        } else {
+                            for (int i = 0; i < userFavPost.size(); i++) {
+                                String favPostID = userFavPost.get(i);
+                                System.out.println("My fav: " + favPostID);
+                                FirebaseFirestore ff = FirebaseFirestore.getInstance();//get post by id
+                                ff.collection("post")
+                                        .document(favPostID)
+                                        .get()
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                Map<String, Object> post = new HashMap<>();
+
+                                                post.put("title", documentSnapshot.getString("title") + " by: " + documentSnapshot.getString("author"));
+                                                post.put("content", documentSnapshot.getString("content"));
+                                                //Date date = documentSnapshot.getDate("datetime");
+                                                post.put("dtc", documentSnapshot.getString("channel") + " / " + documentSnapshot.getDate("datetime"));
+                                                System.out.println("The post item: " + post);
+                                                if (post.get("content") != null) {
+                                                    postList.add(post);
+                                                    docId.add(documentSnapshot.getId());
+                                                }
+                                                //System.out.println("1: " + postList);
+                                                j++; //System.out.println("J val: " + j);
+                                                if (j == userFavPost.size()) { //after final step
+                                                    SimpleAdapter simpleAdapter = new SimpleAdapter(post_favorite.this, postList, R.layout.post_fav_item, form, to);
+                                                    final ListView listView = findViewById(R.id.lv_post_fav);
+                                                    listView.setAdapter(simpleAdapter);
+
+                                                    listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                                                        @Override
+                                                        public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                                                            AlertDialog.Builder dialog = new AlertDialog.Builder(post_favorite.this);
+                                                            dialog.setTitle("Delete");
+                                                            dialog.setMessage("Do you want to delete this favorite?");
+                                                            dialog.setPositiveButton("Yes",
+                                                                    new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                            FirebaseFirestore ff = FirebaseFirestore.getInstance();
+                                                                            ff.collection("users")
+                                                                                    .document(appCookies.userID)
+                                                                                    .update("favorite", FieldValue.arrayRemove(docId.get(position)));
+
+                                                                            Toast.makeText(post_favorite.this, "Deleted Successfully!", Toast.LENGTH_SHORT).show();
+                                                                            Intent intent = new Intent(post_favorite.this, post_favorite.class);//flush this page
+                                                                            startActivity(intent);
+                                                                        }
+                                                                    });
+                                                            dialog.setNegativeButton("No",
+                                                                    new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                        }
+                                                                    });
+                                                            dialog.show();
+                                                            return true;
+                                                        }
+                                                    });
+                                                }
                                             }
-                                            //System.out.println("1: " + postList);
-                                            j++; //System.out.println("J val: " + j);
-                                            if(j == userFavPost.size()) { //after final step
-                                                SimpleAdapter simpleAdapter = new SimpleAdapter(post_favorite.this, postList, R.layout.post_fav_item, form, to);
-                                                final ListView listView = findViewById(R.id.lv_post_fav);
-                                                listView.setAdapter(simpleAdapter);
-
-                                                listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                                                    @Override
-                                                    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                                                        AlertDialog.Builder dialog = new AlertDialog.Builder(post_favorite.this);
-                                                        dialog.setTitle("Delete");
-                                                        dialog.setMessage("Do you want to delete this favorite?");
-                                                        dialog.setPositiveButton("Yes",
-                                                                new DialogInterface.OnClickListener() {
-                                                                    @Override
-                                                                    public void onClick(DialogInterface dialog, int which) {
-                                                                        FirebaseFirestore ff = FirebaseFirestore.getInstance();
-                                                                        ff.collection("users")
-                                                                                .document(appCookies.userID)
-                                                                                .update("favorite", FieldValue.arrayRemove(docId.get(position)));
-
-                                                                        Toast.makeText(post_favorite.this, "Deleted Successfully!", Toast.LENGTH_SHORT).show();
-                                                                        Intent intent = new Intent(post_favorite.this, post_favorite.class);//flush this page
-                                                                        startActivity(intent);
-                                                                    }
-                                                                });
-                                                        dialog.setNegativeButton("No",
-                                                                new DialogInterface.OnClickListener() {
-                                                                    @Override
-                                                                    public void onClick(DialogInterface dialog, int which) { }
-                                                                });
-                                                        dialog.show();
-                                                        return true;
-                                                    }
-                                                });
-                                            }
-                                        }
-                                    });
-                        }
+                                        });
+                            }
+                    }
                     }
                 });
     }

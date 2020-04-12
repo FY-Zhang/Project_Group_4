@@ -123,6 +123,7 @@ public class profile extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(profile.this, post_friend.class);
                 intent.putExtra("friendId", UID);
+                System.out.println("+++++++++++++++++++++++++Friend id: " + UID);
                 startActivity(intent);
             }
         });

@@ -42,10 +42,11 @@ public class post_my extends AppCompatActivity {
         final int[] to = new int[]{R.id.tv_title_my,R.id.tv_content_my,R.id.tv_dtc_my};
         final List<String> docId = new ArrayList<>();// array for id of documents
 
+        System.out.println("My id:" + appCookies.userID);
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
-        System.out.println("To get coll");
+        System.out.println("To get coll");           //user own post
         db.collection("post")
-                .whereEqualTo("author", appCookies.username)
+                .whereEqualTo("authorId", appCookies.userID)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -62,7 +63,7 @@ public class post_my extends AppCompatActivity {
 
                                 postList.add(post);
                                 docId.add(document.getId());
-                               // System.out.println("Now we.. " + postList);
+                                System.out.println("Now we.. " + postList);
                             }
 
                             SimpleAdapter simpleAdapter = new SimpleAdapter(post_my.this, postList, R.layout.post_my_item, form, to);

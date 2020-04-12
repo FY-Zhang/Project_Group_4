@@ -39,17 +39,20 @@ public class post_friend extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             friendId = intent.getStringExtra("friendId");
+            System.out.println(friendId);
         } else {
-            friendId = "10000001";
+            friendId = "FKuYZ5lRhYb0bGTT4bVtefiVoSs2";
         }
 
         final String[] form = new String[]{"title","content","dtc"};
         final int[] to = new int[]{R.id.tv_title_frd,R.id.tv_content_frd,R.id.tv_dtc_frd};
         final List<String> docId = new ArrayList<>();// array for id of documents
 
+        System.out.println("-------------------------------------Friend post");
+
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("post")
-                .whereEqualTo("author", friendId)
+                .whereEqualTo("authorId", friendId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -62,8 +65,14 @@ public class post_friend extends AppCompatActivity {
                                 post.put("content", document.getString("content"));
                                 Date date = document.getDate("datetime");
                                 post.put("dtc", document.getString("channel") + " / " + date);
+
+                                System.out.println("Post: " + post);
+
                                 postList.add(post);
+                                docId.add(document.getId());
                             }
+
+                            System.out.println("postlist: " + postList);
 
                             SimpleAdapter simpleAdapter = new SimpleAdapter(post_friend.this, postList, R.layout.post_friend_item, form, to);
                             final ListView listView = findViewById(R.id.lv_post_friend);
@@ -72,9 +81,10 @@ public class post_friend extends AppCompatActivity {
                             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                                 @Override
                                 public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                                    System.out.println("--------The index: " + position);
                                     AlertDialog.Builder dialog = new AlertDialog.Builder(post_friend.this);
                                     dialog.setTitle("Favorites");
-                                    dialog.setMessage("Do you want to post_favorite this post?");
+                                    dialog.setMessage("Do you want to favorite this post?");
                                     dialog.setPositiveButton("Yes",
                                             new DialogInterface.OnClickListener() {
                                                 @Override

@@ -214,7 +214,6 @@ public class fragment_modify_setting extends Fragment {
                 userRef.update("email", user_email);
                 user_set.updateEmail(user_email);
 
-
                 final EditText txt_birthday_txt = view.findViewById(R.id.txt_birthday_txt);
                 txt_birthday_txt.setOnClickListener(new View.OnClickListener() {
                     @Override
