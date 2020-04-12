@@ -114,6 +114,32 @@ public class fragment_modify_setting extends Fragment {
         return inflater.inflate(R.layout.fragment_modify, container, false);
     }
 
+    public void setBirthday(View view) {
+        final EditText txt_birthday_txt = view.findViewById(R.id.txt_birthday_txt);
+        txt_birthday_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+
+                System.out.println("Show ?  ------   22   --------- ");
+
+                DatePickerDialog picker = new DatePickerDialog(getActivity(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                txt_birthday_txt.setText(dayOfMonth + "/" + (month+1) + "/" + year);
+                            }
+                        }, year, month, day);
+
+                System.out.println("Show ?  ------   33   --------- ");
+                picker.show();
+            }
+        });
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -132,8 +158,12 @@ public class fragment_modify_setting extends Fragment {
                     System.out.println("if2 the dp: " + appCookies.userDisplay);
                     db.collection("users").document(appCookies.userID).
                             update("display", false);
-                }}
+                }
+            }
         });
+
+        EditText txt_birthday_txt = getView().findViewById(R.id.txt_birthday_txt);
+        setBirthday(txt_birthday_txt);
     }
 
     @Override
@@ -213,28 +243,14 @@ public class fragment_modify_setting extends Fragment {
                 String user_email = txt_email_txt.getText().toString();
                 userRef.update("email", user_email);
                 user_set.updateEmail(user_email);
+                appCookies.userEmail = user_email;
 
-                final EditText txt_birthday_txt = view.findViewById(R.id.txt_birthday_txt);
-                txt_birthday_txt.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        final Calendar calendar = Calendar.getInstance();
-                        int day = calendar.get(Calendar.DAY_OF_MONTH);
-                        int month = calendar.get(Calendar.MONTH);
-                        int year = calendar.get(Calendar.YEAR);
-
-                        DatePickerDialog picker = new DatePickerDialog(getActivity(),
-                                new DatePickerDialog.OnDateSetListener() {
-                                    @Override
-                                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                        txt_birthday_txt.setText(dayOfMonth + "/" + month + "/" + year);
-                                    }
-                                }, year, month, day);
-                        picker.show();
-                    }
-                });
+                System.out.println("Show ?  ------   1   --------- ");
+                EditText txt_birthday_txt = view.findViewById(R.id.txt_birthday_txt);
+                //setBirthday(previously)
                 String user_birthday = txt_birthday_txt.getText().toString();
                 userRef.update("birthday", user_birthday);
+                appCookies.userBirthday = user_birthday;
 
                 RadioGroup rg_sex = view.findViewById(R.id.rg_sex);//RadioGroup
                 int sex = rg_sex.getCheckedRadioButtonId();
