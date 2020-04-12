@@ -92,11 +92,8 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             locationViewHolder.sendName.setText(send_name);
             locationViewHolder.time.setText(chatMessageCurrent.getTime());
-            if(chatMessageCurrent.getLocation() != ""){
-                locationViewHolder.button.setText(chatMessageCurrent.getLocation());
-            }else {
-                locationViewHolder.button.setText("CURRENT LOCATION");
-            }
+
+            locationViewHolder.button.setText(chatMessageCurrent.getLocation());
             locationViewHolder.button.setTag(R.string.latitude, chatMessageCurrent.getLatitude());
             locationViewHolder.button.setTag(R.string.longitude, chatMessageCurrent.getLongitude());
             locationViewHolder.button.setTag(R.string.location, chatMessageCurrent.getLocation());

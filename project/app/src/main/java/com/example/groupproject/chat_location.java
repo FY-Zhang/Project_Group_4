@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -13,6 +14,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -47,8 +49,10 @@ import static com.example.groupproject.appCookies.userID;
 
 public class chat_location extends AppCompatActivity implements OnMapReadyCallback {
 
+    private static final String TAG = chat_location.class.getSimpleName();
     private static final int REQUEST_CODE = 159;
     private static final float DEFAULT_ZOOM = 15f;
+    private static final int REQUEST_CODE_LOCATION_SETTINGS = 337;
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private boolean locationPermissionGranted;
@@ -58,7 +62,7 @@ public class chat_location extends AppCompatActivity implements OnMapReadyCallba
 
     private String friendName, friendID, databaseName;
     private DatabaseReference dbMessage;
-    private String locationTitle = new String();
+    private String locationTitle = new String("CURRENT LOCATION");
 
     private  EditText searchText;
 
@@ -87,33 +91,47 @@ public class chat_location extends AppCompatActivity implements OnMapReadyCallba
     private void getCurrentLocation() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        try{
-            if(locationPermissionGranted){
-                Toast.makeText(this, "location permission granted", Toast.LENGTH_LONG).show();
-                Task location = fusedLocationProviderClient.getLastLocation();
-                location.addOnCompleteListener(new OnCompleteListener() {
-                    @Override
-                    public void onComplete(@NonNull Task task) {
-                        if(task.isSuccessful()){
-                            Location currentLocation = (Location) task.getResult();
+        View view = findViewById(R.id.fragment_chat_location);
+        if(gpsTurnedOn(view.getContext())) {
+            try {
+                if (locationPermissionGranted) {
+                    Toast.makeText(this, "location permission granted", Toast.LENGTH_LONG).show();
+                    Task location = fusedLocationProviderClient.getLastLocation();
+                    location.addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if (task.isSuccessful()) {
+                                Location currentLocation = (Location) task.getResult();
 
-                            latitude = currentLocation.getLatitude();
-                            longitude = currentLocation.getLongitude();
+                                latitude = currentLocation.getLatitude();
+                                longitude = currentLocation.getLongitude();
 
-                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
+                                moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
                                         DEFAULT_ZOOM,
                                         "My Location");
-                        }else {
-                            Toast.makeText(chat_location.this, "Unable to get the current location.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(chat_location.this, "Unable to get the current location.", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+                }
+            } catch (SecurityException e) {
+                Log.e("Location", "Error getting device location: " + e.getMessage());
             }
-        }catch (SecurityException e){
-            Log.e("Location", "Error getting device location: "+e.getMessage());
+        }
+        else{
+            Toast.makeText(chat_location.this, "Please turn on GPS", Toast.LENGTH_SHORT).show();
+            Intent locationIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivityForResult(locationIntent, REQUEST_CODE_LOCATION_SETTINGS);
         }
 
     }
+
+    public static boolean gpsTurnedOn(final Context context) {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
     private void moveCamera(LatLng latLng, float zoom, String title){
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
