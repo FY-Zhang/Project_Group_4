@@ -1,15 +1,24 @@
 package com.example.groupproject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.example.groupproject.appCookies.userFriends;
 import static com.example.groupproject.appCookies.userFriendsID;
@@ -24,6 +33,8 @@ public class profile extends AppCompatActivity {
     boolean showGender;
     Button button1;
     Button button2;
+
+    ArrayList<String> content = new ArrayList<>();
 
     ArrayAdapter<String> infoAdapter;
     ListView information;
@@ -53,14 +64,45 @@ public class profile extends AppCompatActivity {
                     break;
                 }
             }
-        }else if(type.equals("request")){
-            //button1.text
+            setInfo();
+            infoAdapter.addAll(content);
+            information.setAdapter(infoAdapter);
 
-        }else if(type.equals("unknown")){
+        }else if(type.equals("request") || type.equals("unknown")){
+            if(type.equals("unknown")){
+                button1.setText("Send Friend Request");
+            }else {
+                button1.setText("Accept Request");
+            }
 
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("users").document(UID)
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            user_email = documentSnapshot.getString("email");
+                            user_name = documentSnapshot.getString("username");
+                            user_gender = documentSnapshot.getString("gender");
+                            showGender = documentSnapshot.getBoolean("display");
+
+                            setInfo();
+                            infoAdapter.addAll(content);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+            information.setAdapter(infoAdapter);
         }
 
-        ArrayList<String> content = new ArrayList<>();
+
+    }
+    private void setInfo(){
+
         content.add("Username: "+ user_name);
         content.add("Email: "+user_email);
         if(showGender){
@@ -68,9 +110,11 @@ public class profile extends AppCompatActivity {
         }else {
             content.add("Gender: Secret:)");
         }
+    }
+    public void showPost(View view){
 
-        infoAdapter.addAll(content);
-        information.setAdapter(infoAdapter);
+    }
+    public void button1Function(View view){
 
     }
 }

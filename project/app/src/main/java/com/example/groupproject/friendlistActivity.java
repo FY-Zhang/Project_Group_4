@@ -122,6 +122,12 @@ public class friendlistActivity extends AppCompatActivity {
                     if (position == 0) {
                         listview.setAdapter(friendlistAdapter);
                         currentAdapter = 1;
+                    }else{
+                        Intent intent = new Intent();
+                        intent.putExtra("UID", userNotifications.get(position-1));
+                        intent.putExtra("type", "request");
+                        intent.setClass(friendlistActivity.this, profile.class);
+                        startActivity(intent);
                     }
                 }
             }
@@ -276,6 +282,11 @@ public class friendlistActivity extends AppCompatActivity {
                 intent.setClass(this, map_main.class);
                 startActivity(intent);
                 return true;
+            case R.id.search:
+                Fragment search = new fragment_search();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_place, search);
             default:
                 return super.onOptionsItemSelected(item);
         }

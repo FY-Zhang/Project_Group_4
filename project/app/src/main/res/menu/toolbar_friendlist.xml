@@ -2,10 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:title="Search"
+        android:id="@+id/search"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/icon_magnify"/>
     <item
         android:title="Map"
         android:id="@+id/map_check"
-        android:icon="@drawable/icon_map"
+        android:icon="@drawable/icon_location"
         app:showAsAction="ifRoom"
         />
 </menu>
