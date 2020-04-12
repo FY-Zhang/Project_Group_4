@@ -190,9 +190,10 @@ public class chat_nav extends AppCompatActivity {
         Button locationButton = findViewById(R.id.locationButton);
         Intent intent = new Intent();
         intent.setClass(chat_nav.this, map_main.class);
-        intent.putExtra("latitude", Double.parseDouble(locationButton.getTag(1).toString()));
-        intent.putExtra("longitude", Double.parseDouble(locationButton.getTag(2).toString()));
-        intent.putExtra("location", locationButton.getTag(3).toString());
+
+        intent.putExtra("latitude", Double.parseDouble(locationButton.getTag(R.string.latitude).toString()));
+        intent.putExtra("longitude", Double.parseDouble(locationButton.getTag(R.string.longitude).toString()));
+        intent.putExtra("location", locationButton.getTag(R.string.location).toString());
 
         startActivity(intent);
 
