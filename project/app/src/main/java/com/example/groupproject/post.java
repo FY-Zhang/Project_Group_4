@@ -15,6 +15,8 @@ import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,15 +27,17 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-
-import static com.example.groupproject.channel.posts;
+import java.util.HashMap;
+import java.util.Map;
 
 public class post extends AppCompatActivity {
 
     Toolbar toolbar;
     private ListView listview;
-    public ArrayList<String> list = new ArrayList<String>();
     public static final String POST_NAME = "com.example.groupproject.POST_NAME";
+    private ArrayAdapter<String> adapter;
+    public static ArrayList<String> arrayList = new ArrayList<>();
+    private ArrayList<Map<String,Object>> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,20 +45,21 @@ public class post extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);        //把这一块移到setOnIteClickListener里面。
         listview = (ListView)findViewById(R.id.item);
 
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
+        getData();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_expandable_list_item_1,
-                getData());
+                arrayList);
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position,
                                     long id) {
-
                 String postName = (String)parent.getItemAtPosition(position);
                 Intent intent = new Intent();
                 intent.putExtra(POST_NAME, postName);
@@ -65,56 +70,38 @@ public class post extends AppCompatActivity {
         });
     }
 
-    public ArrayList<String> getData()
-    {
-
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        db.collection("post")
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        String id = getIntent().getStringExtra("id");
-//                        if(task.isSuccessful()) {
-//                            for(QueryDocumentSnapshot document: task.getResult()) {
-//                                String channel = document.get("channel").toString();
-//                                String title = document.get("title").toString();
-//                                String content = document.get("content").toString();
-//                                String author = document.get("author").toString();
-//
-//                                if(id.equals(channel)) {
-//                                    public BaseAdapter
-//                                    list.add(title);
-//                                    list.add("12");
-//                                }
-//                            }
-//                        }
-//                    }
-//                });
-        list.clear();
-        String id = getIntent().getStringExtra("id");
-        for(int i = 1;i <= 10;i++) {
-            String channel = "channel" + i;
-            if (channel.equals(id)) {
-                for (String title : posts.get(i - 1))
-                    list.add(title);
-                break;
-            }
-        }
-//        for(ArrayList<String> array: posts) {
-//            for(String s: array) {
-//                list.add("BBBBB");
-//                list.add(s);
-//            }
-//        }
-//            }
-//        }
-
-//        if(id.equals("channel1"))
-//            list.add("Post_1");
-        list.add("AAAAAAAAAA");
-        return list;
+    public void getData() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("post")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        String id = getIntent().getStringExtra("id");
+                        if(task.isSuccessful()) {
+                            for(QueryDocumentSnapshot document: task.getResult()) {
+                                String channel = document.get("channel").toString();
+                                String title = document.get("title").toString();
+                                Map<String, Object> temp = new HashMap<>(document.getData());
+                                if(id.equals(channel))
+                                    list.add(temp);
+                            }
+                        }
+                        arrayList = setListAdapter();
+                        adapter.addAll(arrayList);
+                    }
+                });
     }
+
+    private ArrayList<String> setListAdapter() {
+        ArrayList<String> arrayList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            String temp = new String(list.get(i).get("title").toString());
+            arrayList.add(temp);
+        }
+        return arrayList;
+    }
+
     public void toBack(View view){
         Intent intent = new Intent();
         intent.setClass(this, channel.class);

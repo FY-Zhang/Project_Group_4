@@ -3,11 +3,17 @@ package com.example.groupproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
+import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +22,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +31,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,6 +50,7 @@ import static com.example.groupproject.appCookies.userChecked;
 public class friendlistActivity extends AppCompatActivity {
 
     Toolbar toolbar;
+    private int currentAdapter = 1;
 
     private ListView listview;
     private ArrayList<String> list = new ArrayList<String>();
@@ -51,17 +60,20 @@ public class friendlistActivity extends AppCompatActivity {
     private String userEmail = new String();
     private String userGender = new String();
     private String userBirthday = new String();
-    private boolean userDisplay;
+    private boolean userDisplay = false;
 
     private ArrayList<String> userFriendsID = new ArrayList<>();
     private ArrayList<Map<String,Object>> userFriends = new ArrayList<>();
-    private ArrayAdapter<String> adapter;
+    private ArrayAdapter<String> friendlistAdapter;
 
     private ArrayList<GeoPoint> userCheckedPoints = new ArrayList<>();
     private ArrayList<Map<String,Object>> userChecked = new ArrayList<>();
 
-    private ArrayList<String> allUsername = new ArrayList<>();
-    private ArrayList<String> userFriendsName = new ArrayList<>();
+    ListView notificationsList;
+    private ArrayList<String> userNotifications = new ArrayList<>();
+    private ArrayAdapter<String> notificationAdapter;
+    private ArrayList<String > notificationContent = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,31 +83,57 @@ public class friendlistActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         listview = (ListView)findViewById(R.id.item);
+        notificationsList = (ListView)findViewById(R.id.notification_list);
+
 
         //storeData(username, userID, userEmail, userGender, userBirthday);
-        if(adapter != null)
-            adapter.clear();
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
+        if(friendlistAdapter != null)
+            friendlistAdapter.clear();
+        friendlistAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
+
+        if(notificationAdapter != null)
+            notificationAdapter.clear();
+        notificationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         getUserInfo(user);
 
-        listview.setAdapter(adapter);
+        listview.setAdapter(friendlistAdapter);
 
         //turn to chat window
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position,
                                     long id) {
-                String friendName = (String)parent.getItemAtPosition(position);
+                if(currentAdapter == 1) {
+                    if (position == 0) {
+                        listview.setAdapter(notificationAdapter);
+                        currentAdapter = 0;
+                    } else {
+                        String friendName = (String) parent.getItemAtPosition(position);
 
-                Intent intent = new Intent();
-                intent.putExtra("friend_name", friendName);
-                intent.putExtra("friend_id", userFriends.get(position).get("UID").toString());
-                intent.setClass(friendlistActivity.this,chat_nav.class);
-                startActivity(intent);
+                        Intent intent = new Intent();
+                        intent.putExtra("friend_name", friendName);
+                        intent.putExtra("friend_id", userFriends.get(position-1).get("UID").toString());
+                        intent.setClass(friendlistActivity.this, chat_nav.class);
+                        startActivity(intent);
+                    }
+                }else if(currentAdapter == 0){
+                    if (position == 0) {
+                        listview.setAdapter(friendlistAdapter);
+                        currentAdapter = 1;
+                    }else{
+                        Intent intent = new Intent();
+                        intent.putExtra("UID", userNotifications.get(position-1));
+                        intent.putExtra("type", "request");
+                        intent.setClass(friendlistActivity.this, profile.class);
+                        startActivity(intent);
+                    }
+                }
             }
 
         });
+
     }
 
     private void getUserInfo(FirebaseUser user){
@@ -103,7 +141,8 @@ public class friendlistActivity extends AppCompatActivity {
         userEmail = user.getEmail();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users").document(userID)
+        DocumentReference documentReference = db.collection("users").document(userID);
+        documentReference
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -120,38 +159,56 @@ public class friendlistActivity extends AppCompatActivity {
                 });
     }
 
+    private void initializeUserInfo(String userID, String userEmail) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        CollectionReference users = db.collection("users");
+
+        Map<String, Object> newUser = new HashMap<>();
+        newUser.put("UID", userID);
+        newUser.put("email", userEmail);
+        newUser.put("gender", "");
+        newUser.put("birthday", "");
+        newUser.put("display", (boolean)false);
+        newUser.put("username", userEmail);
+        newUser.put("password","");
+        newUser.put("checkPoint",new ArrayList<String>());
+        newUser.put("friends",new ArrayList<String>());
+        newUser.put("notifications",new ArrayList<String>());
+
+        users.document(userID).set(newUser);
+    }
+
     //function used to store user's information
     protected void storeUserInfo(DocumentSnapshot data){
 
-        userGender = data.getString("gender");
-        username = data.getString("username");
-        userBirthday = data.getString("birthday");
-        userEmail = data.getString("email");
-        userDisplay = data.getBoolean("display");
-        userFriendsID = (ArrayList<String>)data.get("friends");
-        userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
-
+        if(data.getString("email") == null){
+                initializeUserInfo(userID, userEmail);
+        }
+        if(data.getString("email") != null){
+            userEmail = data.getString("email");
+        }
         if(data.getString("gender") != null){
             userGender = data.getString("gender");
         }
-        if(data.getString("username")!=null){
+        if(data.getString("username") != null){
             username = data.getString("username");
         }
-        if(data.getString("birthday")!=null) {
+        if(data.getString("birthday") != null){
             userBirthday = data.getString("birthday");
         }
-        if(data.getString("email") != null) {
-            userEmail = data.getString("email");
-        }
-        if(data.getBoolean("display") != null) {
+        if(data.getBoolean("display") != null){
             userDisplay = data.getBoolean("display");
         }
-        if((ArrayList<String>)data.get("friends") != null) {
-            userFriendsID = (ArrayList<String>) data.get("friends");
+        if((ArrayList<String>)data.get("friends") != null){
+            userFriendsID = (ArrayList<String>)data.get("friends");
         }
-		if((ArrayList<GeoPoint>) data.get("checkPoint") != null) {
-			userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
-		}//----------如果为null怎么办?
+        if((ArrayList<GeoPoint>) data.get("checkPoint") != null) {
+            userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
+        }
+        if(data.get("notifications") != null){
+            userNotifications = (ArrayList<String>)data.get("notifications");
+        }
     }
 
     //function used to store all information of all user's friend;
@@ -165,13 +222,24 @@ public class friendlistActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
                             if(userFriendsID != null) {
-                                for (int i = 0; i < userFriendsID.size(); i++) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Map<String, Object> temp = new HashMap<>(document.getData());
-                                        if (temp.get("UID") != null && temp.get("UID").toString().equals(userFriendsID.get(i))) {
-                                            System.out.println(temp.get("username"));
-                                            userFriends.add(temp);
-                                            break;
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Map<String, Object> temp = new HashMap<>(document.getData());
+                                    if (temp.get("UID") != null) {
+                                        String UID = temp.get("UID").toString();
+
+                                        for (int i = 0; i < userFriendsID.size(); i++) {
+                                            if (UID != null && UID.equals(userFriendsID.get(i))) {
+                                                userFriends.add(temp);
+                                                break;
+                                            }
+                                        }
+
+                                        for (int i = 0; i < userNotifications.size(); i++) {
+                                            if (UID != null && UID.equals(userNotifications.get(i))) {
+                                                notificationContent.add(0,
+                                                        "user " + temp.get("username").toString() + " sent you a friend request!");
+                                                break;
+                                            }
                                         }
                                     }
                                 }
@@ -182,14 +250,18 @@ public class friendlistActivity extends AppCompatActivity {
                         }
 
                         ArrayList<String> list = setListAdapter();
-                        adapter.addAll(list);
-                        storeData(username, userID, userEmail, userGender, userBirthday, userDisplay, userFriends, userCheckedPoints);
+                        friendlistAdapter.addAll(list);
+
+                        notificationContent.add(0,"<-Friends List");
+                        notificationAdapter.addAll(notificationContent);
+                        storeData(username, userID, userEmail, userGender, userBirthday, userDisplay, userFriends, userCheckedPoints, userFriendsID);
                     }
                 });
     }
 
     private ArrayList<String> setListAdapter(){
         ArrayList<String> list = new ArrayList<>();
+        list.add("Notifications->");
         for(int i=0; i<userFriends.size(); i++){
             System.out.println(" "+i);
             String temp = new String(userFriends.get(i).get("username").toString());
@@ -210,6 +282,11 @@ public class friendlistActivity extends AppCompatActivity {
                 intent.setClass(this, map_main.class);
                 startActivity(intent);
                 return true;
+            case R.id.search:
+                Fragment search = new fragment_search();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_place, search);
             default:
                 return super.onOptionsItemSelected(item);
         }

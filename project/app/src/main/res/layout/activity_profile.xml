@@ -4,37 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".friendlistActivity">
+    tools:context=".profile">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#3872AA"
-        app:title="Friendlist"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent"
+        app:title="Friendlist"
         tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/avator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/information"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="270dp"
+        android:background="#fff"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+    </ListView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="500dp"
         android:orientation="vertical">
 
-        <fragment
-            android:id="@+id/fragment_place"
+        <Button
+            android:id="@+id/button1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="button1Function"
+            android:text="send message" />
 
-            android:name="com.example.groupproject.fragment_friendlist"/>
-
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="showPost"
+            android:text="post" />
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -74,19 +102,6 @@
             android:onClick="toSetting"
             android:text="Setting" />
     </LinearLayout>
-
-
-    <fragment
-        android:id="@+id/fragment_search"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="500dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="80dp"
-
-        android:name="com.example.groupproject.fragment_search"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

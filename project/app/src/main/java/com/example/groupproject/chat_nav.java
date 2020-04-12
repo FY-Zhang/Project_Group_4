@@ -157,6 +157,14 @@ public class chat_nav extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.chat_friend_info:
+                intent.setClass(chat_nav.this, profile.class);
+                intent.putExtra("friend_name", friendName);
+                intent.putExtra("friend_id", friendID);
+                intent.putExtra("database_name", dbName);
+                intent.putExtra("type", "friends");
+                intent.putExtra("UID", friendID);
+                startActivity(intent);
+
                 return true;
             case R.id.chat_album:
                 intent.setClass(chat_nav.this, chat_album.class);
