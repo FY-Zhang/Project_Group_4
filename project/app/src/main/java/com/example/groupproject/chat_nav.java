@@ -66,7 +66,7 @@ public class chat_nav extends AppCompatActivity {
         if(userID.compareTo(friendID) > 0) {
             dbName  = "ChatMessage_"+userID+"-"+friendID;
         }else {
-            dbName = "ChatMessage_"+friendID+"_"+userID;
+            dbName = "ChatMessage_"+friendID+"-"+userID;
         }
 
         dbMessage = FirebaseDatabase.getInstance().getReference(dbName);

@@ -112,7 +112,7 @@ public class fragment_setting_setting extends Fragment {
             @Override
             public void onClick(View v) {
                 //appCookies.storeData(null, null, null, null, null, null, null);//clear cookies
-                Intent intent = new Intent(getActivity(), Login.class);
+                Intent intent = new Intent(getActivity(), initial_page.class);
                 startActivity(intent);
             }
         });

@@ -254,13 +254,13 @@ public class friendlistActivity extends AppCompatActivity {
         Map<String, Object> newUser = new HashMap<>();
         newUser.put("UID", userID);
         newUser.put("email", userEmail);
-        newUser.put("gender", "");
-        newUser.put("birthday", "");
+        newUser.put("gender", "Female");
+        newUser.put("birthday", "1900/01/01");
         newUser.put("display", false);
         newUser.put("username", userEmail);
-        newUser.put("password","");
         newUser.put("checkPoint",new ArrayList<String>());
         newUser.put("friends",new ArrayList<String>());
+        newUser.put("favorite", new ArrayList<String>());
         newUser.put("notifications",new ArrayList<String>());
 
         users.document(userID).set(newUser);
