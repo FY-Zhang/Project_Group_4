@@ -25,7 +25,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.groupproject.appCookies.*;
 
@@ -44,8 +46,10 @@ public class chat_nav extends AppCompatActivity {
     private RecyclerView textBox;
 
     //Picture send
-    private ChatMessageAdapter imageAdapter;
+    private ChatMessageAdapter messageAdapter;
     private List<ChatMessage> chatList;
+
+    private Map<String, Object> locations = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +90,7 @@ public class chat_nav extends AppCompatActivity {
         textBox.setLayoutManager(new LinearLayoutManager(this));
 
         chatList = new ArrayList<>();
+
     }
 
     @Override
@@ -96,16 +101,18 @@ public class chat_nav extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                ArrayList<Integer> position_type = new ArrayList<>();
                 chatList.clear();
 
                 for(DataSnapshot chatSnapshot : dataSnapshot.getChildren()){
                     ChatMessage chatMessage = chatSnapshot.getValue(ChatMessage.class);
+                    position_type.add(chatMessage.getType());
                     chatList.add(chatMessage);
                 }
 
-                imageAdapter = new ChatMessageAdapter(chat_nav.this, chatList, friendName);
+                messageAdapter = new ChatMessageAdapter(chat_nav.this, chatList, friendName, position_type);
 
-                textBox.setAdapter(imageAdapter);
+                textBox.setAdapter(messageAdapter);
             }
 
             @Override
@@ -127,7 +134,7 @@ public class chat_nav extends AppCompatActivity {
 
             String id = dbMessage.push().getKey();
 
-            ChatMessage messageInfo = new ChatMessage("", userID, sdf.format(date), 1, message);
+            ChatMessage messageInfo = new ChatMessage(userID, sdf.format(date), 1, message, "", "", 200, 200);
 
             dbMessage.child(id).setValue(messageInfo);
 
@@ -176,5 +183,18 @@ public class chat_nav extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void showMap(View view){
+
+        Button locationButton = findViewById(R.id.locationButton);
+        Intent intent = new Intent();
+        intent.setClass(chat_nav.this, map_main.class);
+        intent.putExtra("latitude", Double.parseDouble(locationButton.getTag(1).toString()));
+        intent.putExtra("longitude", Double.parseDouble(locationButton.getTag(2).toString()));
+        intent.putExtra("location", locationButton.getTag(3).toString());
+
+        startActivity(intent);
+
     }
 }

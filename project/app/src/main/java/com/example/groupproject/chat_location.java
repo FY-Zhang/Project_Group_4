@@ -58,6 +58,7 @@ public class chat_location extends AppCompatActivity implements OnMapReadyCallba
 
     private String friendName, friendID, databaseName;
     private DatabaseReference dbMessage;
+    private String locationTitle = new String();
 
     private  EditText searchText;
 
@@ -137,7 +138,7 @@ public class chat_location extends AppCompatActivity implements OnMapReadyCallba
                         || actionId == EditorInfo.IME_ACTION_DONE
                         || event.getAction() == KeyEvent.ACTION_DOWN
                         || event.getAction() == KeyEvent.KEYCODE_ENTER) {
-
+                    searchText.setText("");
                     //execute method for searching
                     geoLocate();
                 }
@@ -167,7 +168,7 @@ public class chat_location extends AppCompatActivity implements OnMapReadyCallba
             Log.d("Location", "geoLocate: found a location"+address.toString());
             //Toast.makeText(this, address.toString(), Toast.LENGTH_LONG).show();
 
-
+            locationTitle = address.getAddressLine(0);
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()),DEFAULT_ZOOM, address.getAddressLine(0));
         }
     }
@@ -238,9 +239,9 @@ public class chat_location extends AppCompatActivity implements OnMapReadyCallba
 
             String id = dbMessage.push().getKey();
 
-            ChatMessage messageInfo = new ChatMessage("", userID, sdf.format(date), 1, message);
+            ChatMessage chatMessage = new ChatMessage(userID, sdf.format(date), 2, "","", locationTitle, latitude, longitude);
 
-            dbMessage.child(id).setValue(messageInfo);
+            dbMessage.child(id).setValue(chatMessage);
 
         }else{
             Toast.makeText(this, "Message cant't be null", Toast.LENGTH_SHORT).show();

@@ -2,23 +2,29 @@ package com.example.groupproject;
 
 public class ChatMessage {
 
-    private String imgUrl;
-    private String send_id;
-    private String time;
-    private String message;
-    private int type;
+    private String imgUrl = new String();
+    private String send_id = new String();
+    private String time = new String();
+    private String message = new String();
+    private double latitude = 200;
+    private double longitude = 200;
+    private String location = new String();
+    private int type = -1;
 
     public ChatMessage(){
         //empty constructor needed
     }
     // 0->img
     // 1->message
-    public ChatMessage(String imgUrl, String send_id, String time, int type, String message) {
+    public ChatMessage( String send_id, String time, int type, String message, String imgUrl, String location, double latitude, double longitude) {
         this.imgUrl = imgUrl;
-        this.message = message;
         this.send_id = send_id;
         this.time = time;
         this.type = type;
+        this.message = message;
+        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getImgUrl() {
@@ -39,6 +45,18 @@ public class ChatMessage {
 
     public int getType() {
         return type;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public String getLocation() {
+        return location;
     }
 
     public void setImgUrl(String imgUrl) {

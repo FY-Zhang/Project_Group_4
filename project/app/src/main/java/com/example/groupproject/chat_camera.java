@@ -113,7 +113,7 @@ public class chat_camera extends AppCompatActivity {
                                 sdf.applyPattern("yyyy-MM-dd_HH:mm_ss_a");
                                 Date date = new Date();
 
-                                ChatMessage chatMessage = new ChatMessage(photoStringLink, userID, sdf.format(date), 0, "Take a picture:");
+                                ChatMessage chatMessage = new ChatMessage(userID, sdf.format(date), 0, "",photoStringLink, "", 200, 200);
                                 String uploadID = databaseReference.push().getKey();
                                 databaseReference.child(uploadID).setValue(chatMessage);
                             }

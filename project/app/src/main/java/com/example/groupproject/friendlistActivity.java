@@ -43,6 +43,7 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -251,6 +252,10 @@ public class friendlistActivity extends AppCompatActivity {
 
         CollectionReference users = db.collection("users");
 
+        ArrayList<String> tempFriends = new ArrayList<>();
+        tempFriends.add("wtJ5hG5fvtYdwVbeNfraG6lmpyY2");
+
+
         Map<String, Object> newUser = new HashMap<>();
         newUser.put("UID", userID);
         newUser.put("email", userEmail);
@@ -259,7 +264,7 @@ public class friendlistActivity extends AppCompatActivity {
         newUser.put("display", false);
         newUser.put("username", userEmail);
         newUser.put("checkPoint",new ArrayList<String>());
-        newUser.put("friends",new ArrayList<String>());
+        newUser.put("friends", tempFriends);
         newUser.put("favorite", new ArrayList<String>());
         newUser.put("notifications",new ArrayList<String>());
 
