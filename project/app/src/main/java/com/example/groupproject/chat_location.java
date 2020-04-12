@@ -138,9 +138,9 @@ public class chat_location extends AppCompatActivity implements OnMapReadyCallba
                         || actionId == EditorInfo.IME_ACTION_DONE
                         || event.getAction() == KeyEvent.ACTION_DOWN
                         || event.getAction() == KeyEvent.KEYCODE_ENTER) {
+                    geoLocate();
                     searchText.setText("");
                     //execute method for searching
-                    geoLocate();
                 }
                 return false;
             }
