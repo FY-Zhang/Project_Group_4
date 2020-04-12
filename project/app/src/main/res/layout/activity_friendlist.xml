@@ -17,23 +17,29 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
-    <LinearLayout
+
+    <fragment
+        android:id="@+id/fragment_friendlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:layout_marginTop="60dp"
         android:layout_marginBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical">
+        android:name="com.example.groupproject.fragment_friendlist"/>
+    <fragment
+        android:id="@+id/fragment_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-        <fragment
-            android:id="@+id/fragment_place"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:name="com.example.groupproject.fragment_search"/>
 
-            android:name="com.example.groupproject.fragment_friendlist"/>
 
-    </LinearLayout>
 
 
     <LinearLayout
@@ -76,17 +82,7 @@
     </LinearLayout>
 
 
-    <fragment
-        android:id="@+id/fragment_search"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="500dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="80dp"
 
-        android:name="com.example.groupproject.fragment_search"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
