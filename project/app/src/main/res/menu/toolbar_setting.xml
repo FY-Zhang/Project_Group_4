@@ -2,15 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="Modify"
-        android:id="@+id/setting_modify"/>
-    <item
         android:title="All Post"
-        android:id="@+id/setting_all_post"/>
+        android:id="@+id/setting_post"/>
+    <item
+        android:title="Favorite"
+        android:id="@+id/setting_fav"/>
     <item
         android:title="Log Out"
         android:id="@+id/setting_logout"/>
-    <item
-        android:title="Favorite"
-        android:id="@+id/setting_favorite"/>
 </menu>

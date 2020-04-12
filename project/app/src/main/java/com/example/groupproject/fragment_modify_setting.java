@@ -110,6 +110,7 @@ public class fragment_modify_setting extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_modify, container, false);
     }
@@ -164,24 +165,17 @@ public class fragment_modify_setting extends Fragment {
 
         EditText txt_birthday_txt = getView().findViewById(R.id.txt_birthday_txt);
         setBirthday(txt_birthday_txt);
+
     }
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //click back
-        Button btn_back_modify = view.findViewById(R.id.btn_back_modify);
-        btn_back_modify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_modify_to_setting);
-            }
-        });
 
         //modify - setting
             //show current info
-        String user_id = appCookies.userID; //cookie之类的记录登录信息 (邮箱登录,然后存储id -- 是否直接使用邮箱为主键?)
+        String user_id = appCookies.userID;
         String user_name = appCookies.username;
         String user_email = appCookies.userEmail;
         final String user_psw = "000000";// default show
