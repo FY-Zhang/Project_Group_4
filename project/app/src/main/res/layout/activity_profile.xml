@@ -53,14 +53,12 @@
             android:id="@+id/button1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="button1Function"
             android:text="send message" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="showPost"
             android:text="post" />
     </LinearLayout>
 

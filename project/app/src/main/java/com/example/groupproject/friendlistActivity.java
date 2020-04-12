@@ -157,6 +157,7 @@ public class friendlistActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
+                intent.setClass(friendlistActivity.this, profile.class);
                 intent.putExtra("UID", searchID.get(position));
                 intent.putExtra("type", "unknown");
                 startActivity(intent);
@@ -183,7 +184,10 @@ public class friendlistActivity extends AppCompatActivity {
                         || event.getAction() == KeyEvent.ACTION_DOWN
                         || event.getAction() == KeyEvent.KEYCODE_ENTER) {
 
+                    searchAdapter.clear();
+
                     getSearchResult();
+                    textInputEditText.setText("");
                     //execute method for searching
                 }
                 return false;
@@ -209,6 +213,7 @@ public class friendlistActivity extends AppCompatActivity {
                             }
                             if(searchResult.size() == 0)
                                 Toast.makeText(friendlistActivity.this, "Sorry, no matched user :(", Toast.LENGTH_LONG).show();
+
                             searchAdapter.addAll(searchResult);
                         }else {
                             Toast.makeText(friendlistActivity.this, "Error doing search", Toast.LENGTH_SHORT).show();

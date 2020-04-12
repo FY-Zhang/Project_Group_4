@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -78,11 +79,7 @@ public class chat_camera extends AppCompatActivity {
     }
 
     public void onDropClick(View view){
-        Intent intent = new Intent();
-        intent.putExtra("friend_name", friendName);
-        intent.putExtra("friend_id", friendID);
-        intent.setClass(this, chat_nav.class);
-        startActivity(intent);
+        finish();
     }
     public void onSendClick(View view){
 
