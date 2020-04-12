@@ -33,6 +33,7 @@ public class new_post extends AppCompatActivity {
         String title = editText1.getText().toString();
         String content = editText2.getText().toString();
         String author = appCookies.username;
+        String authorId = appCookies.userID;
         String channel = getIntent().getStringExtra("id");
         Date date = new Date();
         String time = (9999-date.getTime()/100000000000.0)+"";
@@ -44,6 +45,8 @@ public class new_post extends AppCompatActivity {
         post.put("title", title);
         post.put("content", content);
         post.put("author", author);
+        post.put("authorId", authorId);
+        post.put("postId", time);
         post.put("channel", channel);
         post.put("datetime", date);
         posts.document(time).set(post);
