@@ -66,9 +66,6 @@ public class fragment_setting_setting extends Fragment {
         {
             @Override
             public void onClick(View view) {
-                /*Intent intent = new Intent();
-                intent.setClass(getActivity(), Login.class);
-                startActivity(intent);*/
                 map_main map_t = new map_main();
                 map_t.map_GetCurrentLocation(view);
             }
@@ -88,8 +85,16 @@ public class fragment_setting_setting extends Fragment {
         btn_allpost_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Navigation.findNavController(v).navigate(R.id.action_setting_to_fragment_allpost_setting);
                 Intent intent = new Intent(getActivity(), post_my.class);
+                startActivity(intent);
+            }
+        });
+
+        Button btn_fav = view.findViewById(R.id.btn_fav); //allpost
+        btn_fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), post_favorite.class);
                 startActivity(intent);
             }
         });
@@ -111,6 +116,7 @@ public class fragment_setting_setting extends Fragment {
                 startActivity(intent);
             }
         });
+
     }
 
     private void showInfo_setting(final View view){

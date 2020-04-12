@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -42,13 +43,15 @@ public class post_my extends AppCompatActivity {
         final List<String> docId = new ArrayList<>();// array for id of documents
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        System.out.println("To get coll");
         db.collection("post")
-                .whereEqualTo("author", appCookies.userID)
+                .whereEqualTo("author", appCookies.username)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
+                            //System.out.println("succ to in the l");
                             for(QueryDocumentSnapshot document : task.getResult()) {
                                 Map<String, Object> post= new HashMap<>();
 
@@ -56,9 +59,10 @@ public class post_my extends AppCompatActivity {
                                 post.put("content", document.getString("content"));
                                 Date date = document.getDate("datetime");
                                 post.put("dtc", document.getString("channel") + " / " + date);
+
                                 postList.add(post);
                                 docId.add(document.getId());
-                                //System.out.println("Now we.. " + postList);
+                               // System.out.println("Now we.. " + postList);
                             }
 
                             SimpleAdapter simpleAdapter = new SimpleAdapter(post_my.this, postList, R.layout.post_my_item, form, to);
@@ -79,8 +83,10 @@ public class post_my extends AppCompatActivity {
                                                     ff.collection("post")
                                                             .document(docId.get(position))
                                                             .delete();
+
                                                     Toast.makeText(post_my.this, "Deleted Successfully!", Toast.LENGTH_SHORT).show();
-                                                    listView.removeViewAt(position);
+                                                    Intent intent = new Intent(post_my.this, post_my.class);//flush this page
+                                                    startActivity(intent);
                                                 }
                                             });
                                     dialog.setNegativeButton("No",
