@@ -13,11 +13,13 @@ import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,6 +31,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -72,7 +76,17 @@ public class friendlistActivity extends AppCompatActivity {
     ListView notificationsList;
     private ArrayList<String> userNotifications = new ArrayList<>();
     private ArrayAdapter<String> notificationAdapter;
-    private ArrayList<String > notificationContent = new ArrayList<>();
+    private ArrayList<String> notificationContent = new ArrayList<>();
+
+    ListView searchList;
+    private ArrayAdapter<String> searchAdapter;
+    private ArrayList<String> searchResult = new ArrayList<>();
+    private TextInputEditText textInputEditText;
+    private ArrayList<String> searchID = new ArrayList<>();
+
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    private Fragment search = new fragment_search();
+    private Fragment friendList = new fragment_friendlist();
 
 
     @Override
@@ -85,6 +99,8 @@ public class friendlistActivity extends AppCompatActivity {
         listview = (ListView)findViewById(R.id.item);
         notificationsList = (ListView)findViewById(R.id.notification_list);
 
+        textInputEditText = findViewById(R.id.searchText);
+
 
         //storeData(username, userID, userEmail, userGender, userBirthday);
         if(friendlistAdapter != null)
@@ -94,6 +110,9 @@ public class friendlistActivity extends AppCompatActivity {
         if(notificationAdapter != null)
             notificationAdapter.clear();
         notificationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
+
+        searchList = findViewById(R.id.result);
+        searchAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         getUserInfo(user);
@@ -134,6 +153,69 @@ public class friendlistActivity extends AppCompatActivity {
 
         });
 
+        searchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent();
+                intent.putExtra("UID", searchID.get(position));
+                intent.putExtra("type", "unknown");
+                startActivity(intent);
+            }
+        });
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        search = fragmentManager.findFragmentById(R.id.fragment_search);
+        friendList = fragmentManager.findFragmentById(R.id.fragment_friendlist);
+        fragmentTransaction.hide(search);
+        fragmentTransaction.commit();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        textInputEditText
+                .setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_SEARCH
+                        || actionId == EditorInfo.IME_ACTION_DONE
+                        || event.getAction() == KeyEvent.ACTION_DOWN
+                        || event.getAction() == KeyEvent.KEYCODE_ENTER) {
+
+                    getSearchResult();
+                    //execute method for searching
+                }
+                return false;
+            }
+        });
+    }
+
+    private void getSearchResult() {
+        final String input = textInputEditText.getText().toString();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot document: task.getResult()){
+                                if(document.getData().get("email").toString().contains(input)){
+                                    searchResult.add(document.getData().get("username").toString());
+                                    searchID.add(document.getData().get("UID").toString());
+                                }
+                            }
+                            if(searchResult.size() == 0)
+                                Toast.makeText(friendlistActivity.this, "Sorry, no matched user :(", Toast.LENGTH_LONG).show();
+                            searchAdapter.addAll(searchResult);
+                        }else {
+                            Toast.makeText(friendlistActivity.this, "Error doing search", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        searchList.setAdapter(searchAdapter);
     }
 
     private void getUserInfo(FirebaseUser user){
@@ -283,10 +365,10 @@ public class friendlistActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.search:
-                Fragment search = new fragment_search();
-                FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_place, search);
+                fragmentTransaction.hide(friendList);
+                fragmentTransaction.show(search);
+                fragmentTransaction.commit();
             default:
                 return super.onOptionsItemSelected(item);
         }

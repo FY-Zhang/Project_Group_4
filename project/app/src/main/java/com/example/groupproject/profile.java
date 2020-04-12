@@ -10,11 +10,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firestore.v1.WriteResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +27,8 @@ import java.util.Map;
 
 import static com.example.groupproject.appCookies.userFriends;
 import static com.example.groupproject.appCookies.userFriendsID;
+import static com.example.groupproject.appCookies.userID;
+import static com.example.groupproject.appCookies.username;
 
 public class profile extends AppCompatActivity {
 
@@ -111,10 +118,43 @@ public class profile extends AppCompatActivity {
             content.add("Gender: Secret:)");
         }
     }
-    public void showPost(View view){
+    private void addAsFriend(){
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        db.collection("users")
+                .document(userID)
+                .update("friends", FieldValue.arrayUnion(UID) );
+
+        db.collection("users")
+                .document(UID)
+                .update("friends", FieldValue.arrayUnion(userID));
+    }
+    private void sendRequest(){
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users")
+                .document(UID)
+                .update("notifications", FieldValue.arrayUnion(userID));
+    }
+    public void showPost(View view){
+        Intent intent = new Intent();
+        intent.putExtra("friendId", UID);
+        startActivity(intent);
     }
     public void button1Function(View view){
-
+        Intent intent = new Intent();
+        switch (type){
+            case "friends":
+                intent.putExtra("friend_id", UID);
+                intent.putExtra("friend_name", user_name);
+                startActivity(intent);
+                break;
+            case "request":
+                addAsFriend();
+                button1.setText("SEND MESSAGE");
+                break;
+            case "unknown":
+                sendRequest();
+                break;
+        }
     }
 }

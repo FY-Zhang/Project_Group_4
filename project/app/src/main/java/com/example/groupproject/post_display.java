@@ -101,13 +101,13 @@ public class post_display extends AppCompatActivity {
         message.put("userId", appCookies.userID);
         message.put("postId", postId);
         messages.document(appCookies.userID+postId).set(message);
-        Intent intent = new Intent(post_display.this, post.class);
+        Intent intent = new Intent(post_display.this, channel.class);
         startActivity(intent);
     }
     public void toDislike(View view) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("like").document(appCookies.userID+postId).delete();
-        Intent intent = new Intent(post_display.this, post.class);
+        Intent intent = new Intent(post_display.this, channel.class);
         startActivity(intent);
 
     }
