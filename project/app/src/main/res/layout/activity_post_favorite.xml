@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".post_my">
+    tools:context=".post_favorite">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_myPosts"
+        android:id="@+id/toolbar_favPosts"
         android:layout_width="match_parent"
         android:layout_height="66dp"
         android:background="#3872AA"
@@ -16,7 +16,7 @@
         android:theme="?attr/actionBarTheme" />
 
     <ListView
-        android:id="@+id/lv_post_my"
+        android:id="@+id/lv_post_fav"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
