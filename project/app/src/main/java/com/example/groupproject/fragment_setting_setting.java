@@ -4,13 +4,17 @@ package com.example.groupproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -39,38 +43,6 @@ public class fragment_setting_setting extends Fragment {
         View view = inflater.inflate(R.layout.fragment_setting,null);
         showInfo_setting(view);
 
-        Button btn_friendlist_setting = view.findViewById(R.id.btn_friendlist_setting); //jump to friendlist
-        btn_friendlist_setting.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), friendlistActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button btn_channel_setting = view.findViewById(R.id.btn_channel_setting); //jump to channel
-        btn_channel_setting.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), channel.class);
-                startActivity(intent);
-            }
-        });
-
-        Button btn_logout = view.findViewById(R.id.btn_logout); //jump to channel
-        btn_logout.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                map_main map_t = new map_main();
-                map_t.map_GetCurrentLocation(view);
-            }
-        });
-
         return view;
 
         // Inflate the layout for this fragment
@@ -81,24 +53,6 @@ public class fragment_setting_setting extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button btn_allpost_setting = view.findViewById(R.id.btn_allpost_setting); //allpost
-        btn_allpost_setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), post_my.class);
-                startActivity(intent);
-            }
-        });
-
-        Button btn_fav = view.findViewById(R.id.btn_fav); //allpost
-        btn_fav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), post_favorite.class);
-                startActivity(intent);
-            }
-        });
-
         Button btn_modify = view.findViewById(R.id.btn_modify); //modify
         btn_modify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,17 +60,6 @@ public class fragment_setting_setting extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_setting2_to_modify);
             }
         });
-
-        Button btn_logout = view.findViewById(R.id.btn_logout);//logout
-        btn_logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //appCookies.storeData(null, null, null, null, null, null, null);//clear cookies
-                Intent intent = new Intent(getActivity(), initial_page.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
     private void showInfo_setting(final View view){
@@ -153,5 +96,9 @@ public class fragment_setting_setting extends Fragment {
                 });
     }
 
+   /* public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_setting,menu);
+        return true;
+    } */
 
 }

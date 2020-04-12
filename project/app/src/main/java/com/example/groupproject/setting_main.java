@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.Navigation;
 
 import java.util.Calendar;
 
@@ -32,16 +34,21 @@ public class setting_main extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.toolbar_setting,menu);
         return true;
     }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent();
         switch (item.getItemId()){
-            case R.id.chat_camera:
+            case R.id.setting_post:
+                intent = new Intent(setting_main.this, post_my.class);
+                startActivity(intent);
                 return true;
-            case R.id.chat_location:
+            case R.id.setting_fav:
+                intent = new Intent(setting_main.this, post_favorite.class);
+                startActivity(intent);
                 return true;
-            case R.id.chat_friend_info:
-                return true;
-            case R.id.chat_album:
+            case R.id.setting_logout:
+                intent = new Intent(setting_main.this, initial_page.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

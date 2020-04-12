@@ -18,42 +18,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/low_modify"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:background="#707070"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+
+    <Button
+        android:id="@+id/btn_submit"
+        style="@style/FirebaseUI.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="62dp"
+        android:layout_weight="1"
+
+        android:text="submit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_editor_absoluteX="0dp">
-
-        <Button
-            android:id="@+id/btn_back_modify"
-            style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#707070"
-            android:text="back" />
-
-        <Button
-            android:id="@+id/btn_submit"
-            style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#707070"
-
-            android:text="submit" />
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/rg_sex" />
 
     <RadioGroup
         android:id="@+id/rg_sex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="9dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
