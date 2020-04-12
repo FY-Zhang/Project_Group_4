@@ -45,28 +45,22 @@ public class post extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);        //把这一块移到setOnIteClickListener里面。
+        setSupportActionBar(toolbar);
         listview = (ListView)findViewById(R.id.item);
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
         getData();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_expandable_list_item_1,
-                arrayList);
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position,
                                     long id) {
-                String postName = (String)parent.getItemAtPosition(position);
                 Intent intent = new Intent();
-                intent.putExtra(POST_NAME, postName);
-                intent.setClass(post.this,post_display.class);
+                intent.putExtra("post_id", list.get(position).get("postId").toString());
+                intent.setClass(post.this, post_display.class);
                 startActivity(intent);
             }
-
         });
     }
 

@@ -251,7 +251,7 @@ public class friendlistActivity extends AppCompatActivity {
         newUser.put("email", userEmail);
         newUser.put("gender", "");
         newUser.put("birthday", "");
-        newUser.put("display", (boolean)false);
+        newUser.put("display", false);
         newUser.put("username", userEmail);
         newUser.put("password","");
         newUser.put("checkPoint",new ArrayList<String>());
