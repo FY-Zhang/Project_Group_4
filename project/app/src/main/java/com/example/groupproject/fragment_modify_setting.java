@@ -26,6 +26,8 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -44,6 +46,8 @@ public class fragment_modify_setting extends Fragment {
     private TextInputLayout txt_username;
     private TextInputLayout txt_email;
     private TextInputLayout txt_password;
+    private FirebaseUser user_set = FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseAuth auth_set = FirebaseAuth.getInstance();
 
     private boolean validateUsername(String username) {
         if(username.isEmpty()) {
@@ -83,7 +87,9 @@ public class fragment_modify_setting extends Fragment {
                     "$");
 
     private boolean validatePassword(String psw) {
-        if(psw.isEmpty()){
+        if(psw.equals("000000")) {
+            return true; //default - not change
+        } else if(psw.isEmpty()){
             txt_password.setError("Password cannot be empty!");
             return false;
         } else if(!PASSWORD_PATTERN.matcher(psw).matches()) {
@@ -148,9 +154,9 @@ public class fragment_modify_setting extends Fragment {
         String user_id = appCookies.userID; //cookie之类的记录登录信息 (邮箱登录,然后存储id -- 是否直接使用邮箱为主键?)
         String user_name = appCookies.username;
         String user_email = appCookies.userEmail;
-        final String user_psw = "111111";
+        final String user_psw = "000000";// default show
         String user_birthday = appCookies.userBirthday;
-        String user_sex = appCookies.userGender;
+        final String user_sex = appCookies.userGender;
         Boolean user_display = appCookies.userDisplay;
 
         //initial original display
@@ -181,7 +187,7 @@ public class fragment_modify_setting extends Fragment {
         }
 
         //change info
-        Button btn_submit = view.findViewById(R.id.btn_submit); // click submit
+        Button btn_submit = view.findViewById(R.id.btn_submit); // click submit btn and then will happen....
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,15 +199,21 @@ public class fragment_modify_setting extends Fragment {
                 EditText txt_username_txt = view.findViewById(R.id.txt_username_txt);
                 String user_name = txt_username_txt.getText().toString();
                 userRef.update("username", user_name);
-                appCookies.username = user_name; //使用set/get函数?
+                appCookies.username = user_name;
 
                 EditText txt_password_txt = view.findViewById(R.id.txt_password_txt);
                 String user_psw = txt_password_txt.getText().toString();
-                userRef.update("password", user_psw);
+                if(user_psw.equals("000000")){
+                    // not change
+                } else {
+                    user_set.updatePassword(user_psw);
+                }
 
                 EditText txt_email_txt = view.findViewById(R.id.txt_email_txt);
                 String user_email = txt_email_txt.getText().toString();
                 userRef.update("email", user_email);
+                user_set.updateEmail(user_email);
+
 
                 final EditText txt_birthday_txt = view.findViewById(R.id.txt_birthday_txt);
                 txt_birthday_txt.setOnClickListener(new View.OnClickListener() {
@@ -237,6 +249,12 @@ public class fragment_modify_setting extends Fragment {
 
                 if(validateUsername(user_name) && validateEmail(user_email) && validatePassword(user_psw)) {
                     Navigation.findNavController(v).navigate(R.id.action_modify_to_setting);
+                    //user.updatePassword("123456");
+                    //user_set.sendEmailVerification(); 使用真实邮件/后期使用
+                    // FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                    //获取修改密码的code?
+                    //firebaseAuth.sendPasswordResetEmail(user.getEmail());
+                    //firebaseAuth.verifyPasswordResetCode();
                     Toast.makeText(getActivity(), "Submitted Successfully!", Toast.LENGTH_SHORT).show();
                 }
             }
