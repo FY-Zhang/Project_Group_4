@@ -276,7 +276,7 @@ public class friendlistActivity extends AppCompatActivity {
         newUser.put("friends", tempFriends);
         newUser.put("favorite", new ArrayList<String>());
         newUser.put("notifications",tempNotifications);
-        newUser.put("avatar", "");
+        newUser.put("avatar", "https://firebasestorage.googleapis.com/v0/b/groupproject-ffdc4.appspot.com/o/user_avatar%2Favatar_default.jpg?alt=media&token=852659d8-aa5a-4022-a53f-abfb3c268aa6");
 
         users.document(userID).set(newUser);
     }
@@ -286,8 +286,6 @@ public class friendlistActivity extends AppCompatActivity {
 
         if(data.getString("email") == null){
             initializeUserInfo(userID, userEmail);
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            getUserInfo(user);
         }
         if(data.getString("email") != null){
             userEmail = data.getString("email");
