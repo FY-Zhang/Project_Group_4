@@ -67,6 +67,7 @@ public class fragment_setting_setting extends Fragment {
 
         ImageView avatar = view.findViewById(R.id.imageView);
 
+        avatar.setAdjustViewBounds(true);
         Picasso.with(avatar.getContext())
                 .load(userAvatar)
                 .into(avatar);

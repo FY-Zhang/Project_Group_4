@@ -34,13 +34,13 @@ import static com.example.groupproject.appCookies.userID;
 
 public class chat_album extends AppCompatActivity {
 
+    private Uri imgUri;
     private static final int PICK_IMAGE_REQUEST = 852;
     private String friendName, friendID, databaseName;
 
     private ImageView imgView;
     private ProgressBar progressBar;
 
-    private Uri imgUri;
 
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
