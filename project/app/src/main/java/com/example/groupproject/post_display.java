@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firestore.v1.WriteResult;
+import com.squareup.picasso.Picasso;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -34,6 +35,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.groupproject.appCookies.userAvatar;
+
 public class post_display extends AppCompatActivity {
 
     public static String postId = new String();
@@ -43,6 +46,8 @@ public class post_display extends AppCompatActivity {
     public String post_author;
     public String post_content;
     public String post_channel;
+    private String imageUri;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,8 @@ public class post_display extends AppCompatActivity {
 
         Intent intent = getIntent();
         postId = intent.getStringExtra("post_id");
+
+        imageView = findViewById(R.id.image);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("post")
@@ -67,6 +74,7 @@ public class post_display extends AppCompatActivity {
                                     post_author = document.get("author").toString() + "\n" + post_date;
                                     post_content = document.get("content").toString();
                                     post_channel = document.get("channel").toString();
+                                    imageUri = document.get("image").toString();
                                     break;
                                 }
                             }
@@ -81,6 +89,11 @@ public class post_display extends AppCompatActivity {
                         Button postDislike = (Button)findViewById(R.id.post_dislike);
                         postLike.setText("Like ("+post_like+")");
                         postDislike.setText("Dislike ("+post_like+")");
+
+                        imageView.setAdjustViewBounds(true);
+                        Picasso.with(post_display.this)
+                                .load(imageUri)
+                                .into(imageView);
                     }
                 });
         TextView postContent = (TextView)findViewById(R.id.post_content);
@@ -112,6 +125,10 @@ public class post_display extends AppCompatActivity {
                         }
                     }
                 });
+
+        Picasso.with(this)
+                .load(imageUri)
+                .into(imageView);
     }
 
     public void toLike(View view) {
