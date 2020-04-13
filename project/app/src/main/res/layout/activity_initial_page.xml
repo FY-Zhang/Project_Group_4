@@ -7,11 +7,6 @@
     android:background="@drawable/initialpage_bg"
     tools:context=".initial_page">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/initialpage_bg"
-        margin
     <Button
         android:id="@+id/signin"
         style="@style/FirebaseUI.Button"
