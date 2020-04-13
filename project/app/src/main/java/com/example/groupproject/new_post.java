@@ -30,6 +30,7 @@ public class new_post extends AppCompatActivity {
     public void toSubmit(View view){
         EditText editText1 = (EditText)findViewById(R.id.post_title);
         EditText editText2 = (EditText)findViewById(R.id.post_content);
+        int like = 0;
         String title = editText1.getText().toString();
         String content = editText2.getText().toString();
         String author = appCookies.username;
@@ -42,6 +43,7 @@ public class new_post extends AppCompatActivity {
         CollectionReference posts = db.collection("post");
 
         Map<String, Object> post = new HashMap<>();
+        post.put("like", like);
         post.put("title", title);
         post.put("content", content);
         post.put("author", author);
@@ -52,6 +54,7 @@ public class new_post extends AppCompatActivity {
         posts.document(time).set(post);
 
         Intent intent = new Intent();
+        intent.putExtra("id", channel);
         intent.setClass(this, post.class);
         startActivity(intent);
     }

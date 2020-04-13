@@ -26,7 +26,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
         <activity android:name=".map_points"></activity>
+        <activity android:name=".post_album"></activity>
         <activity android:name=".post_favorite" />
         <activity android:name=".post_friend" />
         <activity android:name=".profile" />

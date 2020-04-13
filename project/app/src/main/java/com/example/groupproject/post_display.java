@@ -5,12 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,15 +25,24 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firestore.v1.WriteResult;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class post_display extends AppCompatActivity {
 
     public static String postId = new String();
-    public String post_title = "11";
-    public String post_author = "22";
-    public String post_content = "33";
+    public int post_like;
+    public Date post_date;
+    public String post_title;
+    public String post_author;
+    public String post_content;
+    public String post_channel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +61,12 @@ public class post_display extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if(postId.equals(document.get("postId"))) {
+                                    post_like = Integer.parseInt(document.get("like").toString());
+                                    post_date = document.getDate("datetime");
                                     post_title = document.get("title").toString();
-                                    post_author = document.get("author").toString();
+                                    post_author = document.get("author").toString() + "\n" + post_date;
                                     post_content = document.get("content").toString();
+                                    post_channel = document.get("channel").toString();
                                     break;
                                 }
                             }
@@ -61,6 +77,10 @@ public class post_display extends AppCompatActivity {
                         postTitle.setText(post_title);
                         postAuthor.setText(post_author);
                         postContent.setText(post_content);
+                        Button postLike = (Button)findViewById(R.id.post_like);
+                        Button postDislike = (Button)findViewById(R.id.post_dislike);
+                        postLike.setText("Like ("+post_like+")");
+                        postDislike.setText("Dislike ("+post_like+")");
                     }
                 });
         TextView postContent = (TextView)findViewById(R.id.post_content);
@@ -101,14 +121,25 @@ public class post_display extends AppCompatActivity {
         message.put("userId", appCookies.userID);
         message.put("postId", postId);
         messages.document(appCookies.userID+postId).set(message);
-        Intent intent = new Intent(post_display.this, channel.class);
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection("post").document(postId).update("like", post_like + 1);
+
+        Intent intent = new Intent();
+        intent.putExtra("post_id", postId);
+        intent.setClass(this, post_display.class);
         startActivity(intent);
     }
     public void toDislike(View view) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("like").document(appCookies.userID+postId).delete();
-        Intent intent = new Intent(post_display.this, channel.class);
-        startActivity(intent);
 
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection("post").document(postId).update("like", post_like - 1);
+
+        Intent intent = new Intent();
+        intent.putExtra("post_id", postId);
+        intent.setClass(this, post_display.class);
+        startActivity(intent);
     }
 }
