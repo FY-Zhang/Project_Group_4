@@ -45,6 +45,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,8 +77,9 @@ public class friendlistActivity extends AppCompatActivity {
     private ArrayList<Map<String,Object>> userChecked = new ArrayList<>();
 
     ListView notificationsList;
-    private ArrayList<String> userNotifications = new ArrayList<>();
+    private ArrayList<String> dbNotifications = new ArrayList<>();
     private ArrayAdapter<String> notificationAdapter;
+    private ArrayList<ArrayList<String>> userNotifications = new ArrayList<>();
     private ArrayList<String> notificationContent = new ArrayList<>();
 
     ListView searchList;
@@ -144,7 +147,7 @@ public class friendlistActivity extends AppCompatActivity {
                         currentAdapter = 1;
                     }else{
                         Intent intent = new Intent();
-                        intent.putExtra("UID", userNotifications.get(position-1));
+                        intent.putExtra("UID", userNotifications.get(position-1).get(2));
                         intent.putExtra("type", "request");
                         intent.setClass(friendlistActivity.this, profile.class);
                         startActivity(intent);
@@ -254,6 +257,8 @@ public class friendlistActivity extends AppCompatActivity {
 
         ArrayList<String> tempFriends = new ArrayList<>();
         tempFriends.add("wtJ5hG5fvtYdwVbeNfraG6lmpyY2");
+        ArrayList<String> tempNotifications = new ArrayList<>();
+        tempNotifications.add("2-0-Welcome to SupLink ;)");
 
 
         Map<String, Object> newUser = new HashMap<>();
@@ -266,7 +271,7 @@ public class friendlistActivity extends AppCompatActivity {
         newUser.put("checkPoint",new ArrayList<String>());
         newUser.put("friends", tempFriends);
         newUser.put("favorite", new ArrayList<String>());
-        newUser.put("notifications",new ArrayList<String>());
+        newUser.put("notifications",tempNotifications);
 
         users.document(userID).set(newUser);
     }
@@ -275,7 +280,9 @@ public class friendlistActivity extends AppCompatActivity {
     protected void storeUserInfo(DocumentSnapshot data){
 
         if(data.getString("email") == null){
-                initializeUserInfo(userID, userEmail);
+            initializeUserInfo(userID, userEmail);
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            getUserInfo(user);
         }
         if(data.getString("email") != null){
             userEmail = data.getString("email");
@@ -299,7 +306,16 @@ public class friendlistActivity extends AppCompatActivity {
             userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
         }
         if(data.get("notifications") != null){
-            userNotifications = (ArrayList<String>)data.get("notifications");
+            dbNotifications = (ArrayList<String>)data.get("notifications");
+            for(int i=0; i<dbNotifications.size(); i++){
+                String[] temp =dbNotifications.get(i).split("-");
+                ArrayList<String> temp2 = new ArrayList<>();
+                temp2.add(temp[0]);
+                temp2.add(temp[1]);
+                temp2.add(temp[2]);
+                userNotifications.add(temp2);
+            }
+            Collections.reverse(userNotifications);
         }
     }
 
@@ -314,24 +330,28 @@ public class friendlistActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
                             if(userFriendsID != null) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Map<String, Object> temp = new HashMap<>(document.getData());
-                                    if (temp.get("UID") != null) {
-                                        String UID = temp.get("UID").toString();
-
-                                        for (int i = 0; i < userFriendsID.size(); i++) {
-                                            if (UID != null && UID.equals(userFriendsID.get(i))) {
-                                                userFriends.add(temp);
-                                                break;
-                                            }
+                                for (int i = 0; i < userFriendsID.size(); i++) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        String UID = document.getData().get("UID").toString();
+                                        if ( UID != null && UID.equals(userFriendsID.get(i))) {
+                                            userFriends.add(document.getData());
+                                            break;
                                         }
+                                    }
+                                }
 
-                                        for (int i = 0; i < userNotifications.size(); i++) {
-                                            if (UID != null && UID.equals(userNotifications.get(i))) {
-                                                notificationContent.add(0,
-                                                        "user " + temp.get("username").toString() + " sent you a friend request!");
-                                                break;
+                                for (int i = 0; i < userNotifications.size(); i++) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        String UID = document.getData().get("UID").toString();
+                                        if (UID != null && UID.equals(userNotifications.get(i).get(2))) {
+                                            if(userNotifications.get(i).get(0).equals("0")){
+
+                                                notificationContent.add("user " + document.getData().get("username").toString() + " sent you a friend request!");
+                                            }else if(userNotifications.get(i).get(0).equals("1")){
+
+                                                notificationContent.add("Your friend " + document.getData().get("username").toString() + " sent you a chat Message!");
                                             }
+                                            break;
                                         }
                                     }
                                 }
