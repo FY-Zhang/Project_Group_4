@@ -238,16 +238,19 @@ public class friendlistActivity extends AppCompatActivity {
         userEmail = user.getEmail();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference documentReference = db.collection("users").document(userID);
-        DocumentReference documentReference2 = db.collection("users").document("00");
-        if(documentReference.equals(documentReference2)) {
-            initializeUserInfo(userID, userEmail);
-        }
+        final DocumentReference documentReference = db.collection("users").document(userID);
+
+        final Intent intent = new Intent();
+        intent.setClass(friendlistActivity.this, initial_page.class);
         documentReference
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if(documentSnapshot.getString("email") == null){
+                            initializeUserInfo(userID, userEmail);
+                            startActivity(intent);
+                        }
                             storeUserInfo(documentSnapshot);
                             storeFriendsInfo();
                     }
