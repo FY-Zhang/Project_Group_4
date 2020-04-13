@@ -15,8 +15,10 @@
 
         <ListView
             android:id="@+id/item"
+            android:background="#b98a16"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:listSelector="@drawable/friendlist_item">
 
         </ListView>
     </LinearLayout>
