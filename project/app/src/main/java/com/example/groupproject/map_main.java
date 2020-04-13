@@ -1,15 +1,18 @@
 package com.example.groupproject;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.provider.FontsContractCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -55,7 +59,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class map_main extends FragmentActivity implements OnMapReadyCallback {
+public class map_main extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
     private static final String TAG = map_main.class.getSimpleName();
@@ -71,6 +75,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
     private double cur_lat = 52.601238; //default
     private double cur_lng = -8.123021;
     private LatLng cur_loc = new LatLng(cur_lat, cur_lng);
+    private LatLng cus_loc;
 
     private static final LatLng Beijing = new LatLng(39.901389, 116.4214707);
     private static final LatLng UL = new LatLng(52.673829, -8.572475);
@@ -84,6 +89,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
     private Marker mkrWashington;
     private Marker mkrSydney;
     private Marker mkrBerlin;
+    private Marker mkrDrag;
 
     private ArrayList<Circle> circlesList = new ArrayList<Circle>();
     private Circle BeijingCircle;
@@ -135,15 +141,12 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
 
         addOfficialMarkers();
         addObjectsToMap();
-        showEurope(null);
+        showEurope(null); //or chat loc
 
         getLocationPermission();
         updateLocationUI();
+        mMap.setOnMarkerClickListener(this);
         //getDeviceLocation();
-
-        View map_view = findViewById(R.id.btn_check_map);
-        map_GetCurrentLocation(map_view);
-        System.out.println("***array: " + appCookies.userCheckedPoints);
 
         updateMarkers();
     }
@@ -154,6 +157,9 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
         mkrWashington = mMap.addMarker(new MarkerOptions().position(Washington).title("Washington, Capital of USA. \uD83C\uDDFA\uD83C\uDDF8"));
         mkrSydney = mMap.addMarker(new MarkerOptions().position(Sydney).title("Sydney, Capital of Sydney. \uD83C\uDDE6\uD83C\uDDFA"));
         mkrBerlin = mMap.addMarker(new MarkerOptions().position(Berlin).title("Berlin, Capital of Germany \uD83C\uDDE9\uD83C\uDDEA."));
+
+        mkrDrag = mMap.addMarker(new MarkerOptions().position(new LatLng(51.5, 0.1)).title("Drag me to get the position!"));
+        mkrDrag.setDraggable(true);
 
         markerList.add(mkrBeijing);
         markerList.add(mkrUL);
@@ -171,6 +177,62 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
                 .include(Berlin);
         // Move camera to show all markers and locations
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 200));
+        System.out.println("The show fun");
+
+        Intent intent = getIntent(); // custom design points from chat
+        System.out.println("intent: " + intent);
+        if(intent != null) {
+            System.out.println("now the in: " + intent);
+            System.out.println("the lat: " + intent.getStringExtra("latitude"));
+            String cus_lat_str = intent.getStringExtra("latitude");
+            String cus_lng_str = intent.getStringExtra("longitude");
+
+            if(cus_lat_str != null && cus_lng_str != null) {
+                double cus_lat = Double.parseDouble(cus_lat_str);
+                double cus_lng = Double.parseDouble(cus_lng_str);
+                String cus_add = intent.getStringExtra("location");
+                cus_loc = new LatLng(cus_lat, cus_lng);
+                System.out.println("------" + cus_loc + " address: " + cus_add);
+
+                Marker cus_mark = mMap.addMarker(new MarkerOptions().position(cus_loc).title(cus_add));
+                cus_mark.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(cus_loc));
+            }
+        }
+    }
+
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+        if(marker.getPosition().equals(cus_loc)) {
+            marker.showInfoWindow();
+
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setTitle("Collect");
+            dialog.setMessage("Do you want to collect this place?");
+            dialog.setPositiveButton("Yes",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            /**
+                             *
+                             * 写入 my point
+                             */
+
+                            Toast.makeText(map_main.this, "Collect Successfully!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(map_main.this, map_main.class);//flush this page
+                            startActivity(intent); /**xu yao??**/
+                        }
+                    });
+            dialog.setNegativeButton("No",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) { }
+                    });
+            dialog.show();
+        }
+
+        return false;
     }
 
     public void map_GetCurrentLocation(View view) {
@@ -261,12 +323,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
         mMap.addMarker(new MarkerOptions().position(sydney).title("new!!!!"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
-        System.out.println("in list ^^^: (point list) " + appCookies.userCheckedPoints);
-
-        /*
-        Intent intent = new Intent();
-        intent.setClass(this, pointsList.class);
-        startActivity(intent); */
+        //System.out.println("in list ^^^: (point list) " + appCookies.userCheckedPoints);
     }
 
     private void addObjectsToMap() {
@@ -377,13 +434,13 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback {
         for(int i = 0; i < appCookies.userCheckedPoints.size(); i++) {
             lat1 = appCookies.userCheckedPoints.get(i).getLatitude();
             lng1 = appCookies.userCheckedPoints.get(i).getLongitude();
-            System.out.println(">> lat1: " + lat1 + " lng1: " + lng1);
+            //System.out.println(">> lat1: " + lat1 + " lng1: " + lng1);
             for(int j = 0; j < markerList.size(); j++) {
                 lat2 = markerList.get(j).getPosition().latitude;
                 lng2 = markerList.get(j).getPosition().longitude;
 
-                System.out.println(">> lat2: " + lat2 + " lng2: " + lng2);
-                System.out.println("the out m: " + markerList.get(j));
+                //System.out.println(">> lat2: " + lat2 + " lng2: " + lng2);
+                //System.out.println("the out m: " + markerList.get(j));
 
                 if(lat1 == lat2 && lng1 == lng2){
                     markerList.get(j).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
