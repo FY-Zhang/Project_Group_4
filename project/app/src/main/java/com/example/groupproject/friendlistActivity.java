@@ -42,6 +42,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ public class friendlistActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     private int currentAdapter = 1;
+    private boolean isNewUser = false;
 
     private ListView listview;
     private ArrayList<String> list = new ArrayList<String>();
@@ -237,13 +239,17 @@ public class friendlistActivity extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference documentReference = db.collection("users").document(userID);
+        DocumentReference documentReference2 = db.collection("users").document("00");
+        if(documentReference.equals(documentReference2)) {
+            initializeUserInfo(userID, userEmail);
+        }
         documentReference
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        storeUserInfo(documentSnapshot);
-                        storeFriendsInfo();
+                            storeUserInfo(documentSnapshot);
+                            storeFriendsInfo();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -256,6 +262,7 @@ public class friendlistActivity extends AppCompatActivity {
 
     private void initializeUserInfo(String userID, String userEmail) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        isNewUser = true;
 
         CollectionReference users = db.collection("users");
 
@@ -263,7 +270,6 @@ public class friendlistActivity extends AppCompatActivity {
         tempFriends.add("wtJ5hG5fvtYdwVbeNfraG6lmpyY2");
         ArrayList<String> tempNotifications = new ArrayList<>();
         tempNotifications.add("2-0-Welcome to SupLink ;)");
-
 
         Map<String, Object> newUser = new HashMap<>();
         newUser.put("UID", userID);
@@ -284,9 +290,6 @@ public class friendlistActivity extends AppCompatActivity {
     //function used to store user's information
     protected void storeUserInfo(DocumentSnapshot data){
 
-        if(data.getString("email") == null){
-            initializeUserInfo(userID, userEmail);
-        }
         if(data.getString("email") != null){
             userEmail = data.getString("email");
         }
@@ -369,7 +372,6 @@ public class friendlistActivity extends AppCompatActivity {
                         else{
                             Log.w("tag", "Error getting document.", task.getException());
                         }
-
                         ArrayList<String> list = setListAdapter();
                         friendlistAdapter.addAll(list);
 

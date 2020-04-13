@@ -90,10 +90,13 @@ public class post_display extends AppCompatActivity {
                         postLike.setText("Like ("+post_like+")");
                         postDislike.setText("Dislike ("+post_like+")");
 
-                        imageView.setAdjustViewBounds(true);
-                        Picasso.with(post_display.this)
-                                .load(imageUri)
-                                .into(imageView);
+                        if (imageUri!= "") {
+
+                            imageView.setAdjustViewBounds(true);
+                            Picasso.with(post_display.this)
+                                    .load(imageUri)
+                                    .into(imageView);
+                        }
                     }
                 });
         TextView postContent = (TextView)findViewById(R.id.post_content);
