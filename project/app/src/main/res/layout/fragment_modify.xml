@@ -44,6 +44,7 @@
 
         <RadioButton
             android:id="@+id/rb0"
+            style="@android:style/Widget.Holo.Light.CompoundButton.RadioButton"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:checked="true"

@@ -66,7 +66,7 @@ public class post_my extends AppCompatActivity {
                                 System.out.println("Now we.. " + postList);
                             }
 
-                            SimpleAdapter simpleAdapter = new SimpleAdapter(post_my.this, postList, R.layout.post_my_item, from, to);
+                            final SimpleAdapter simpleAdapter = new SimpleAdapter(post_my.this, postList, R.layout.post_my_item, from, to);
                             final ListView listView = findViewById(R.id.lv_post_my);
                             listView.setAdapter(simpleAdapter);
                             
@@ -86,8 +86,9 @@ public class post_my extends AppCompatActivity {
                                                             .delete();
 
                                                     Toast.makeText(post_my.this, "Deleted Successfully!", Toast.LENGTH_SHORT).show();
-                                                    Intent intent = new Intent(post_my.this, post_my.class);//flush this page
-                                                    startActivity(intent);
+                                                    postList.remove(position);
+                                                    simpleAdapter.notifyDataSetChanged();
+                                                    listView.invalidate();
                                                 }
                                             });
                                     dialog.setNegativeButton("No",

@@ -44,6 +44,7 @@
 
         <EditText
             android:id="@+id/inputBox"
+            style="@style/Widget.AppCompat.AutoCompleteTextView"
             android:layout_width="20dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
@@ -53,6 +54,7 @@
 
         <Button
             android:id="@+id/sendMessage"
+            style="@android:style/Widget.Material.Light.Button.Toggle"
             android:layout_width="20dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

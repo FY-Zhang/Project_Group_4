@@ -21,6 +21,7 @@
 
                 <TextView
                     android:id="@+id/sendName"
+                    style="@android:style/Widget.Holo.TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxWidth="200dp"
@@ -29,6 +30,7 @@
 
                 <TextView
                     android:id="@+id/sendMessage"
+                    style="@android:style/Widget.Material.Light.TextView.SpinnerItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxWidth="200dp"

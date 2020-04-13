@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.provider.FontsContractCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.Context;
@@ -12,52 +11,38 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.ColorSpace;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
-import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.maps.android.SphericalUtil;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -104,9 +89,13 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
     private Circle WashingtonCircle;
     private Circle BerlinCircle;
 
-    private ArrayList<String> markedLat = new ArrayList<>();
-    private ArrayList<String> markedLng = new ArrayList<>();
-    private ArrayList<String> markedTil = new ArrayList<>();
+    public ArrayList<String> markedLat = new ArrayList<>();
+    public ArrayList<String> markedLng = new ArrayList<>();
+    public ArrayList<String> markedTil = new ArrayList<>();
+
+    public ArrayList<String> getMarkedTil() {
+        return this.markedTil;
+    }
 
     //private Polyline CurPL;
     //private GroundOverlay SydneyGroundOverlay;
@@ -161,6 +150,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
         mkrBerlin = mMap.addMarker(new MarkerOptions().position(Berlin).title("Berlin, Capital of Germany \uD83C\uDDE9\uD83C\uDDEA."));
 
         mkrDrag = mMap.addMarker(new MarkerOptions().position(new LatLng(51.5, 0.1)).title("Drag me to get the position!"));
+        //修改logo mkrDrag.setIcon();
         mkrDrag.setDraggable(true);
 
         markerList.add(mkrBeijing);
@@ -217,18 +207,22 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
                         public void onClick(DialogInterface dialog, int which) {
 
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            CollectionReference colPoiRef = db.collection("users").document(appCookies.userID).collection("points");
+                            CollectionReference colPoiRef = db.collection("users").
+                                    document(appCookies.userID).collection("points");
 
                             Map<String, Object> data = new HashMap<>();
                             data.put("latitude", cus_lat);
                             data.put("longitude", cus_lng);
                             data.put("location", cus_mkr.getTitle());
 
-                            colPoiRef.document(cus_mkr.getTitle()).set(data, SetOptions.merge());
+                           // colPoiRef.document(cus_mkr.getTitle()).set(data, SetOptions.merge());
+                            db.collection("users").
+                                    document(appCookies.userID).collection("points").document(cus_mkr.getTitle())
+                                    .set(data, SetOptions.merge());
 
                             Toast.makeText(map_main.this, "Collect Successfully!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(map_main.this, map_points.class);//flush this page
-                            startActivity(intent);
+                            //Intent intent = new Intent(map_main.this, map_main.class);//flush this page
+                            //startActivity(intent);
                         }
                     });
             dialog.setNegativeButton("No",
@@ -326,7 +320,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
     }
 
     public void map_listView(View view) {
-        System.out.println("marked marker:------------------1");
+        System.out.println("marked marker:--------list view in map_main ----------1");
 
         Intent intent = new Intent(map_main.this, map_points.class);
         intent.putExtra("ofi_lat", markedLat);

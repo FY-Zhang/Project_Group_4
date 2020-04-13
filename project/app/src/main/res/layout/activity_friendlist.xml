@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".friendlistActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -11,78 +12,63 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#3872AA"
-        app:title="Friendlist"
         android:minHeight="?attr/actionBarSize"
+        android:scrollbarStyle="outsideOverlay"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        app:title="Friendlist" />
+
+
+    <fragment
+        android:id="@+id/fragment_search"
+        android:name="com.example.groupproject.fragment_search"
+        android:layout_width="match_parent"
+
+        android:layout_height="52dp" />
 
 
     <fragment
         android:id="@+id/fragment_friendlist"
+        android:name="com.example.groupproject.fragment_friendlist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
 
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:name="com.example.groupproject.fragment_friendlist"/>
-    <fragment
-        android:id="@+id/fragment_search"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:name="com.example.groupproject.fragment_search"/>
-
-
-
+        android:layout_height="562dp" />
 
     <LinearLayout
+        android:id="@+id/linearLayout10"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="#707070"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_editor_absoluteX="0dp">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/friendlist"
-            style="android:attr/buttonBarButtonStyle"
+            style="@style/FirebaseUI.Button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#707070"
             android:onClick="toFriendlist"
-            android:text="Friends" />
+            android:text="@string/chats"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/channel"
-            style="android:attr/buttonBarButtonStyle"
+            style="@style/FirebaseUI.Button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#707070"
             android:onClick="toChannel"
-            android:text="Channel" />
+            android:text="@string/discover"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/setting"
-            style="android:attr/buttonBarButtonStyle"
+            style="@style/FirebaseUI.Button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#707070"
             android:onClick="toSetting"
-            android:text="Setting" />
+            android:text="Setting"
+            android:textAllCaps="false" />
     </LinearLayout>
 
 
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

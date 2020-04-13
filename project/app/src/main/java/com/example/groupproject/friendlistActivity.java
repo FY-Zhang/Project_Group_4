@@ -285,6 +285,7 @@ public class friendlistActivity extends AppCompatActivity {
         newUser.put("avatar", "https://firebasestorage.googleapis.com/v0/b/groupproject-ffdc4.appspot.com/o/user_avatar%2Favatar_default.jpg?alt=media&token=852659d8-aa5a-4022-a53f-abfb3c268aa6");
 
         users.document(userID).set(newUser);
+        users.document(userID).collection("points");
     }
 
     //function used to store user's information

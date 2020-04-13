@@ -46,8 +46,10 @@
             android:hint="Title"
             android:inputType="text"
             tools:layout_editor_absoluteY="180dp" />
+
         <EditText
             android:id="@+id/post_content"
+            style="@android:style/Widget.Holo.Light.EditText"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
             android:ems="10"
@@ -56,11 +58,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_username_modify"
             tools:layout_editor_absoluteY="250dp" />
+
         <Button
             android:id="@+id/openFile"
+            style="@style/FirebaseUI.Button.AccountChooser"
             android:layout_width="wrap_content"
-            android:text="Choose image from album"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:alpha="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:text="Choose image from album" />
+
         <ImageView
             android:layout_width="200dp"
             android:layout_height="wrap_content"
