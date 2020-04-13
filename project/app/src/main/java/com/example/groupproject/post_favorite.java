@@ -87,7 +87,7 @@ public class post_favorite extends AppCompatActivity {
                                                 //System.out.println("1: " + postList);
                                                 j++; //System.out.println("J val: " + j);
                                                 if (j == userFavPost.size()) { //after final step
-                                                    SimpleAdapter simpleAdapter = new SimpleAdapter(post_favorite.this, postList, R.layout.post_fav_item, form, to);
+                                                    final SimpleAdapter simpleAdapter = new SimpleAdapter(post_favorite.this, postList, R.layout.post_fav_item, form, to);
                                                     final ListView listView = findViewById(R.id.lv_post_fav);
                                                     listView.setAdapter(simpleAdapter);
 
@@ -107,8 +107,9 @@ public class post_favorite extends AppCompatActivity {
                                                                                     .update("favorite", FieldValue.arrayRemove(docId.get(position)));
 
                                                                             Toast.makeText(post_favorite.this, "Deleted Successfully!", Toast.LENGTH_SHORT).show();
-                                                                            Intent intent = new Intent(post_favorite.this, post_favorite.class);//flush this page
-                                                                            startActivity(intent);
+                                                                            postList.remove(position);
+                                                                            simpleAdapter.notifyDataSetChanged();
+                                                                            listView.invalidate();
                                                                         }
                                                                     });
                                                             dialog.setNegativeButton("No",

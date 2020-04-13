@@ -55,7 +55,6 @@ public class map_points extends AppCompatActivity {
 
             final String[] from_ofi = new String[]{"latlng","location"};
             final int[] to_ofi = new int[]{R.id.dis_ofi_latlng,R.id.dis_ofi_loc};
-            final List<String> pointId = new ArrayList<>();// array for id of points
 
             for(int i = 0; i < markedTil.size(); i++) {
                 Map<String, Object> ofi_poi = new HashMap<>();
@@ -68,8 +67,8 @@ public class map_points extends AppCompatActivity {
             }
 
             SimpleAdapter simpleAdapter_ofi = new SimpleAdapter(map_points.this, ofiList, R.layout.point_item_ofi, from_ofi, to_ofi);
-            final ListView listView = findViewById(R.id.lv_ofcPoi);
-            listView.setAdapter(simpleAdapter_ofi);
+            final ListView listView_ofi = findViewById(R.id.lv_ofcPoi);
+            listView_ofi.setAdapter(simpleAdapter_ofi);
         }
 
         /*my opi*/
@@ -92,16 +91,46 @@ public class map_points extends AppCompatActivity {
                                 my_poi.put("location", document.get("location"));
 
                                 myList.add(my_poi);
-                                //docId.add(document.getId());
-                                System.out.println("my Now we.. " + myList);
+                                pointId.add(document.getId());
+                                System.out.println("pointID.. " + pointId);
                             }
-                            SimpleAdapter simpleAdapter_my = new SimpleAdapter(map_points.this, myList, R.layout.point_item_my, from_my, to_my);
-                            final ListView listView = findViewById(R.id.lv_myPoi);
-                            listView.setAdapter(simpleAdapter_my);
+                            final SimpleAdapter simpleAdapter_my = new SimpleAdapter(map_points.this, myList, R.layout.point_item_my, from_my, to_my);
+                            final ListView listView_my = findViewById(R.id.lv_myPoi);
+                            listView_my.setAdapter(simpleAdapter_my);
+
+                            listView_my.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                                @Override
+                                public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                                    AlertDialog.Builder dialog = new AlertDialog.Builder(map_points.this);
+                                    dialog.setTitle("Delete");
+                                    dialog.setMessage("Do you want to cancel collect?");
+                                    dialog.setPositiveButton("Yes",
+                                            new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    FirebaseFirestore ff = FirebaseFirestore.getInstance();
+                                                    ff.collection("users").document(appCookies.userID).collection("points")
+                                                            .document(pointId.get(position))
+                                                            .delete();
+                                                    System.out.println("position: " + pointId.get(position));
+                                                    Toast.makeText(map_points.this, "Cancel Successfully!", Toast.LENGTH_SHORT).show();
+                                                    myList.remove(position);
+                                                    simpleAdapter_my.notifyDataSetChanged();
+                                                    listView_my.invalidate();
+                                                }
+                                            });
+                                    dialog.setNegativeButton("No",
+                                            new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) { }
+                                            });
+                                    dialog.show();
+                                    return true;
+                                }
+                            });
+
                         }
                     }
                 });
-
-
     }
 }

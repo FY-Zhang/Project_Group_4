@@ -274,6 +274,7 @@ public class friendlistActivity extends AppCompatActivity {
         newUser.put("notifications",tempNotifications);
 
         users.document(userID).set(newUser);
+        users.document(userID).collection("points");
     }
 
     //function used to store user's information

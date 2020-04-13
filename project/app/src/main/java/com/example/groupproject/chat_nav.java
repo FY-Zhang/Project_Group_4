@@ -199,12 +199,10 @@ public class chat_nav extends AppCompatActivity {
         intent.setClass(chat_nav.this, map_main.class);
 
 
-
         intent.putExtra("latitude", locationButton.getTag(R.string.latitude).toString());
         intent.putExtra("longitude", locationButton.getTag(R.string.longitude).toString());
         intent.putExtra("location", locationButton.getTag(R.string.location).toString());
 
         startActivity(intent);
-
     }
 }
