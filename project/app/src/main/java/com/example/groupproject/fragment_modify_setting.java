@@ -3,9 +3,11 @@ package com.example.groupproject;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,36 +15,53 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 import io.opencensus.internal.StringUtils;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.groupproject.appCookies.userAvatar;
+import static com.example.groupproject.appCookies.userID;
 
 
 /**
@@ -60,6 +79,9 @@ public class fragment_modify_setting extends Fragment {
     private TextInputLayout txt_password;
     private FirebaseUser user_set = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseAuth auth_set = FirebaseAuth.getInstance();
+
+
+    private StorageReference storageReference;
 
     private boolean validateUsername(String username) {
         if(username.isEmpty()) {
@@ -124,17 +146,12 @@ public class fragment_modify_setting extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        avatar = getView().findViewById(R.id.imageView2);
 
-        avatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFileChooser();
-            }
-        });
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_modify, container, false);
     }
+
+
 
 
     private  void openFileChooser(){
@@ -212,7 +229,6 @@ public class fragment_modify_setting extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         //modify - setting
             //show current info
         String user_id = appCookies.userID;
@@ -238,6 +254,8 @@ public class fragment_modify_setting extends Fragment {
 
         EditText txt_birthday_txt = view.findViewById(R.id.txt_birthday_txt);
         txt_birthday_txt.setText(user_birthday);
+
+        storageReference = FirebaseStorage.getInstance().getReference("user_avatar");
 
         if(user_sex.equals("Male")){ //default is female
             RadioButton rb_sex1 = view.findViewById(R.id.rb1);
@@ -306,7 +324,60 @@ public class fragment_modify_setting extends Fragment {
                     //firebaseAuth.verifyPasswordResetCode();
                     Toast.makeText(getActivity(), "Submitted Successfully!", Toast.LENGTH_SHORT).show();
                 }
+                uploadFile();
             }
         });
+
+        avatar = view.findViewById(R.id.imageView2);
+
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("reach onclicklistener");
+                openFileChooser();
+            }
+        });
+
+
+        Picasso.with(avatar.getContext())
+                .load(userAvatar)
+                .into(avatar);
     }
+
+    private  void uploadFile(){
+        if(imgUri != null){
+            StorageReference fileReference = storageReference.child(userID);
+
+            UploadTask uploadTask = fileReference.putFile(imgUri);
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                        }
+                    }, 50000);
+
+
+                    Task<Uri> result = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                    result.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            String photoStringLink = uri.toString();
+
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            db.collection("users")
+                                    .document(userID)
+                                    .update("avatar", photoStringLink);
+                            userAvatar = photoStringLink;
+                        }
+                    });
+                }
+            });
+        }else {
+            //Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

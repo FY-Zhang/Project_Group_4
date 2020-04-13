@@ -139,6 +139,7 @@
         android:layout_width="112dp"
         android:layout_height="113dp"
         android:layout_marginTop="29dp"
+        android:clickable="true"
         android:src="@android:mipmap/sym_def_app_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

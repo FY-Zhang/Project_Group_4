@@ -51,7 +51,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.groupproject.appCookies.storeData;
+import static com.example.groupproject.appCookies.userAvatar;
 import static com.example.groupproject.appCookies.userChecked;
+import static com.example.groupproject.appCookies.userFavorite;
 
 
 public class friendlistActivity extends AppCompatActivity {
@@ -68,6 +70,8 @@ public class friendlistActivity extends AppCompatActivity {
     private String userGender = new String();
     private String userBirthday = new String();
     private boolean userDisplay = false;
+    private String userAvatar = new String();
+    private ArrayList<String> userFavorite = new ArrayList<String>();
 
     private ArrayList<String> userFriendsID = new ArrayList<>();
     private ArrayList<Map<String,Object>> userFriends = new ArrayList<>();
@@ -272,6 +276,7 @@ public class friendlistActivity extends AppCompatActivity {
         newUser.put("friends", tempFriends);
         newUser.put("favorite", new ArrayList<String>());
         newUser.put("notifications",tempNotifications);
+        newUser.put("avatar", "");
 
         users.document(userID).set(newUser);
     }
@@ -316,6 +321,12 @@ public class friendlistActivity extends AppCompatActivity {
                 userNotifications.add(temp2);
             }
             Collections.reverse(userNotifications);
+        }
+        if(data.getString("avatar") != null){
+            userAvatar = data.getString("avatar");
+        }
+        if((ArrayList<String>)data.get("favorite") != null){
+            userFavorite = (ArrayList<String>)data.get("favorite");
         }
     }
 
@@ -366,7 +377,9 @@ public class friendlistActivity extends AppCompatActivity {
 
                         notificationContent.add(0,"<-Friends List");
                         notificationAdapter.addAll(notificationContent);
-                        storeData(username, userID, userEmail, userGender, userBirthday, userDisplay, userFriends, userCheckedPoints, userFriendsID);
+                        storeData(username, userID, userEmail, userGender, userBirthday,
+                                userDisplay, userFriends, userCheckedPoints, userFriendsID,
+                                userAvatar, userFavorite);
                     }
                 });
     }

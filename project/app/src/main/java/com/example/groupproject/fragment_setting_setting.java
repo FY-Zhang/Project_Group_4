@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -23,6 +24,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
+
+import static com.example.groupproject.appCookies.userAvatar;
 
 
 /**
@@ -60,6 +64,12 @@ public class fragment_setting_setting extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_setting2_to_modify);
             }
         });
+
+        ImageView avatar = view.findViewById(R.id.imageView);
+
+        Picasso.with(avatar.getContext())
+                .load(userAvatar)
+                .into(avatar);
     }
 
     private void showInfo_setting(final View view){
