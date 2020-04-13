@@ -107,7 +107,6 @@ public class friendlistActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         listview = (ListView)findViewById(R.id.item);
-        notificationsList = (ListView)findViewById(R.id.notification_list);
 
         textInputEditText = findViewById(R.id.searchText);
 
