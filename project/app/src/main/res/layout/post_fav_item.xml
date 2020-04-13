@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -19,7 +20,10 @@
                 android:id="@+id/tv_title_fav"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Title" />
+                android:paddingStart="15dp"
+                android:text="Title"
+                android:textSize="24sp"
+                android:textStyle="normal" />
 
             <EditText
                 android:id="@+id/tv_content_fav"
@@ -29,18 +33,16 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:gravity="start|top"
-                android:inputType="textMultiLine" />
+                android:inputType="textMultiLine"
+                android:paddingStart="15dp" />
 
             <TextView
                 android:id="@+id/tv_dtc_fav"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="15dp"
                 android:text="dtc" />
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </LinearLayout>

@@ -22,7 +22,6 @@
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:background="#707070"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,28 +29,28 @@
 
         <Button
             android:id="@+id/btn_current_map"
+            style="@style/FirebaseUI.Button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#707070"
             android:onClick="map_GetCurrentLocation"
             android:text="Location" />
 
         <Button
             android:id="@+id/btn_check_map"
+            style="@style/FirebaseUI.Button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#707070"
             android:onClick="map_CheckPoints"
             android:text="Check" />
 
         <Button
             android:id="@+id/btn_pointsList"
+            style="@style/FirebaseUI.Button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#707070"
             android:onClick="map_listView"
             android:text="List" />
     </LinearLayout>
