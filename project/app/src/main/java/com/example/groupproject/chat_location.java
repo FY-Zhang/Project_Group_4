@@ -38,6 +38,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -264,6 +265,10 @@ public class chat_location extends AppCompatActivity implements OnMapReadyCallba
         }else{
             Toast.makeText(this, "Message cant't be null", Toast.LENGTH_SHORT).show();
         }
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users")
+                .document(friendID)
+                .update("notifications", "1-0-"+userID);
 
         Intent intent = new Intent();
         intent.putExtra("friend_name", friendName);

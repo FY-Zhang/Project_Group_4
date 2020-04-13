@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -138,6 +139,11 @@ public class chat_nav extends AppCompatActivity {
 
             dbMessage.child(id).setValue(messageInfo);
 
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("users")
+                    .document(friendID)
+                    .update("notifications", "1-0-"+userID);
+
         }else{
             Toast.makeText(this, "Message cant't be null", Toast.LENGTH_SHORT).show();
         }
@@ -187,9 +193,12 @@ public class chat_nav extends AppCompatActivity {
 
     public void showMap(View view){
 
-        Button locationButton = findViewById(R.id.locationButton);
+
+        Button locationButton = view.findViewById(R.id.locationButton);
         Intent intent = new Intent();
         intent.setClass(chat_nav.this, map_main.class);
+
+
 
         intent.putExtra("latitude", locationButton.getTag(R.string.latitude).toString());
         intent.putExtra("longitude", locationButton.getTag(R.string.longitude).toString());

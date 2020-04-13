@@ -3,10 +3,13 @@ package com.example.groupproject;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -20,6 +23,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -31,17 +35,25 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 import java.util.regex.Pattern;
 
 import io.opencensus.internal.StringUtils;
 
+import static android.app.Activity.RESULT_OK;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class fragment_modify_setting extends Fragment {
+
+    ImageView avatar;
+    Toolbar toolbar;
+    private Uri imgUri;
+    private static final int PICK_IMAGE_REQUEST = 852;
 
     private TextInputLayout txt_username;
     private TextInputLayout txt_email;
@@ -111,9 +123,37 @@ public class fragment_modify_setting extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
+        avatar = getView().findViewById(R.id.imageView2);
+
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFileChooser();
+            }
+        });
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_modify, container, false);
     }
+
+
+    private  void openFileChooser(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+            imgUri = data.getData();
+
+            Picasso.with(avatar.getContext()).load(imgUri).into((avatar));
+        }
+    }
+
 
     public void setBirthday(View view) {
         final EditText txt_birthday_txt = view.findViewById(R.id.txt_birthday_txt);

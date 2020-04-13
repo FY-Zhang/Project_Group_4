@@ -152,9 +152,27 @@ public class profile extends AppCompatActivity {
         userFriendsID.add(UID);
     }
     private void sendRequest(){
-        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users")
                 .document(UID)
                 .update("notifications", FieldValue.arrayUnion(userID));
+        /*db.collection("users")
+                .document(UID)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        ArrayList<String> notifications = (ArrayList<String>)documentSnapshot.getData().get("notifications");
+                        notifications.add(0, "0-0-"+userID);
+                        update(notifications);
+                    }
+                });*/
+    }
+    public void update(ArrayList<String> arr){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users")
+                .document(UID)
+                .update("notifications", arr);
     }
 }
