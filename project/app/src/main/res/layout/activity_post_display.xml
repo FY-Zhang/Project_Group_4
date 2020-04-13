@@ -49,10 +49,11 @@
         <TextView
             android:id="@+id/post_content"
             android:layout_width="match_parent"
-            android:layout_height="450dp"
+            android:layout_height="match_parent"
             android:text="TextView"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="210dp"/>
+
     </LinearLayout>
     <LinearLayout
         android:id="@+id/linearLayout3"
