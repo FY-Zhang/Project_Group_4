@@ -38,7 +38,7 @@ public class post_my extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_my);
 
-        final String[] form = new String[]{"title","content","dtc"};
+        final String[] from = new String[]{"title","content","dtc"};
         final int[] to = new int[]{R.id.tv_title_my,R.id.tv_content_my,R.id.tv_dtc_my};
         final List<String> docId = new ArrayList<>();// array for id of documents
 
@@ -66,7 +66,7 @@ public class post_my extends AppCompatActivity {
                                 System.out.println("Now we.. " + postList);
                             }
 
-                            SimpleAdapter simpleAdapter = new SimpleAdapter(post_my.this, postList, R.layout.post_my_item, form, to);
+                            SimpleAdapter simpleAdapter = new SimpleAdapter(post_my.this, postList, R.layout.post_my_item, from, to);
                             final ListView listView = findViewById(R.id.lv_post_my);
                             listView.setAdapter(simpleAdapter);
                             
