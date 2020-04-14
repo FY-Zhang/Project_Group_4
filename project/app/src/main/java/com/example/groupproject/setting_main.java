@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +22,7 @@ import androidx.navigation.Navigation;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class setting_main extends AppCompatActivity {
 
@@ -60,4 +63,22 @@ public class setting_main extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            /*if(Objects.equals(getIntent().getStringExtra("action"), "did"))*/ {
+                moveTaskToBack(false);
+                Intent intent_toFrd = new Intent(this, friendlistActivity.class);
+                startActivity(intent_toFrd);
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void toChannel(View view) {
+        Intent intent = new Intent(this, friendlistActivity.class);
+        startActivity(intent);
+    }
 }

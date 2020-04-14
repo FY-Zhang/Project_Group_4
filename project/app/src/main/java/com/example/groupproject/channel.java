@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.BaseAdapter;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -110,5 +112,17 @@ public class channel extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setClass(this, setting_main.class);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(false);
+            Intent intent_cnl_frd = new Intent(channel.this, friendlistActivity.class);
+            startActivity(intent_cnl_frd);
+
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

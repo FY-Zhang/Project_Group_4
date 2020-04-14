@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -65,6 +67,20 @@ public class initial_page extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setClass(this, friendlistActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            Toast.makeText(this, "Exiting", Toast.LENGTH_SHORT).show();
+            moveTaskToBack(false);
+            System.out.println("------------");
+            //super.onDestroy();
+            android.os.Process.killProcess(android.os.Process.myPid());
+
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

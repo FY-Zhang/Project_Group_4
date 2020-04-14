@@ -45,6 +45,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.lang.reflect.Array;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -432,4 +433,20 @@ public class friendlistActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private long mExitTime = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount()==0) {
+
+            if(System.currentTimeMillis() - mExitTime > 2000) {
+                mExitTime = System.currentTimeMillis();
+                Toast.makeText(friendlistActivity.this, "Press again to exit", Toast.LENGTH_SHORT).show();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }
