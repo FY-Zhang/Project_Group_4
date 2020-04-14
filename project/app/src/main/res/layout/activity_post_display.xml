@@ -77,7 +77,6 @@
             android:id="@+id/post_like"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:text="Like"
             android:onClick="toLike"
             tools:layout_editor_absoluteX="-1dp"
             tools:layout_editor_absoluteY="665dp"/>
@@ -85,7 +84,6 @@
             android:id="@+id/post_dislike"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:text="Dislike"
             android:onClick="toDislike"
             tools:layout_editor_absoluteX="-1dp"
             tools:layout_editor_absoluteY="665dp" />

@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -88,7 +89,14 @@ public class post_display extends AppCompatActivity {
                         Button postLike = (Button)findViewById(R.id.post_like);
                         Button postDislike = (Button)findViewById(R.id.post_dislike);
                         postLike.setText("Like ("+post_like+")");
-                        postDislike.setText("Dislike ("+post_like+")");
+                        postDislike.setText("Like ("+post_like+")");
+
+                        Drawable drawableLike = getResources().getDrawable(R.drawable.up_like);
+                        drawableLike.setBounds(0,0,350,150);
+                        postLike.setCompoundDrawables(drawableLike,null, drawableLike,null);
+                        Drawable drawableDislike = getResources().getDrawable(R.drawable.up_dislike);
+                        drawableDislike.setBounds(0,0,350,150);
+                        postDislike.setCompoundDrawables(drawableDislike,null, drawableDislike,null);
 
                         if (imageUri!= "") {
 
