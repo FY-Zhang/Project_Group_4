@@ -10,11 +10,11 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#3872AA"
+        android:background="@color/fui_bgFacebook"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Friendlist"
+        app:title="Profile"
         tools:layout_editor_absoluteX="0dp" />
 
     <ImageView
@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
     </ListView>
 
@@ -59,7 +59,7 @@
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="post" />
+            android:text="@string/posts" />
     </LinearLayout>
 
     <LinearLayout

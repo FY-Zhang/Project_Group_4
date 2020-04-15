@@ -4,50 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/common_google_signin_btn_text_light_disabled"
     tools:context=".channel">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#3872AA"
+        android:background="@color/fui_bgFacebook"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/newPost"
         tools:layout_editor_absoluteX="0dp" />
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="20px"
-        android:gravity="center"
-        android:text="New Channel"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
 
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="170dp"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <EditText
             android:id="@+id/post_title"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:textStyle="bold"
-            android:textSize="30dp"
             android:ems="10"
             android:hint="Title"
             android:inputType="text"
+            android:textSize="30dp"
+            android:textStyle="bold"
             tools:layout_editor_absoluteY="180dp" />
 
         <EditText
@@ -56,12 +45,12 @@
             android:layout_width="280dp"
             android:layout_height="180dp"
             android:layout_marginTop="60dp"
-            android:textSize="20dp"
-            android:shadowDx="0"
             android:ems="10"
+            android:gravity="left|top"
             android:hint="Content"
             android:inputType="textMultiLine"
-            android:gravity="left|top"
+            android:shadowDx="0"
+            android:textSize="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_username_modify"
             tools:layout_editor_absoluteY="250dp" />
@@ -71,8 +60,8 @@
             style="@style/FirebaseUI.Button.AccountChooser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
             android:layout_gravity="center"
+            android:layout_marginTop="60dp"
             android:gravity="center"
             android:text="Choose image from album" />
 

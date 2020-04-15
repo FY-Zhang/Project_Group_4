@@ -11,14 +11,15 @@
         android:id="@+id/toolbar_favPosts"
         android:layout_width="match_parent"
         android:layout_height="66dp"
-        android:background="#3872AA"
+        android:background="@color/fui_bgFacebook"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:theme="?attr/actionBarTheme"
+        app:title="@string/favorites"/>
 
     <ListView
         android:id="@+id/lv_post_fav"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
     </ListView>
 

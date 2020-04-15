@@ -10,13 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/dis_ofi_loc"
         android:layout_width="match_parent"
         android:layout_height="53dp"
         android:paddingLeft="15dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="24sp" />
 
 </LinearLayout>
