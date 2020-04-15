@@ -10,6 +10,6 @@
         android:title="Map"
         android:id="@+id/map_check"
         android:icon="@drawable/icon_location"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         />
 </menu>

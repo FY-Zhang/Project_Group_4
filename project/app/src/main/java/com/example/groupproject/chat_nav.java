@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -143,6 +144,10 @@ public class chat_nav extends AppCompatActivity {
             db.collection("users")
                     .document(friendID)
                     .update("notifications", "1-0-"+userID);
+
+            HashMap<String, String> parama = new HashMap<>();
+            parama.put("regid", FirebaseInstanceId.getInstance().getToken());
+            //new CallFCM().execute(parama);
 
         }else{
             Toast.makeText(this, "Message cant't be null", Toast.LENGTH_SHORT).show();
