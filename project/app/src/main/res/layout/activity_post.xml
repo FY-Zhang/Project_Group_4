@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#3872AA"
+        android:background="@color/fui_bgFacebook"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent"
@@ -36,29 +36,29 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="#707070"
+        android:layout_height="wrap_content"
+        android:background="@color/fui_bgFacebook"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_editor_absoluteX="0dp">
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/friendlist"
-            style="android:attr/buttonBarButtonStyle"
+            style="@style/FirebaseUI.Button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#707070"
+            android:background="@color/fui_bgFacebook"
             android:onClick="toBack"
             android:text="Back" />
 
         <Button
             android:id="@+id/channel"
-            style="android:attr/buttonBarButtonStyle"
+            style="@style/FirebaseUI.Button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#707070"
+            android:background="@color/fui_bgFacebook"
             android:onClick="toNewPost"
             android:text="New Post" />
     </LinearLayout>
