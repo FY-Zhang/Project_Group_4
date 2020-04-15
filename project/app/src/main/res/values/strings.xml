@@ -109,4 +109,11 @@
     <string name="chats">Chats</string>
     <string name="discover">Discover</string>
     <string name="me">Me</string>
+    <string name="favorites">Favorites</string>
+    <string name="posts">Posts</string>
+    <string name="myPosts">My Posts</string>
+    <string name="newPost">New Post</string>
+    <string name="myInfo">My Info</string>
+    <string name="modify">Modify</string>
+    <string name="suplink">Suplink</string>
 </resources>

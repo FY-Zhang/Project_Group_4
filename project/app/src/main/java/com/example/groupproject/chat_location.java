@@ -234,10 +234,13 @@ public class chat_location extends AppCompatActivity implements OnMapReadyCallba
 
         if(locationPermissionGranted){
             getCurrentLocation();
+            System.out.println("location now: 1 " + latitude + " ; " + longitude);
 
             mMap.setMyLocationEnabled(true);
+            System.out.println("location now: 2 " + latitude + " ; " + longitude);
         }
         init();
+        System.out.println("location now: 3 " + latitude + " ; " + longitude);
     }
 
 
@@ -250,6 +253,7 @@ public class chat_location extends AppCompatActivity implements OnMapReadyCallba
     }
     public void onSendClick(View view){
         String message = ""+latitude+" "+longitude;
+        System.out.println("location now: 4 " + latitude + " ; " + longitude);
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyy-MM-dd_HH:mm_ss_a");
         Date date = new Date();

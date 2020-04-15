@@ -97,9 +97,6 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
         return this.markedTil;
     }
 
-    //private Polyline CurPL;
-    //private GroundOverlay SydneyGroundOverlay;
-
     private ArrayList<GeoPoint> gp_myPoint = new ArrayList<>(); // custom design points
 
     private static class CustomTag {
@@ -138,12 +135,10 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
         getLocationPermission();
         updateLocationUI();
         mMap.setOnMarkerClickListener(this);
-        //getDeviceLocation();
+        getDeviceLocation();
 
         updateMarkers();
     }
-
-
 
     public boolean map_GetCurrentLocation(View view) throws InterruptedException {
         if (mMap == null) { return false; }
@@ -153,38 +148,12 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
             if(mLocationPermissionGranted) { //if permission established
 
                 getDeviceLocation();
-
-                if(mLastKnownLocation == null){ //待改善
-                    int try_t = 0;
-                    cur_lat = 52.00;
-                    cur_lng = -8.00;
-                    //Toast.makeText(map_main.this, "Getting address ..." , Toast.LENGTH_SHORT).show();
-
-                    while(mLastKnownLocation == null && try_t < 10) { //try to get location
-                        getDeviceLocation();
-                        System.out.println("Location: " + mLastKnownLocation);
-                        try_t++;
-                    }
-
-                    if(mLastKnownLocation == null) { // if still fail
-                        Toast.makeText(map_main.this, "Please try again!", Toast.LENGTH_SHORT).show();
-                    } else { // if success
-                        cur_lat = mLastKnownLocation.getLatitude();
-                        cur_lng = mLastKnownLocation.getLongitude();
-                        Toast.makeText(map_main.this, "Lat: " + cur_lat + ". Lng: " + cur_lng, Toast.LENGTH_SHORT).show();
-                       // System.out.println("1 Lat: " + cur_lat + ". Lng: " + cur_lng);
-                    }
-                } else {
-                    cur_lat = mLastKnownLocation.getLatitude();
-                    cur_lng = mLastKnownLocation.getLongitude();
-                    Toast.makeText(map_main.this, "Lat: " + cur_lat + ". Lng: " + cur_lng, Toast.LENGTH_SHORT).show();
-                   // System.out.println("2 Lat: " + cur_lat + ". Lng: " + cur_lng);
-                }
-
                 cur_loc = new LatLng(cur_lat, cur_lng);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(cur_loc));
-                return true;
 
+                Toast.makeText(map_main.this, "Lat: " + cur_lat + ". Lng: " + cur_lng, Toast.LENGTH_SHORT).show();
+
+                return true;
             } else {
                 Log.i(TAG, "Please grant location permission.");
                 Toast.makeText(map_main.this, "Please grant location permission", Toast.LENGTH_SHORT).show();
@@ -201,36 +170,41 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
     }
 
     private void getDeviceLocation() {
-        try {
-            if (mLocationPermissionGranted) {
-                Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful()) {
-                            //System.out.println("get device location");
-                            mLastKnownLocation = task.getResult();
-                            if (mLastKnownLocation != null) {
-                                mMap.moveCamera(CameraUpdateFactory.newLatLng(
-                                        new LatLng(mLastKnownLocation.getLatitude(),
-                                                mLastKnownLocation.getLongitude())));
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        View view = findViewById(R.id.map_check_frg);
+        if(isOPen(view.getContext())) {
+            try {
+                if (mLocationPermissionGranted) {
+                    //Toast.makeText(this, "location permission granted", Toast.LENGTH_LONG).show();
+                    Task location = mFusedLocationProviderClient.getLastLocation();
+                    location.addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if (task.isSuccessful()) {
+                                Location currentLocation = (Location) task.getResult();
+
+                                cur_lat = currentLocation.getLatitude();
+                                cur_lng = currentLocation.getLongitude();
+
+                                System.out.println("latlng: " + cur_lat + " --" + cur_lng);
+
+                            } else {
+                                Toast.makeText(map_main.this, "Unable to get the current location.", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            Toast.makeText(map_main.this, "Current Location is null ", Toast.LENGTH_SHORT).show();
-                            Log.d(TAG, "Current location is null. Using defaults.");
-                            Log.e(TAG, "Exception: %s", task.getException());
-                            mMap.moveCamera(CameraUpdateFactory
-                                    .newLatLng(mDefaultLocation));
-                            mMap.getUiSettings().setMyLocationButtonEnabled(false);
                         }
-                    }
-                });
+                    });
+                }
+            } catch (SecurityException e) {
+                Log.e("Location", "Error getting device location: " + e.getMessage());
             }
-        } catch (SecurityException e)  {
-            Log.e("Exception: %s", Objects.requireNonNull(e.getMessage()));
+        }
+        else{
+            Toast.makeText(map_main.this, "Please turn on GPS", Toast.LENGTH_SHORT).show();
+            Intent locationIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivityForResult(locationIntent, REQUEST_CODE_LOCATION_SETTINGS);
         }
     }
-
 
 
     /* permission */
@@ -370,7 +344,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
                 }
             }
 
-            if(mLastKnownLocation == null) {
+            if(cur_loc == null) {
                 Toast.makeText(map_main.this, "Please try again", Toast.LENGTH_SHORT).show();
             }
             else if(num == 0) {
