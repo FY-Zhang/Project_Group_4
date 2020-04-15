@@ -6,10 +6,11 @@
     <LinearLayout
         android:id="@+id/layout_display_my"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp">
 
         <LinearLayout
-            android:layout_width="312dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="8"
             android:orientation="vertical">
@@ -18,7 +19,16 @@
                 android:id="@+id/tv_title_frd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Title" />
+                android:paddingLeft="15dp"
+                android:text="Title"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_dtc_frd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:text="dtc" />
 
             <EditText
                 android:id="@+id/tv_content_frd"
@@ -28,18 +38,10 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:gravity="start|top"
-                android:inputType="textMultiLine" />
-
-            <TextView
-                android:id="@+id/tv_dtc_frd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="dtc" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:inputType="textMultiLine"
+                android:minHeight="81dp"
+                android:paddingLeft="15dp"
+                android:textSize="24sp" />
 
         </LinearLayout>
     </LinearLayout>

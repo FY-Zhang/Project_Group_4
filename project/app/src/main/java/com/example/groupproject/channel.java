@@ -29,70 +29,70 @@ public class channel extends AppCompatActivity {
 
     public void toPost1(View view){
         Intent intent = new Intent();
-        String id = "channel1";
+        String id = "Cl.1";
         intent.putExtra("id", id);
         intent.setClass(this, post.class);
         startActivity(intent);
     }
     public void toPost2(View view){
         Intent intent = new Intent();
-        String id = "channel2";
+        String id = "Cl.2";
         intent.putExtra("id", id);
         intent.setClass(this, post.class);
         startActivity(intent);
     }
     public void toPost3(View view){
         Intent intent = new Intent();
-        String id = "channel3";
+        String id = "Cl.3";
         intent.putExtra("id", id);
         intent.setClass(this, post.class);
         startActivity(intent);
     }
     public void toPost4(View view){
         Intent intent = new Intent();
-        String id = "channel4";
+        String id = "Cl.4";
         intent.putExtra("id", id);
         intent.setClass(this, post.class);
         startActivity(intent);
     }
     public void toPost5(View view){
         Intent intent = new Intent();
-        String id = "channel5";
+        String id = "Cl.5";
         intent.putExtra("id", id);
         intent.setClass(this, post.class);
         startActivity(intent);
     }
     public void toPost6(View view){
         Intent intent = new Intent();
-        String id = "channel6";
+        String id = "Cl.6";
         intent.putExtra("id", id);
         intent.setClass(this, post.class);
         startActivity(intent);
     }
     public void toPost7(View view){
         Intent intent = new Intent();
-        String id = "channel7";
+        String id = "Cl.7";
         intent.putExtra("id", id);
         intent.setClass(this, post.class);
         startActivity(intent);
     }
     public void toPost8(View view){
         Intent intent = new Intent();
-        String id = "channel8";
+        String id = "Cl.8";
         intent.putExtra("id", id);
         intent.setClass(this, post.class);
         startActivity(intent);
     }
     public void toPost9(View view){
         Intent intent = new Intent();
-        String id = "channel9";
+        String id = "Cl.9";
         intent.putExtra("id", id);
         intent.setClass(this, post.class);
         startActivity(intent);
     }
     public void toPost10(View view){
         Intent intent = new Intent();
-        String id = "channel10";
+        String id = "Cl.10";
         intent.putExtra("id", id);
         intent.setClass(this, post.class);
         startActivity(intent);

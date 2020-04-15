@@ -130,7 +130,7 @@
             android:layout_height="90dp"
             android:layout_weight="1"
             android:onClick="toPost8"
-            android:text="⑧ Animation &#038; Comic"
+            android:text="⑧ Animation"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
     </LinearLayout>
@@ -158,7 +158,7 @@
             android:layout_height="90dp"
             android:layout_weight="1"
             android:onClick="toPost10"
-            android:text="⑩ Photography"
+            android:text="⑩ Photo"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
     </LinearLayout>

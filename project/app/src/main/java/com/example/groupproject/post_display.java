@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +27,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firestore.v1.WriteResult;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -86,17 +89,8 @@ public class post_display extends AppCompatActivity {
                         postTitle.setText(post_title);
                         postAuthor.setText(post_author);
                         postContent.setText(post_content);
-                        Button postLike = (Button)findViewById(R.id.post_like);
-                        Button postDislike = (Button)findViewById(R.id.post_dislike);
-                        postLike.setText("Like ("+post_like+")");
-                        postDislike.setText("Like ("+post_like+")");
-
-                        Drawable drawableLike = getResources().getDrawable(R.drawable.up_like);
-                        drawableLike.setBounds(0,0,350,150);
-                        postLike.setCompoundDrawables(drawableLike,null, drawableLike,null);
-                        Drawable drawableDislike = getResources().getDrawable(R.drawable.up_dislike);
-                        drawableDislike.setBounds(0,0,350,150);
-                        postDislike.setCompoundDrawables(drawableDislike,null, drawableDislike,null);
+                        TextView like_display = findViewById(R.id.like_display);
+                        like_display.setText("Like ("+post_like+")");
 
                         if (imageUri!= "") {
 
@@ -125,11 +119,11 @@ public class post_display extends AppCompatActivity {
                                 }
                             }
                             if(flag == 1) {
-                                Button button = (Button)findViewById(R.id.post_like);
+                                ImageButton button = (ImageButton)findViewById(R.id.post_like);
                                 button.setVisibility(View.GONE);
                             }
                             else {
-                                Button button = (Button)findViewById(R.id.post_dislike);
+                                ImageButton button = (ImageButton)findViewById(R.id.post_dislike);
                                 button.setVisibility(View.GONE);
                             }
 
