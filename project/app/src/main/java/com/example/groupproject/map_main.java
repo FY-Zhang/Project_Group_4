@@ -143,99 +143,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
         updateMarkers();
     }
 
-    private void addOfficialMarkers() { // official check points
-        mkrBeijing = mMap.addMarker(new MarkerOptions().position(Beijing).title("Beijing, Capital of China. \uD83C\uDDE8\uD83C\uDDF3."));
-        mkrUL = mMap.addMarker(new MarkerOptions().position(UL).title("University of Limerick, Ireland. \uD83C\uDDEE\uD83C\uDDEA"));
-        mkrWashington = mMap.addMarker(new MarkerOptions().position(Washington).title("Washington, Capital of USA. \uD83C\uDDFA\uD83C\uDDF8"));
-        mkrSydney = mMap.addMarker(new MarkerOptions().position(Sydney).title("Sydney, Capital of Australia. \uD83C\uDDE6\uD83C\uDDFA"));
-        mkrBerlin = mMap.addMarker(new MarkerOptions().position(Berlin).title("Berlin, Capital of Germany \uD83C\uDDE9\uD83C\uDDEA."));
 
-        mkrDrag = mMap.addMarker(new MarkerOptions().position(new LatLng(51.5, 0.1)).title("Drag me to get the position!"));
-        //修改logo mkrDrag.setIcon();
-        mkrDrag.setDraggable(true);
-
-        markerList.add(mkrBeijing);
-        markerList.add(mkrUL);
-        markerList.add(mkrWashington);
-        markerList.add(mkrSydney);
-        markerList.add(mkrBerlin);
-    }
-
-    public void showEurope(View v) {
-        if (mMap == null)
-            return;
-        // Create bounds that include all locations of the map
-        LatLngBounds.Builder bounds = LatLngBounds.builder()
-                .include(UL)
-                .include(Berlin);
-        // Move camera to show all markers and locations
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 200, 500, 1));
-        System.out.println("The show fun");
-
-        Intent intent = getIntent(); // custom design points from chat
-        System.out.println("intent: " + intent);
-        if(intent != null) {
-            System.out.println("now the in: " + intent);
-            //System.out.println("the lat: " + intent.getStringExtra("latitude"));
-            String cus_lat_str = intent.getStringExtra("latitude");
-            String cus_lng_str = intent.getStringExtra("longitude");
-
-            if(cus_lat_str != null && cus_lng_str != null) {
-                cus_lat = Double.parseDouble(cus_lat_str);
-                cus_lng = Double.parseDouble(cus_lng_str);
-                String cus_add = intent.getStringExtra("location");
-                cus_loc = new LatLng(cus_lat, cus_lng);
-                System.out.println("------" + cus_loc + " address: " + cus_add);
-
-                cus_mkr = mMap.addMarker(new MarkerOptions().position(cus_loc).title(cus_add));
-                cus_mkr.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(cus_loc));
-            }
-        }
-    }
-
-    @Override
-    public boolean onMarkerClick(final Marker marker) {
-        if(marker.getPosition().equals(cus_loc) && !Objects.equals(getIntent().getStringExtra("from"), "map_points")) {
-            marker.showInfoWindow();
-
-            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-            dialog.setTitle("Collect");
-            dialog.setMessage("Do you want to collect this place?");
-            dialog.setPositiveButton("Yes",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            CollectionReference colPoiRef = db.collection("users").
-                                    document(appCookies.userID).collection("points");
-
-                            Map<String, Object> data = new HashMap<>();
-                            data.put("latitude", cus_lat);
-                            data.put("longitude", cus_lng);
-                            data.put("location", cus_mkr.getTitle());
-
-                           // colPoiRef.document(cus_mkr.getTitle()).set(data, SetOptions.merge());
-                            db.collection("users").
-                                    document(appCookies.userID).collection("points").document(cus_mkr.getTitle())
-                                    .set(data, SetOptions.merge());
-
-                            Toast.makeText(map_main.this, "Collect Successfully!", Toast.LENGTH_SHORT).show();
-                            //Intent intent = new Intent(map_main.this, map_main.class);//flush this page
-                            //startActivity(intent);
-                        }
-                    });
-            dialog.setNegativeButton("No",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) { }
-                    });
-            dialog.show();
-        }
-
-        return false;
-    }
 
     public boolean map_GetCurrentLocation(View view) throws InterruptedException {
         if (mMap == null) { return false; }
@@ -292,6 +200,149 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
         return false;
     }
 
+    private void getDeviceLocation() {
+        try {
+            if (mLocationPermissionGranted) {
+                Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
+                locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful()) {
+                            //System.out.println("get device location");
+                            mLastKnownLocation = task.getResult();
+                            if (mLastKnownLocation != null) {
+                                mMap.moveCamera(CameraUpdateFactory.newLatLng(
+                                        new LatLng(mLastKnownLocation.getLatitude(),
+                                                mLastKnownLocation.getLongitude())));
+                            }
+                        } else {
+                            Toast.makeText(map_main.this, "Current Location is null ", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Current location is null. Using defaults.");
+                            Log.e(TAG, "Exception: %s", task.getException());
+                            mMap.moveCamera(CameraUpdateFactory
+                                    .newLatLng(mDefaultLocation));
+                            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                        }
+                    }
+                });
+            }
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", Objects.requireNonNull(e.getMessage()));
+        }
+    }
+
+
+
+    /* permission */
+
+    private boolean getLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true;
+            //Toast.makeText(map_main.this, "Get location permission success.", Toast.LENGTH_SHORT).show();
+            System.out.println("get success");
+            return true;
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            Toast.makeText(map_main.this, "Get location permission fail.", Toast.LENGTH_SHORT).show();
+            System.out.println("get fail");
+            return false;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //Toast.makeText(map_main.this, "in the on request location.", Toast.LENGTH_SHORT).show();
+        System.out.println("in the request location");
+        mLocationPermissionGranted = false;
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mLocationPermissionGranted = true;
+                }
+            }
+        }
+        updateLocationUI();
+    }
+
+
+    /* check & update */
+
+    public static boolean isOPen(final Context context) {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    } //check gps open
+
+    public boolean checkBounds(LatLng cur_location, Circle checkpoint) {
+        double distance = SphericalUtil.computeDistanceBetween(cur_location, checkpoint.getCenter());
+        System.out.println("cur: " + cur_location + ". cen:" + checkpoint.getCenter() + ". r: " + checkpoint.getRadius() + ". Distance: " + distance);
+        return distance <= checkpoint.getRadius();
+    }
+
+    public boolean isChecked(double lat, double lng) {
+        for(int i = 0; i < appCookies.userCheckedPoints.size(); i++) { //check whether the latlng exists in the copy array
+            if(lat == appCookies.userCheckedPoints.get(i).getLatitude()
+                    && lng == appCookies.userCheckedPoints.get(i).getLongitude()){
+                //System.out.println("now pass: " + lat + " ~ " + lng);
+                //System.out.println("now in arr: " + gp_checkPoint.get(i).getLatitude() + " ~ " + gp_checkPoint.get(i).getLongitude());
+                return true;
+            }
+        }
+        System.out.println("Not existed.");
+        return false;
+    }
+
+    private void updateMarkers(){ //change colour for checked circle -- warning: used after getPoint() //Toast.makeText(map_main.this, "Update markers", Toast.LENGTH_SHORT).show();
+        double lat1, lat2, lng1, lng2;
+        System.out.println("The size: " + appCookies.userCheckedPoints.size());
+        for(int i = 0; i < appCookies.userCheckedPoints.size(); i++) {
+            lat1 = appCookies.userCheckedPoints.get(i).getLatitude();
+            lng1 = appCookies.userCheckedPoints.get(i).getLongitude();
+
+            for(int j = 0; j < markerList.size(); j++) {
+                lat2 = markerList.get(j).getPosition().latitude;
+                lng2 = markerList.get(j).getPosition().longitude;
+
+                if(lat1 == lat2 && lng1 == lng2){
+                    markerList.get(j).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)); // checked marker
+
+                    String lat_t = String.valueOf(markerList.get(j).getPosition().latitude);
+                    String lng_t = String.valueOf(markerList.get(j).getPosition().longitude);
+                    if(!markedTil.contains(markerList.get(j).getTitle())) { // discard duplicate
+                        markedLat.add(lat_t);
+                        markedLng.add(lng_t);
+                        markedTil.add(markerList.get(j).getTitle());
+                    }
+                }
+            }
+        }
+    }
+
+    private void updateLocationUI() {
+        if (mMap == null) { return; }
+        try {
+            if (mLocationPermissionGranted) {
+                mMap.setMyLocationEnabled(true);
+                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            } else {
+                mMap.setMyLocationEnabled(false);
+                mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                mLastKnownLocation = null;
+                getLocationPermission();
+            }
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", Objects.requireNonNull(e.getMessage()));
+        }
+    }
+
+
+    /* function check & list & click*/
+
     public void map_CheckPoints(View view) throws InterruptedException { // once button, all check
         if(map_GetCurrentLocation(view)){
             updateMarkers();
@@ -337,6 +388,69 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
         intent_toPoint.putExtra("ofi_til", markedTil);
 
         startActivity(intent_toPoint);
+    }
+
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+        if(marker.getPosition().equals(cus_loc) && !Objects.equals(getIntent().getStringExtra("from"), "map_points")) {
+            marker.showInfoWindow();
+
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setTitle("Collect");
+            dialog.setMessage("Do you want to collect this place?");
+            dialog.setPositiveButton("Yes",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            CollectionReference colPoiRef = db.collection("users").
+                                    document(appCookies.userID).collection("points");
+
+                            Map<String, Object> data = new HashMap<>();
+                            data.put("latitude", cus_lat);
+                            data.put("longitude", cus_lng);
+                            data.put("location", cus_mkr.getTitle());
+
+                            // colPoiRef.document(cus_mkr.getTitle()).set(data, SetOptions.merge());
+                            db.collection("users").
+                                    document(appCookies.userID).collection("points").document(cus_mkr.getTitle())
+                                    .set(data, SetOptions.merge());
+
+                            Toast.makeText(map_main.this, "Collect Successfully!", Toast.LENGTH_SHORT).show();
+                            //Intent intent = new Intent(map_main.this, map_main.class);//flush this page
+                            //startActivity(intent);
+                        }
+                    });
+            dialog.setNegativeButton("No",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) { }
+                    });
+            dialog.show();
+        }
+
+        return false;
+    }
+
+
+    /* add items to map */
+    private void addOfficialMarkers() { // official check points
+        mkrBeijing = mMap.addMarker(new MarkerOptions().position(Beijing).title("Beijing, Capital of China. \uD83C\uDDE8\uD83C\uDDF3."));
+        mkrUL = mMap.addMarker(new MarkerOptions().position(UL).title("University of Limerick, Ireland. \uD83C\uDDEE\uD83C\uDDEA"));
+        mkrWashington = mMap.addMarker(new MarkerOptions().position(Washington).title("Washington, Capital of USA. \uD83C\uDDFA\uD83C\uDDF8"));
+        mkrSydney = mMap.addMarker(new MarkerOptions().position(Sydney).title("Sydney, Capital of Australia. \uD83C\uDDE6\uD83C\uDDFA"));
+        mkrBerlin = mMap.addMarker(new MarkerOptions().position(Berlin).title("Berlin, Capital of Germany \uD83C\uDDE9\uD83C\uDDEA."));
+
+        mkrDrag = mMap.addMarker(new MarkerOptions().position(new LatLng(51.5, 0.1)).title("Drag me to get the position!"));
+        //修改logo mkrDrag.setIcon();
+        mkrDrag.setDraggable(true);
+
+        markerList.add(mkrBeijing);
+        markerList.add(mkrUL);
+        markerList.add(mkrWashington);
+        markerList.add(mkrSydney);
+        markerList.add(mkrBerlin);
     }
 
     private void addObjectsToMap() {
@@ -388,136 +502,36 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
         circlesList.add(BerlinCircle);
     }
 
-    private boolean getLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            mLocationPermissionGranted = true;
-            //Toast.makeText(map_main.this, "Get location permission success.", Toast.LENGTH_SHORT).show();
-            System.out.println("get success");
-            return true;
-        } else {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-            Toast.makeText(map_main.this, "Get location permission fail.", Toast.LENGTH_SHORT).show();
-            System.out.println("get fail");
-            return false;
-        }
-    }
+    public void showEurope(View v) {
+        if (mMap == null)
+            return;
+        // Create bounds that include all locations of the map
+        LatLngBounds.Builder bounds = LatLngBounds.builder()
+                .include(UL)
+                .include(Berlin);
+        // Move camera to show all markers and locations
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 200, 500, 1));
+        System.out.println("The show fun");
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        //Toast.makeText(map_main.this, "in the on request location.", Toast.LENGTH_SHORT).show();
-        System.out.println("in the request location");
-        mLocationPermissionGranted = false;
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mLocationPermissionGranted = true;
-                }
+        Intent intent = getIntent(); // custom design points from chat
+        System.out.println("intent: " + intent);
+        if(intent != null) {
+            System.out.println("now the in: " + intent);
+            //System.out.println("the lat: " + intent.getStringExtra("latitude"));
+            String cus_lat_str = intent.getStringExtra("latitude");
+            String cus_lng_str = intent.getStringExtra("longitude");
+
+            if(cus_lat_str != null && cus_lng_str != null) {
+                cus_lat = Double.parseDouble(cus_lat_str);
+                cus_lng = Double.parseDouble(cus_lng_str);
+                String cus_add = intent.getStringExtra("location");
+                cus_loc = new LatLng(cus_lat, cus_lng);
+                System.out.println("------" + cus_loc + " address: " + cus_add);
+
+                cus_mkr = mMap.addMarker(new MarkerOptions().position(cus_loc).title(cus_add));
+                cus_mkr.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(cus_loc));
             }
         }
-        updateLocationUI();
-    }
-
-    private void updateLocationUI() {
-        if (mMap == null) { return; }
-        try {
-            if (mLocationPermissionGranted) {
-                mMap.setMyLocationEnabled(true);
-                mMap.getUiSettings().setMyLocationButtonEnabled(true);
-            } else {
-                mMap.setMyLocationEnabled(false);
-                mMap.getUiSettings().setMyLocationButtonEnabled(false);
-                mLastKnownLocation = null;
-                getLocationPermission();
-            }
-        } catch (SecurityException e)  {
-            Log.e("Exception: %s", Objects.requireNonNull(e.getMessage()));
-        }
-    }
-
-    private void updateMarkers(){ //change colour for checked circle -- warning: used after getPoint() //Toast.makeText(map_main.this, "Update markers", Toast.LENGTH_SHORT).show();
-        double lat1, lat2, lng1, lng2;
-        System.out.println("The size: " + appCookies.userCheckedPoints.size());
-        for(int i = 0; i < appCookies.userCheckedPoints.size(); i++) {
-            lat1 = appCookies.userCheckedPoints.get(i).getLatitude();
-            lng1 = appCookies.userCheckedPoints.get(i).getLongitude();
-
-            for(int j = 0; j < markerList.size(); j++) {
-                lat2 = markerList.get(j).getPosition().latitude;
-                lng2 = markerList.get(j).getPosition().longitude;
-
-                if(lat1 == lat2 && lng1 == lng2){
-                    markerList.get(j).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)); // checked marker
-
-                    String lat_t = String.valueOf(markerList.get(j).getPosition().latitude);
-                    String lng_t = String.valueOf(markerList.get(j).getPosition().longitude);
-                    if(!markedTil.contains(markerList.get(j).getTitle())) { // discard duplicate
-                        markedLat.add(lat_t);
-                        markedLng.add(lng_t);
-                        markedTil.add(markerList.get(j).getTitle());
-                    }
-                }
-            }
-        }
-    }
-
-    private void getDeviceLocation() {
-        try {
-            if (mLocationPermissionGranted) {
-                Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful()) {
-                            //System.out.println("get device location");
-                            mLastKnownLocation = task.getResult();
-                            if (mLastKnownLocation != null) {
-                                mMap.moveCamera(CameraUpdateFactory.newLatLng(
-                                        new LatLng(mLastKnownLocation.getLatitude(),
-                                                mLastKnownLocation.getLongitude())));
-                            }
-                        } else {
-                            Toast.makeText(map_main.this, "Current Location is null ", Toast.LENGTH_SHORT).show();
-                            Log.d(TAG, "Current location is null. Using defaults.");
-                            Log.e(TAG, "Exception: %s", task.getException());
-                            mMap.moveCamera(CameraUpdateFactory
-                                    .newLatLng(mDefaultLocation));
-                            mMap.getUiSettings().setMyLocationButtonEnabled(false);
-                        }
-                    }
-                });
-            }
-        } catch (SecurityException e)  {
-            Log.e("Exception: %s", Objects.requireNonNull(e.getMessage()));
-        }
-    }
-
-    public static boolean isOPen(final Context context) {
-        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-    } //check gps open
-
-    public boolean checkBounds(LatLng cur_location, Circle checkpoint) {
-        double distance = SphericalUtil.computeDistanceBetween(cur_location, checkpoint.getCenter());
-        System.out.println("cur: " + cur_location + ". cen:" + checkpoint.getCenter() + ". r: " + checkpoint.getRadius() + ". Distance: " + distance);
-        return distance <= checkpoint.getRadius();
-    }
-
-    public boolean isChecked(double lat, double lng) {
-        for(int i = 0; i < appCookies.userCheckedPoints.size(); i++) { //check whether the latlng exists in the copy array
-            if(lat == appCookies.userCheckedPoints.get(i).getLatitude()
-                    && lng == appCookies.userCheckedPoints.get(i).getLongitude()){
-                //System.out.println("now pass: " + lat + " ~ " + lng);
-                //System.out.println("now in arr: " + gp_checkPoint.get(i).getLatitude() + " ~ " + gp_checkPoint.get(i).getLongitude());
-                return true;
-            }
-        }
-        System.out.println("Not existed.");
-        return false;
     }
 }
