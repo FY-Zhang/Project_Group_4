@@ -22,8 +22,8 @@
         style="@style/FirebaseUI.Button"
         android:layout_width="match_parent"
         android:layout_height="57dp"
-        android:layout_marginTop="52dp"
-        android:background="@color/fui_bgFacebook"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/ic_action_name"
         android:text="modify"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
@@ -145,7 +145,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/fui_bgFacebook"
+            android:background="@drawable/fui_ic_anonymous_white_24dp"
             android:text="@string/me"
             android:textAllCaps="false" />
 

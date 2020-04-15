@@ -2,22 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="20dp">
 
     <TextView
         android:id="@+id/dis_ofi_latlng"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/dis_ofi_loc"
         android:layout_width="match_parent"
         android:layout_height="53dp"
+        android:paddingLeft="15dp"
         android:text="TextView" />
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 </LinearLayout>

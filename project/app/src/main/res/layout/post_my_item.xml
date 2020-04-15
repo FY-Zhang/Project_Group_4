@@ -7,19 +7,30 @@
     <LinearLayout
         android:id="@+id/layout_display_my"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp">
 
         <LinearLayout
-            android:layout_width="312dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="8"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="5px">
 
             <TextView
                 android:id="@+id/tv_title_my"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Title" />
+                android:paddingLeft="15dp"
+                android:text="Title"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_dtc_my"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:text="dtc" />
 
             <EditText
                 android:id="@+id/tv_content_my"
@@ -29,19 +40,13 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:gravity="start|top"
-                android:inputType="textMultiLine" />
+                android:inputType="textMultiLine"
+                android:minHeight="81dp"
+                android:paddingLeft="15dp"
+                android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/tv_dtc_my"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="dtc" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>

@@ -24,12 +24,13 @@
         style="@style/FirebaseUI.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="62dp"
         android:layout_weight="1"
 
-        android:text="submit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rg_sex" />
+        android:background="@color/fui_bgFacebook"
+        android:text="@string/fui_button_text_save"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <RadioGroup
         android:id="@+id/rg_sex"
@@ -72,10 +73,10 @@
         android:layout_height="47dp"
         android:layout_marginTop="3dp"
         android:ems="10"
+        android:focusableInTouchMode="false"
         android:hint="Birthday"
         android:inputType="date"
         android:onClick="setBirthday"
-        android:focusableInTouchMode="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_email_til" />
 
