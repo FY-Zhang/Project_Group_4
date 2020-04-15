@@ -56,6 +56,7 @@ import static com.example.groupproject.appCookies.storeData;
 import static com.example.groupproject.appCookies.userAvatar;
 import static com.example.groupproject.appCookies.userChecked;
 import static com.example.groupproject.appCookies.userFavorite;
+import static com.example.groupproject.appCookies.userPhone;
 
 
 public class friendlistActivity extends AppCompatActivity {
@@ -72,6 +73,7 @@ public class friendlistActivity extends AppCompatActivity {
     private String userEmail = new String();
     private String userGender = new String();
     private String userBirthday = new String();
+    private String userPhone = new String();
     private boolean userDisplay = false;
     private String userAvatar = new String();
     private ArrayList<String> userFavorite = new ArrayList<String>();
@@ -194,15 +196,14 @@ public class friendlistActivity extends AppCompatActivity {
                         || event.getAction() == KeyEvent.ACTION_DOWN
                         || event.getAction() == KeyEvent.KEYCODE_ENTER) {
 
-                    searchAdapter.clear();
-
                     getSearchResult();
-                    textInputEditText.setText("");
                     //execute method for searching
                 }
                 return false;
             }
         });
+
+
     }
 
     private void getSearchResult() {
@@ -215,6 +216,7 @@ public class friendlistActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
+                            searchResult.clear();
                             for(QueryDocumentSnapshot document: task.getResult()){
                                 if(document.getData().get("email").toString().contains(input)){
                                     searchResult.add(document.getData().get("username").toString());
@@ -224,6 +226,7 @@ public class friendlistActivity extends AppCompatActivity {
                             if(searchResult.size() == 0)
                                 Toast.makeText(friendlistActivity.this, "Sorry, no matched user :(", Toast.LENGTH_LONG).show();
 
+                            searchAdapter.clear();
                             searchAdapter.addAll(searchResult);
                         }else {
                             Toast.makeText(friendlistActivity.this, "Error doing search", Toast.LENGTH_SHORT).show();
@@ -231,6 +234,7 @@ public class friendlistActivity extends AppCompatActivity {
                     }
                 });
         searchList.setAdapter(searchAdapter);
+        textInputEditText.setText("");
     }
 
     private void getUserInfo(FirebaseUser user){
@@ -250,6 +254,7 @@ public class friendlistActivity extends AppCompatActivity {
                         if(documentSnapshot.getString("email") == null){
                             initializeUserInfo(userID, userEmail);
                             startActivity(intent);
+                            finish();
                         }
                             storeUserInfo(documentSnapshot);
                             storeFriendsInfo();
@@ -281,6 +286,7 @@ public class friendlistActivity extends AppCompatActivity {
         newUser.put("birthday", "1900/01/01");
         newUser.put("display", false);
         newUser.put("username", userEmail);
+        newUser.put("phone", "");
         newUser.put("checkPoint",new ArrayList<String>());
         newUser.put("friends", tempFriends);
         newUser.put("favorite", new ArrayList<String>());
@@ -311,6 +317,9 @@ public class friendlistActivity extends AppCompatActivity {
         }
         if((ArrayList<String>)data.get("friends") != null){
             userFriendsID = (ArrayList<String>)data.get("friends");
+        }
+        if(data.getString("phone") != null){
+            userPhone = data.getString("phone");
         }
         if((ArrayList<GeoPoint>) data.get("checkPoint") != null) {
             userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
@@ -383,7 +392,7 @@ public class friendlistActivity extends AppCompatActivity {
                         notificationAdapter.addAll(notificationContent);
                         storeData(username, userID, userEmail, userGender, userBirthday,
                                 userDisplay, userFriends, userCheckedPoints, userFriendsID,
-                                userAvatar, userFavorite);
+                                userAvatar, userFavorite, userPhone);
                     }
                 });
     }
@@ -413,7 +422,6 @@ public class friendlistActivity extends AppCompatActivity {
                 return true;
             case R.id.search:
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.hide(friendList);
                 fragmentTransaction.show(search);
                 fragmentTransaction.commit();
             default:
@@ -448,5 +456,11 @@ public class friendlistActivity extends AppCompatActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void showFriendlist(View view){
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.hide(search);
+        fragmentTransaction.commit();
     }
 }

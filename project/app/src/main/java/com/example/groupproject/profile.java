@@ -155,7 +155,7 @@ public class profile extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users")
                 .document(UID)
-                .update("notifications", "0-0-"+FieldValue.arrayUnion(userID));
+                .update("notifications", FieldValue.arrayUnion("0-0-"+userID));
         /*db.collection("users")
                 .document(UID)
                 .get()

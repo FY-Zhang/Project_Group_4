@@ -75,6 +75,7 @@ public class fragment_modify_setting extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 852;
 
     private TextInputLayout txt_username;
+    private TextInputLayout txt_phone;
     private TextInputLayout txt_email;
     private TextInputLayout txt_password;
     private FirebaseUser user_set = FirebaseAuth.getInstance().getCurrentUser();
@@ -238,6 +239,7 @@ public class fragment_modify_setting extends Fragment {
         String user_birthday = appCookies.userBirthday;
         final String user_sex = appCookies.userGender;
         Boolean user_display = appCookies.userDisplay;
+        String user_phone = appCookies.userPhone;
 
         //initial original display
         txt_username = view.findViewById(R.id.txt_username_til);
@@ -251,6 +253,10 @@ public class fragment_modify_setting extends Fragment {
         txt_password = view.findViewById(R.id.txt_password_til);
         EditText txt_password_txt = view.findViewById(R.id.txt_password_txt);
         txt_password_txt.setText(user_psw);
+
+        txt_phone = view.findViewById(R.id.txt_phone_til);
+        EditText txt_phone_txt = view.findViewById(R.id.txt_phone_txt);
+        txt_phone_txt.setText(user_phone);
 
         EditText txt_birthday_txt = view.findViewById(R.id.txt_birthday_txt);
         txt_birthday_txt.setText(user_birthday);
@@ -282,6 +288,11 @@ public class fragment_modify_setting extends Fragment {
                 String user_name = txt_username_txt.getText().toString();
                 userRef.update("username", user_name);
                 appCookies.username = user_name;
+
+                EditText txt_phone_txt = view.findViewById(R.id.txt_phone_txt);
+                String user_phone = txt_phone_txt.getText().toString();
+                userRef.update("phone", user_phone);
+                appCookies.userPhone = user_phone;
 
                 EditText txt_password_txt = view.findViewById(R.id.txt_password_txt);
                 String user_psw = txt_password_txt.getText().toString();

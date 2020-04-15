@@ -62,44 +62,14 @@
             android:text="post" />
     </LinearLayout>
 
-    <LinearLayout
+
+    <fragment
+        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="#707070"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_editor_absoluteX="0dp">
-
-        <Button
-            android:id="@+id/friendlist"
-            style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#707070"
-            android:onClick="toFriendlist"
-            android:text="Friends" />
-
-        <Button
-            android:id="@+id/channel"
-            style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#707070"
-            android:onClick="toChannel"
-            android:text="Channel" />
-
-        <Button
-            android:id="@+id/setting"
-            style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#707070"
-            android:onClick="toSetting"
-            android:text="Setting" />
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        android:name="com.example.groupproject.bottom_bar"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -150,7 +150,7 @@ public class new_post extends AppCompatActivity {
                         }
                     });
         }else {
-
+            toSubmit("");
         }
     }
 }

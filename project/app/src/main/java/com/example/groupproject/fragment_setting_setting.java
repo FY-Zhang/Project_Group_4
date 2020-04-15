@@ -103,6 +103,10 @@ public class fragment_setting_setting extends Fragment {
                                 TextView tv4 = view.findViewById(R.id.dis_birthday);
                                 tv4.setText(document.getString("birthday"));
                                 System.out.println(document.getString("birthday"));
+
+                                TextView tv5 = view.findViewById(R.id.dis_phone);
+                                tv5.setText(document.getString("phone"));
+                                System.out.println(document.getString("phone"));
                             }
                         }
                     }

@@ -78,7 +78,7 @@
         android:inputType="date"
         android:onClick="setBirthday"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_email_til" />
+        app:layout_constraintTop_toBottomOf="@+id/phoneBox" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txt_username_til"
@@ -135,6 +135,44 @@
             android:hint="Password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/phoneBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/txt_email_til"
+            android:layout_marginTop="3dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+353"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_weight="2"
+                android:id="@+id/txt_phone_til"
+                android:layout_width="409dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="3dp"
+                app:errorEnabled="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_email_til">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_phone_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone"
+                    android:inputType="textEmailAddress"
+                    tools:layout_editor_absoluteX="33dp"
+                    tools:layout_editor_absoluteY="494dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
 
     <ImageView
         android:id="@+id/imageView2"

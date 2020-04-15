@@ -28,7 +28,6 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".SplashScreen"></activity>
         <activity android:name=".map_points" />
-        <activity android:name=".post_album" />
         <activity android:name=".post_favorite" />
         <activity android:name=".post_friend" />
         <activity android:name=".profile" />

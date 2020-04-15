@@ -7,7 +7,7 @@
     android:adjustViewBounds="true"
     android:orientation="vertical"
     android:textIsSelectable="true"
-    Android:cardBackgroundColor="@color/common_google_signin_btn_text_light_disabled"
+    Android:cardBackgroundColor="#E2CC5D"
     Android:cardElevation="0dp"
     Android:cardMaxElevation="0dp">
 
