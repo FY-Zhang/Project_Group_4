@@ -37,7 +37,6 @@
             android:gravity="center"
             android:textSize="30dp"
             android:textStyle="bold"
-            android:text="TextView"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="80dp" />
 
@@ -47,7 +46,6 @@
             android:layout_height="60dp"
             android:gravity="center"
             android:textSize="10dp"
-            android:text="TextView"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="150dp" />
 
@@ -61,7 +59,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:text="TextView"
                 android:textSize="20dp"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="210dp" />

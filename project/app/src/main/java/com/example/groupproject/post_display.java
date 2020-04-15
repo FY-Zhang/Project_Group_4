@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -147,6 +148,7 @@ public class post_display extends AppCompatActivity {
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         database.collection("post").document(postId).update("like", post_like + 1);
 
+        finish();
         Intent intent = new Intent();
         intent.putExtra("post_id", postId);
         intent.setClass(this, post_display.class);
@@ -159,6 +161,7 @@ public class post_display extends AppCompatActivity {
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         database.collection("post").document(postId).update("like", post_like - 1);
 
+        finish();
         Intent intent = new Intent();
         intent.putExtra("post_id", postId);
         intent.setClass(this, post_display.class);
