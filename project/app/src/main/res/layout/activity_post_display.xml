@@ -47,7 +47,9 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="center"
+
             android:text="TextView"
+
             android:textSize="10dp"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="150dp" />
@@ -62,7 +64,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:text="TextView"
                 android:textSize="20dp"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="210dp" />
