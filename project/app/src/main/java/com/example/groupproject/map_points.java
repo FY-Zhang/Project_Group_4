@@ -45,7 +45,7 @@ public class map_points extends AppCompatActivity {
         setContentView(R.layout.activity_map_points);
 
         /*ofi poi*/
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         if(intent != null){
             markedLat = intent.getStringArrayListExtra("ofi_lat");
             markedLng = intent.getStringArrayListExtra("ofi_lng");
@@ -75,6 +75,8 @@ public class map_points extends AppCompatActivity {
         final String[] from_my = new String[]{"latlng","location"};
         final int[] to_my = new int[]{R.id.dis_my_latlng,R.id.dis_my_loc};
         final List<String> pointId = new ArrayList<>();// array for id of points
+        final List<Double> points_lat_my = new ArrayList<>();//record lat lng
+        final List<Double> points_lng_my = new ArrayList<>();//record lat lng
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference colPoiRef = db.collection("users").document(appCookies.userID).collection("points");
@@ -92,7 +94,9 @@ public class map_points extends AppCompatActivity {
 
                                 myList.add(my_poi);
                                 pointId.add(document.getId());
-                                System.out.println("pointID.. " + pointId);
+                                points_lat_my.add((Double) document.get("latitude"));
+                                points_lng_my.add((Double) document.get("longitude"));
+                                System.out.println("pointID.. " + pointId + "lat: " + points_lat_my + " lng: " + points_lng_my);
                             }
                             final SimpleAdapter simpleAdapter_my = new SimpleAdapter(map_points.this, myList, R.layout.point_item_my, from_my, to_my);
                             final ListView listView_my = findViewById(R.id.lv_myPoi);
@@ -102,9 +106,9 @@ public class map_points extends AppCompatActivity {
                                 @Override
                                 public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                                     AlertDialog.Builder dialog = new AlertDialog.Builder(map_points.this);
-                                    dialog.setTitle("Delete");
-                                    dialog.setMessage("Do you want to cancel collect?");
-                                    dialog.setPositiveButton("Yes",
+                                    dialog.setTitle("Points");
+                                    dialog.setMessage("My points operations");
+                                    dialog.setPositiveButton("Delete",
                                             new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
@@ -117,6 +121,21 @@ public class map_points extends AppCompatActivity {
                                                     myList.remove(position);
                                                     simpleAdapter_my.notifyDataSetChanged();
                                                     listView_my.invalidate();
+                                                }
+                                            });
+                                    dialog.setNeutralButton("Go",
+                                            new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    System.out.println("Info:--- " + points_lat_my.get(position) + " , " + points_lng_my.get(position));
+
+                                                    Intent intent_toMap = new Intent(map_points.this, map_main.class);
+                                                    intent_toMap.putExtra("latitude", points_lat_my.get(position).toString());
+                                                    intent_toMap.putExtra("longitude", points_lng_my.get(position).toString());
+                                                    intent_toMap.putExtra("location", "Destination");
+                                                    intent_toMap.putExtra("from", "map_points");
+
+                                                    startActivity(intent_toMap);
                                                 }
                                             });
                                     dialog.setNegativeButton("No",

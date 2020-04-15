@@ -9,35 +9,22 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#3872AA"
+        android:layout_height="wrap_content"
+        android:background="@color/fui_bgFacebook"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/discover"
         tools:layout_editor_absoluteX="0dp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="5dp"
-        android:gravity="center"
-        android:text="Channel"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:layout_editor_absoluteX="150dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="32dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <Button
             android:id="@+id/channel1"
@@ -152,9 +139,7 @@
         android:id="@+id/linearLayout7"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:layout_marginBottom="51dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
         <Button
@@ -179,43 +164,47 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout8"
+        android:id="@+id/linearLayout11"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="#707070"
+        android:layout_height="wrap_content"
+        android:background="@color/fui_bgFacebook"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_editor_absoluteX="0dp">
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/friendlist"
-            style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/FirebaseUI.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#707070"
+            android:background="@color/fui_bgFacebook"
             android:onClick="toFriendlist"
-            android:text="Friends" />
+            android:text="@string/chats"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/channel"
-            style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/FirebaseUI.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#707070"
+            android:background="@color/fui_bgFacebook"
             android:onClick="toChannel"
-            android:text="Channel" />
+            android:text="@string/discover"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/setting"
-            style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/FirebaseUI.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#707070"
+            android:background="@color/fui_bgFacebook"
             android:onClick="toSetting"
-            android:text="Setting" />
+            android:text="@string/me"
+            android:textAllCaps="false" />
+
     </LinearLayout>
 
 

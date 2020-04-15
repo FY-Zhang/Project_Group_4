@@ -315,13 +315,10 @@ public class fragment_modify_setting extends Fragment {
                 }
 
                 if(validateUsername(user_name) && validateEmail(user_email) && validatePassword(user_psw)) {
-                    Navigation.findNavController(v).navigate(R.id.action_modify_to_setting);
-                    //user.updatePassword("123456");
-                    //user_set.sendEmailVerification(); 使用真实邮件/后期使用
-                    // FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                    //获取修改密码的code?
-                    //firebaseAuth.sendPasswordResetEmail(user.getEmail());
-                    //firebaseAuth.verifyPasswordResetCode();
+                    //Navigation.findNavController(v).navigate(R.id.action_modify_to_setting);
+                    Intent intent_store = new Intent(getActivity(), setting_main.class);
+                    intent_store.putExtra("action", "did");
+                    getActivity().startActivity(intent_store);
                     Toast.makeText(getActivity(), "Submitted Successfully!", Toast.LENGTH_SHORT).show();
                 }
                 uploadFile();

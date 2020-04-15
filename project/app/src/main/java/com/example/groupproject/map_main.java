@@ -132,6 +132,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
 
         addOfficialMarkers();
         addObjectsToMap();
+
         showEurope(null); //or chat loc
 
         getLocationPermission();
@@ -168,7 +169,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
                 .include(UL)
                 .include(Berlin);
         // Move camera to show all markers and locations
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 200));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 200, 500, 1));
         System.out.println("The show fun");
 
         Intent intent = getIntent(); // custom design points from chat
@@ -195,7 +196,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
-        if(marker.getPosition().equals(cus_loc)) {
+        if(marker.getPosition().equals(cus_loc) && !Objects.equals(getIntent().getStringExtra("from"), "map_points")) {
             marker.showInfoWindow();
 
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -236,14 +237,12 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
         return false;
     }
 
-    public void map_GetCurrentLocation(View view) {
-        if (mMap == null) { return; }
-
-        getLocationPermission();//check again
+    public boolean map_GetCurrentLocation(View view) throws InterruptedException {
+        if (mMap == null) { return false; }
 
         if(isOPen(view.getContext())) {// if has open GPS
             getDeviceLocation();
-            if (mLocationPermissionGranted) { //if permission established
+            if(mLocationPermissionGranted) { //if permission established
 
                 getDeviceLocation();
 
@@ -251,7 +250,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
                     int try_t = 0;
                     cur_lat = 52.00;
                     cur_lng = -8.00;
-                    Toast.makeText(map_main.this, "Getting address ..." , Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(map_main.this, "Getting address ..." , Toast.LENGTH_SHORT).show();
 
                     while(mLastKnownLocation == null && try_t < 10) { //try to get location
                         getDeviceLocation();
@@ -265,17 +264,19 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
                         cur_lat = mLastKnownLocation.getLatitude();
                         cur_lng = mLastKnownLocation.getLongitude();
                         Toast.makeText(map_main.this, "Lat: " + cur_lat + ". Lng: " + cur_lng, Toast.LENGTH_SHORT).show();
-                        System.out.println("1 Lat: " + cur_lat + ". Lng: " + cur_lng);
+                       // System.out.println("1 Lat: " + cur_lat + ". Lng: " + cur_lng);
                     }
                 } else {
                     cur_lat = mLastKnownLocation.getLatitude();
                     cur_lng = mLastKnownLocation.getLongitude();
                     Toast.makeText(map_main.this, "Lat: " + cur_lat + ". Lng: " + cur_lng, Toast.LENGTH_SHORT).show();
-                    System.out.println("2 Lat: " + cur_lat + ". Lng: " + cur_lng);
+                   // System.out.println("2 Lat: " + cur_lat + ". Lng: " + cur_lng);
                 }
 
                 cur_loc = new LatLng(cur_lat, cur_lng);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(cur_loc));
+                return true;
+
             } else {
                 Log.i(TAG, "Please grant location permission.");
                 Toast.makeText(map_main.this, "Please grant location permission", Toast.LENGTH_SHORT).show();
@@ -288,46 +289,54 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
             Intent locationIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivityForResult(locationIntent, REQUEST_CODE_LOCATION_SETTINGS);
         }
+        return false;
     }
 
-    public void map_CheckPoints(View view) { // once button, all check
-        map_GetCurrentLocation(view);
-        updateMarkers();
+    public void map_CheckPoints(View view) throws InterruptedException { // once button, all check
+        if(map_GetCurrentLocation(view)){
+            updateMarkers();
 
-        int num = 0;
-        for(int i = 0; i < circlesList.size(); i++){
-            if (checkBounds(cur_loc, circlesList.get(i))) { //get circle center
-                double lat = circlesList.get(i).getCenter().latitude;
-                double lng = circlesList.get(i).getCenter().longitude;
+            int num = 0;
+            for(int i = 0; i < circlesList.size(); i++){
+                if (checkBounds(cur_loc, circlesList.get(i))) { //get circle center
+                    double lat = circlesList.get(i).getCenter().latitude;
+                    double lng = circlesList.get(i).getCenter().longitude;
 
-                if(isChecked(lat, lng)){ //if checked
-                    Toast.makeText(map_main.this, "You have checked!", Toast.LENGTH_SHORT).show();
-                } else { //if new, insert
-                    //String user_id = appCookies.userID;
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db.collection("users").document(appCookies.userID)
-                            .update("checkPoint", FieldValue.arrayUnion(new GeoPoint(lat, lng))); //add into db
-                    appCookies.userCheckedPoints.add(new GeoPoint(lat, lng));
-                    Toast.makeText(map_main.this, "You checked successfully!", Toast.LENGTH_SHORT).show();
+                    if(isChecked(lat, lng)){ //if checked
+                        Toast.makeText(map_main.this, "You have checked!", Toast.LENGTH_SHORT).show();
+                    } else { //if new, insert
+                        //String user_id = appCookies.userID;
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        db.collection("users").document(appCookies.userID)
+                                .update("checkPoint", FieldValue.arrayUnion(new GeoPoint(lat, lng))); //add into db
+                        appCookies.userCheckedPoints.add(new GeoPoint(lat, lng));
+                        Toast.makeText(map_main.this, "Checked successfully!", Toast.LENGTH_SHORT).show();
 
-                    System.out.println("success check * -- =");
-                    updateMarkers();
+                        System.out.println("success check * -- =");
+                        updateMarkers();
+                    }
+                    num++;
                 }
-                num++;
+            }
+
+            if(mLastKnownLocation == null) {
+                Toast.makeText(map_main.this, "Please try again", Toast.LENGTH_SHORT).show();
+            }
+            else if(num == 0) {
+                Toast.makeText(map_main.this, "No nearby check points", Toast.LENGTH_SHORT).show();
             }
         }
-        if(num == 0) { Toast.makeText(map_main.this, "No nearby check points!", Toast.LENGTH_SHORT).show(); }
     }
 
-    public void map_listView(View view) {
+    public void map_listView(View view) { //send info to point list page
         System.out.println("marked marker:--------list view in map_main ----------1");
 
-        Intent intent = new Intent(map_main.this, map_points.class);
-        intent.putExtra("ofi_lat", markedLat);
-        intent.putExtra("ofi_lng", markedLng);
-        intent.putExtra("ofi_til", markedTil);
+        Intent intent_toPoint = new Intent(map_main.this, map_points.class);
+        intent_toPoint.putExtra("ofi_lat", markedLat);
+        intent_toPoint.putExtra("ofi_lng", markedLng);
+        intent_toPoint.putExtra("ofi_til", markedTil);
 
-        startActivity(intent);
+        startActivity(intent_toPoint);
     }
 
     private void addObjectsToMap() {
@@ -379,19 +388,21 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
         circlesList.add(BerlinCircle);
     }
 
-    private void getLocationPermission() {
+    private boolean getLocationPermission() {
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true;
-            Toast.makeText(map_main.this, "Get location permission success.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(map_main.this, "Get location permission success.", Toast.LENGTH_SHORT).show();
             System.out.println("get success");
+            return true;
         } else {
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
             Toast.makeText(map_main.this, "Get location permission fail.", Toast.LENGTH_SHORT).show();
             System.out.println("get fail");
+            return false;
         }
     }
 
@@ -413,9 +424,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
     }
 
     private void updateLocationUI() {
-        if (mMap == null) {
-            return;
-        }
+        if (mMap == null) { return; }
         try {
             if (mLocationPermissionGranted) {
                 mMap.setMyLocationEnabled(true);
@@ -431,8 +440,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
         }
     }
 
-    private void updateMarkers(){ //change colour for checked circle -- warning: used after getPoint()
-        Toast.makeText(map_main.this, "Update markers", Toast.LENGTH_SHORT).show();
+    private void updateMarkers(){ //change colour for checked circle -- warning: used after getPoint() //Toast.makeText(map_main.this, "Update markers", Toast.LENGTH_SHORT).show();
         double lat1, lat2, lng1, lng2;
         System.out.println("The size: " + appCookies.userCheckedPoints.size());
         for(int i = 0; i < appCookies.userCheckedPoints.size(); i++) {
@@ -442,7 +450,6 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
             for(int j = 0; j < markerList.size(); j++) {
                 lat2 = markerList.get(j).getPosition().latitude;
                 lng2 = markerList.get(j).getPosition().longitude;
-
 
                 if(lat1 == lat2 && lng1 == lng2){
                     markerList.get(j).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)); // checked marker
@@ -470,16 +477,16 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
                             //System.out.println("get device location");
                             mLastKnownLocation = task.getResult();
                             if (mLastKnownLocation != null) {
-                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                mMap.moveCamera(CameraUpdateFactory.newLatLng(
                                         new LatLng(mLastKnownLocation.getLatitude(),
-                                                mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                                                mLastKnownLocation.getLongitude())));
                             }
                         } else {
                             Toast.makeText(map_main.this, "Current Location is null ", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "Current location is null. Using defaults.");
                             Log.e(TAG, "Exception: %s", task.getException());
                             mMap.moveCamera(CameraUpdateFactory
-                                    .newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
+                                    .newLatLng(mDefaultLocation));
                             mMap.getUiSettings().setMyLocationButtonEnabled(false);
                         }
                     }

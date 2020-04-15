@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frd_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".friendlistActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#3872AA"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:background="@color/fui_bgFacebook"
         android:minHeight="?attr/actionBarSize"
         android:scrollbarStyle="outsideOverlay"
         android:theme="?attr/actionBarTheme"
-        app:title="Friendlist" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/chats" />
 
 
     <fragment
@@ -23,28 +25,36 @@
         android:name="com.example.groupproject.fragment_search"
         android:layout_width="match_parent"
 
-        android:layout_height="52dp" />
-
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_friendlist"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <fragment
         android:id="@+id/fragment_friendlist"
         android:name="com.example.groupproject.fragment_friendlist"
         android:layout_width="match_parent"
 
-        android:layout_height="562dp" />
+        android:layout_height="577dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout10"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout10"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:background="@color/fui_bgFacebook"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/friendlist"
             style="@style/FirebaseUI.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@color/fui_bgFacebook"
             android:onClick="toFriendlist"
             android:text="@string/chats"
             android:textAllCaps="false" />
@@ -52,9 +62,10 @@
         <Button
             android:id="@+id/channel"
             style="@style/FirebaseUI.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@color/fui_bgFacebook"
             android:onClick="toChannel"
             android:text="@string/discover"
             android:textAllCaps="false" />
@@ -62,13 +73,21 @@
         <Button
             android:id="@+id/setting"
             style="@style/FirebaseUI.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@color/fui_bgFacebook"
             android:onClick="toSetting"
-            android:text="Setting"
+            android:text="@string/me"
             android:textAllCaps="false" />
+
     </LinearLayout>
 
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left" />
 
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

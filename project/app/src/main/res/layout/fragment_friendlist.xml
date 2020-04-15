@@ -15,9 +15,9 @@
 
         <ListView
             android:id="@+id/item"
-            android:background="#b98a16"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#FFFFFF"
             android:listSelector="@drawable/friendlist_item">
 
         </ListView>

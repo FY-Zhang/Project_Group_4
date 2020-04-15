@@ -11,7 +11,7 @@
         android:id="@+id/toolbar_setting"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#3872AA"
+        android:background="@color/fui_bgFacebook"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,9 +19,11 @@
 
     <Button
         android:id="@+id/btn_modify"
+        style="@style/FirebaseUI.Button"
         android:layout_width="match_parent"
         android:layout_height="57dp"
         android:layout_marginTop="52dp"
+        android:background="@color/fui_bgFacebook"
         android:text="modify"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
@@ -105,5 +107,48 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_setting" />
 
+
+    <LinearLayout
+        android:id="@+id/linearLayout10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/fui_bgFacebook"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/friendlist"
+            style="@style/FirebaseUI.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/fui_bgFacebook"
+
+            android:text="@string/chats"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/channel"
+            style="@style/FirebaseUI.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/fui_bgFacebook"
+
+            android:text="@string/discover"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/setting"
+            style="@style/FirebaseUI.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/fui_bgFacebook"
+            android:text="@string/me"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
