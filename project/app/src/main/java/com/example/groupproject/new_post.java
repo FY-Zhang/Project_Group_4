@@ -163,11 +163,8 @@ public class new_post extends AppCompatActivity {
         post.put("channel", channel);
         post.put("datetime", date);
         post.put("image", uri);
-        System.out.println("-------------------------------------------");
-        System.out.println("loc: " + cur_lat + ", " + cur_lng);
-        post.put("latitude", cur_lat); /** 获取全局 位置 **/
+        post.put("latitude", cur_lat);
         post.put("longitude", cur_lng);
-        System.out.println("-------------------------------------------");
         posts.document(time).set(post);
 
         finish();
@@ -230,13 +227,9 @@ public class new_post extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Location currentLocation = (Location) task.getResult();
 
-                                System.out.println("====1===" + currentLocation);
-                                //cur_lat = String.valueOf(currentLocation.getLatitude());
-                                //cur_lng = String.valueOf(currentLocation.getLongitude());
-
+                                cur_lat = String.valueOf(currentLocation.getLatitude());
+                                cur_lng = String.valueOf(currentLocation.getLongitude());
                                 System.out.println("latlng: " + cur_lat + " --" + cur_lng);
-                                System.out.println("===2====" + currentLocation);
-
                             } else {
                                 Toast.makeText(new_post.this, "Unable to get the current location.", Toast.LENGTH_SHORT).show();
                             }

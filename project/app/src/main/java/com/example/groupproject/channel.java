@@ -76,31 +76,10 @@ public class channel extends AppCompatActivity {
         intent.setClass(this, post.class);
         startActivity(intent);
     }
-    public void toPost8(View view){
-        Intent intent = new Intent();
-        String id = "Cl.8";
-        intent.putExtra("id", id);
-        intent.setClass(this, post.class);
-        startActivity(intent);
-    }
-    public void toPost9(View view){
-        Intent intent = new Intent();
-        String id = "Cl.9";
-        intent.putExtra("id", id);
-        intent.setClass(this, post.class);
-        startActivity(intent);
-    }
-    public void toPost10(View view){
-        Intent intent = new Intent();
-        String id = "Cl.10";
-        intent.putExtra("id", id);
-        intent.setClass(this, post.class);
-        startActivity(intent);
-    }
 
     public void toPostLocal(View view) {
         Intent intent = new Intent();
-        String id = "Local"; // actually not existed in fb.db
+        String id = "local"; // actually not existed in fb.db
         intent.putExtra("id", id);
         intent.setClass(this, post.class);
         startActivity(intent);

@@ -3,16 +3,27 @@ package com.example.groupproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,12 +36,22 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.maps.android.SphericalUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class post extends AppCompatActivity {
+
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private static final int REQUEST_CODE_LOCATION_SETTINGS = 2;
+    private boolean mLocationPermissionGranted;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private double cur_lat = 180;
+    private double cur_lng = 180;
+    private LatLng cur_latLng = new LatLng(cur_lat, cur_lng);
+
 
     Toolbar toolbar;
     private ListView listview;
@@ -44,12 +65,14 @@ public class post extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         listview = (ListView)findViewById(R.id.item);
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
-        getData();
+        getDeviceLocation();
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -65,20 +88,46 @@ public class post extends AppCompatActivity {
     }
 
     public void getData() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final String id = getIntent().getStringExtra("id");
+
+        System.out.println("ID: ------- " + id);
+        assert id != null;
+        if(id.equals("local")) { //if - local post
+            if(isOpen(findViewById(R.id.newPost).getContext())) {
+                if(getLocationPermission()) {
+                    System.out.println("Now the lat ln is: " + cur_lat + " , " + cur_lng);
+                    cur_latLng = new LatLng(cur_lat, cur_lng);
+                }
+            }
+        }
+
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("post")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        String id = getIntent().getStringExtra("id");
                         if(task.isSuccessful()) {
                             for(QueryDocumentSnapshot document: task.getResult()) {
                                 String channel = document.get("channel").toString();
                                 String title = document.get("title").toString();
                                 Map<String, Object> temp = new HashMap<>(document.getData());
-                                if(id.equals(channel))
+                                if(id.equals(channel)){ // !!! higher priority to normal channel
                                     list.add(temp);
+                                } else if(id.equals("local") && document.get("latitude") != null) { // local post
+                                    System.out.println("the ;ati: " + document.get("latitude"));
+
+                                    String post_lat = document.get("latitude").toString();
+                                    String post_lng = document.get("longitude").toString();
+                                    if(!post_lat.equals("none") && !post_lng.equals("none")) {
+                                        double p_lat = Double.parseDouble(post_lat);
+                                        double p_lng = Double.parseDouble(post_lng);
+                                        if(isInBounds(p_lat, p_lng)) {
+                                            System.out.println("xian zaide weizhi : " + cur_latLng);
+                                            list.add(temp);
+                                        }
+                                    }
+                                }
                             }
                         }
                         arrayList = setListAdapter();
@@ -108,5 +157,102 @@ public class post extends AppCompatActivity {
         intent.putExtra("id", channel);
         intent.setClass(this, new_post.class);
         startActivity(intent);
+    }
+
+    /* about map fun*/
+    private void getDeviceLocation() {
+        final LatLng fun_latlng = new LatLng(180,180);
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        System.out.println("Now the get device: " + mFusedLocationProviderClient);
+
+        getLocationPermission();
+        View view = findViewById(R.id.newPost);
+        if(isOpen(view.getContext())) {
+            try {
+                if (mLocationPermissionGranted) {
+                    //Toast.makeText(this, "location permission granted", Toast.LENGTH_LONG).show();
+                    Task location = mFusedLocationProviderClient.getLastLocation();
+
+                    location.addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if (task.isSuccessful()) {
+                                Location currentLocation = (Location) task.getResult();
+
+                                if(currentLocation != null) {
+                                    cur_lat = currentLocation.getLatitude();
+                                    cur_lng = currentLocation.getLongitude();
+                                    System.out.println("latlng: " + cur_lat + " --" + cur_lng);
+                                }
+
+                                getData();
+                            } else {
+                                Toast.makeText(post.this, "Unable to get the current location.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            } catch (SecurityException e) {
+                Log.e("Location", "Error getting device location: " + e.getMessage());
+            }
+        }
+        else{
+            Toast.makeText(post.this, "Please turn on GPS", Toast.LENGTH_SHORT).show();
+            Intent locationIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivityForResult(locationIntent, REQUEST_CODE_LOCATION_SETTINGS);
+        }
+    }
+
+    //permission
+    private boolean getLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true;
+            //Toast.makeText(map_main.this, "Get location permission success.", Toast.LENGTH_SHORT).show();
+            System.out.println("get success");
+            return true;
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            Toast.makeText(post.this, "Get location permission fail.", Toast.LENGTH_SHORT).show();
+            System.out.println("get fail");
+            return false;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //Toast.makeText(map_main.this, "in the on request location.", Toast.LENGTH_SHORT).show();
+        System.out.println("in the request location");
+        mLocationPermissionGranted = false;
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mLocationPermissionGranted = true;
+                }
+            }
+        }
+    }
+
+    public static boolean isOpen(final Context context) {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    } //check gps open
+
+    public boolean isInBounds(double p_lat, double p_lng) {
+        double dist_lat = cur_lat - p_lat;
+        double dist_lng = cur_lng - p_lng;
+
+        LatLng latLng = new LatLng(p_lat, p_lng);
+        double distance = SphericalUtil.computeDistanceBetween(latLng, cur_latLng);
+        System.out.println("distance: " + distance + "  loc: " + cur_latLng + "  po: " + latLng);
+        if(distance <= 1500)
+            return true;
+
+        return false;
     }
 }
