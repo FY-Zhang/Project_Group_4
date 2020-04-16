@@ -79,6 +79,7 @@ public class new_post extends AppCompatActivity {
 
         imgButton = findViewById(R.id.openFile);
         mapButton = findViewById(R.id.openMap);
+        imageView = findViewById(R.id.image);
         storageReference = FirebaseStorage.getInstance().getReference("post_image");
 
         imgButton.setOnClickListener(new View.OnClickListener() {

@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -143,7 +144,7 @@ public class chat_nav extends AppCompatActivity {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("users")
                     .document(friendID)
-                    .update("notifications", "1-0-"+userID);
+                    .update("notifications", FieldValue.arrayUnion("1-0-"+userID));
 
             HashMap<String, String> parama = new HashMap<>();
             parama.put("regid", FirebaseInstanceId.getInstance().getToken());
