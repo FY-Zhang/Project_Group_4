@@ -9,7 +9,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@color/fui_bgFacebook"
         app:title="Camera"
         android:minHeight="?attr/actionBarSize"
@@ -20,7 +20,7 @@
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="40dp"
         android:id="@+id/fragment_chat_location"
         android:name="com.google.android.gms.maps.SupportMapFragment"/>
