@@ -13,6 +13,7 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -38,7 +39,7 @@ import static com.example.groupproject.appCookies.userID;
 
 public class new_post extends AppCompatActivity {
 
-    Button button ;
+    ImageButton button ;
     ImageView imageView ;
     private Uri imgUri;
     private static final int PICK_IMAGE_REQUEST = 852;

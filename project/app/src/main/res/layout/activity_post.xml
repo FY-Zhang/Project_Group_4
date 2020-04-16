@@ -35,32 +35,27 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout10"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/fui_bgFacebook"
+        android:layout_height="70dp"
+        android:background="@android:color/transparent"
         android:orientation="horizontal"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/friendlist"
+        <ImageButton
+            android:id="@+id/newPost"
             style="@style/FirebaseUI.Button"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="70dp"
             android:layout_weight="1"
-            android:background="@color/fui_bgFacebook"
-            android:onClick="toBack"
-            android:text="Back" />
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/icon_add"
+            android:scaleType="fitEnd"
+            android:onClick="toNewPost"/>
 
-        <Button
-            android:id="@+id/channel"
-            style="@style/FirebaseUI.Button"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/fui_bgFacebook"
-            android:onClick="toNewPost"
-            android:text="New Post" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

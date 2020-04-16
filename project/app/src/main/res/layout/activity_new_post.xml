@@ -55,15 +55,17 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_username_modify"
             tools:layout_editor_absoluteY="250dp" />
 
-        <Button
+        <ImageButton
             android:id="@+id/openFile"
             style="@style/FirebaseUI.Button.AccountChooser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="84dp"
+            android:layout_height="54dp"
             android:layout_gravity="center"
             android:layout_marginTop="60dp"
+            android:background="@color/fui_bgFacebook"
             android:gravity="center"
-            android:text="Choose image from album" />
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/icon_addphoto" />
 
         <ImageView
             android:id="@+id/image"
@@ -73,36 +75,19 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <Button
+        android:id="@+id/submit"
+        style="@style/FirebaseUI.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:background="@color/fui_bgFacebook"
-        android:orientation="horizontal"
+        android:text="Submit"
+        android:textAllCaps="false"
+        android:onClick="toSubmit"
+        tools:ignore="OnClick"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/back"
-            style="@style/FirebaseUI.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/fui_bgFacebook"
-            android:onClick="toBack"
-            android:text="Back"
-            tools:ignore="OnClick" />
-
-        <Button
-            android:id="@+id/submit"
-            style="@style/FirebaseUI.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/fui_bgFacebook"
-            android:onClick="toSubmit"
-            android:text="Submit"
-            tools:ignore="OnClick" />
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

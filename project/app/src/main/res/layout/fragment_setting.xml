@@ -18,14 +18,51 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/myInfo"/>
 
+
+    <LinearLayout
+        android:id="@+id/linearLayout12"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:layout_marginTop="48dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/fui_bgFacebook"
+            android:layout_weight="1"
+            android:text="Edit"
+            android:textSize="20dp"
+            android:gravity="center_vertical|right"
+            style="@style/FirebaseUI.Button"
+            android:textAllCaps="false"
+            />
+
+        <ImageView
+            android:id="@+id/text2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/fui_bgFacebook"
+            android:layout_weight="1"
+            android:src="@drawable/icon_next"
+            android:scaleType="fitStart"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/btn_modify"
         style="@style/FirebaseUI.Button"
         android:layout_width="match_parent"
         android:layout_height="57dp"
         android:layout_marginTop="48dp"
-        android:background="@drawable/ic_action_name"
-        android:text="modify"
+        android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
 

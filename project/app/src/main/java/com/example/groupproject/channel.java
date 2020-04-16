@@ -104,9 +104,6 @@ public class channel extends AppCompatActivity {
         startActivity(intent);
     }
     public void toChannel(View view){
-        Intent intent = new Intent();
-        intent.setClass(this, channel.class);
-        startActivity(intent);
     }
     public void toSetting(View view) {
         Intent intent = new Intent();
