@@ -102,6 +102,7 @@ public class post extends AppCompatActivity {
         startActivity(intent);
     }
     public void toNewPost(View view){
+        finish();
         Intent intent = new Intent();
         String channel = getIntent().getStringExtra("id");
         intent.putExtra("id", channel);
