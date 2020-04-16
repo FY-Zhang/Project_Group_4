@@ -18,86 +18,76 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:layout_marginTop="40dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
-
         <Button
             android:id="@+id/channel1"
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
             android:onClick="toPost1"
+            android:background="@android:color/transparent"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
-
         <Button
             android:id="@+id/channel2"
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
             android:onClick="toPost2"
+            android:background="@android:color/transparent"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
     </LinearLayout>
-
     <LinearLayout
-        android:id="@+id/linearLayout11"
+        android:id="@+id/linearLayout41"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="32dp"
-        android:orientation="horizontal"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/icon_tech" />
-
+            app:srcCompat="@drawable/icon_tech"
+            android:scaleType="fitCenter" />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/icon_digital" />
+            app:srcCompat="@drawable/icon_digital"
+            android:scaleType="fitCenter" />
     </LinearLayout>
-
     <LinearLayout
-        android:id="@+id/linearLayout12"
+        android:id="@+id/linearLayout42"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout11">
-
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout41">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:gravity="center"
             android:text="① Technology"
-            android:textAllCaps="false" />
-
+            android:textAllCaps="false"
+            android:gravity="center" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:gravity="center"
             android:text="② Digital"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:gravity="center" />
     </LinearLayout>
-
-
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -105,80 +95,71 @@
         android:layout_height="90dp"
         android:layout_marginTop="40dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout1">
-
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
         <Button
             android:id="@+id/channel3"
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
             android:onClick="toPost3"
+            android:background="@android:color/transparent"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
-
         <Button
             android:id="@+id/channel4"
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
             android:onClick="toPost4"
+            android:background="@android:color/transparent"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/linearLayout31"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:orientation="horizontal"
+        android:layout_marginTop="32dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        app:layout_constraintTop_toTopOf="@id/linearLayout3">
-
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/icon_food" />
-
+            app:srcCompat="@drawable/icon_life"
+            android:scaleType="fitCenter" />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/icon_film" />
+            app:srcCompat="@drawable/icon_fashion"
+            android:scaleType="fitCenter" />
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/linearLayout32"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout31">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="③ Food"
-            android:textAllCaps="false" />
-
+            android:text="③ Life"
+            android:textAllCaps="false"
+            android:gravity="center" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="④ Film &#038; TV"
-            android:textAllCaps="false" />
+            android:text="④ Fashion"
+            android:textAllCaps="false"
+            android:gravity="center" />
     </LinearLayout>
-
-
 
     <LinearLayout
         android:id="@+id/linearLayout5"
@@ -187,79 +168,142 @@
         android:layout_marginTop="40dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
-
         <Button
             android:id="@+id/channel5"
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
             android:onClick="toPost5"
+            android:background="@android:color/transparent"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
-
         <Button
             android:id="@+id/channel6"
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
             android:onClick="toPost6"
+            android:background="@android:color/transparent"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/linearLayout51"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:orientation="horizontal"
+        android:layout_marginTop="32dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout5">
-
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/icon_game" />
-
+            app:srcCompat="@drawable/icon_food"
+            android:scaleType="fitCenter" />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/icon_anime" />
+            app:srcCompat="@drawable/icon_film"
+            android:scaleType="fitCenter" />
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/linearLayout52"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout51">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="⑤ Game"
-            android:textAllCaps="false" />
-
+            android:text="⑤ Food"
+            android:textAllCaps="false"
+            android:gravity="center" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="⑥Animation"
-            android:textAllCaps="false" />
+            android:text="⑥ Film &#038; TV"
+            android:textAllCaps="false"
+            android:gravity="center" />
     </LinearLayout>
 
-
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+        <Button
+            android:id="@+id/channel7"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_weight="1"
+            android:onClick="toPost7"
+            android:background="@android:color/transparent"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="116dp" />
+        <Button
+            android:id="@+id/channel8"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_weight="1"
+            android:onClick="toPost8"
+            android:background="@android:color/transparent"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="116dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout61"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/icon_game"
+            android:scaleType="fitCenter" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/icon_anime"
+            android:scaleType="fitCenter" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout62"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout61">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="⑦ Game"
+            android:textAllCaps="false"
+            android:gravity="center" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="⑧ Animation"
+            android:textAllCaps="false"
+            android:gravity="center" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout7"
@@ -267,88 +311,79 @@
         android:layout_height="90dp"
         android:layout_marginTop="40dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
-
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
         <Button
-            android:id="@+id/channel7"
+            android:id="@+id/channel9"
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
+            android:onClick="toPost9"
             android:background="@android:color/transparent"
-            android:onClick="toPost7"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
-
         <Button
-            android:id="@+id/channel8"
+            android:id="@+id/channel10"
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_weight="1"
+            android:onClick="toPost10"
             android:background="@android:color/transparent"
-            android:onClick="toPostLocal"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="116dp" />
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/linearLayout71"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:orientation="horizontal"
+        android:layout_marginTop="32dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout7">
-
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/icon_tour" />
-
+            app:srcCompat="@drawable/icon_tour"
+            android:scaleType="fitCenter" />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/icon_location" />
+            app:srcCompat="@drawable/icon_photo"
+            android:scaleType="fitCenter" />
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/linearLayout72"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout71">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="⑦ Tourism"
-            android:textAllCaps="false" />
-
+            android:text="⑨ Tourism"
+            android:textAllCaps="false"
+            android:gravity="center" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="⑧ Local"
-            android:textAllCaps="false" />
+            android:text="⑩ Photo"
+            android:textAllCaps="false"
+            android:gravity="center" />
     </LinearLayout>
-
-
 
     <fragment
         android:id="@+id/bottomBar"
-        android:name="com.example.groupproject.bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:name="com.example.groupproject.bottom_bar"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
