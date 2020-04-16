@@ -66,6 +66,7 @@ public class initial_page extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setClass(this, friendlistActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override

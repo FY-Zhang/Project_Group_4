@@ -105,7 +105,8 @@ public class fragment_setting_setting extends Fragment {
                                 System.out.println(document.getString("birthday"));
 
                                 TextView tv5 = view.findViewById(R.id.dis_phone);
-                                tv5.setText(document.getString("phone"));
+                                String[] temp = document.getString("phone").split("-");
+                                tv5.setText("+353"+temp[0]+temp[1]+temp[2]);
                                 System.out.println(document.getString("phone"));
                             }
                         }

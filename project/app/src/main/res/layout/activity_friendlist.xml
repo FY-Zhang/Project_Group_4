@@ -50,4 +50,6 @@
         android:name="com.example.groupproject.bottom_bar"/>
 
 
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

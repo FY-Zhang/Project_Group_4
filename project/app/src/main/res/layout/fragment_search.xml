@@ -33,17 +33,17 @@
     </com.google.android.material.textfield.TextInputLayout>
 
         <ListView
-            android:background="#5f824d"
             android:id="@+id/result"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxHeight="300dp"/>
+            android:layout_height="250dp"
+            android:background="#B7B6CF"
+            android:maxHeight="300dp" />
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/fui_transparent"
-            android:onClick="showFriendlist"
-            />
+            android:onClick="showFriendlist" />
     </LinearLayout>
 
 
