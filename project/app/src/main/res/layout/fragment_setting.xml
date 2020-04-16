@@ -37,6 +37,7 @@
             android:text="Edit"
             android:textSize="20dp"
             android:gravity="center_vertical|right"
+            android:paddingRight="10dp"
             style="@style/FirebaseUI.Button"
             android:textAllCaps="false"
             />
@@ -46,12 +47,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/fui_bgFacebook"
-            android:layout_weight="1"
+            android:layout_weight="7"
             android:src="@drawable/icon_next"
             android:scaleType="fitStart"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
-            android:paddingLeft="15dp"
+            android:paddingLeft="5dp"
             />
 
     </LinearLayout>

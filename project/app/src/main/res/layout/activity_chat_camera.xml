@@ -10,11 +10,11 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#3872AA"
-        app:title="Camera"
+        android:background="@color/fui_bgFacebook"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent"
+        app:title="Camera"
         tools:layout_editor_absoluteX="0dp" />
 
     <ImageView
@@ -27,42 +27,131 @@
         tools:layout_editor_absoluteX="16dp" />
 
     <LinearLayout
+        android:id="@+id/linearLayout101"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#707070"
+        android:layout_height="40dp"
+        android:background="@color/fui_bgFacebook"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_editor_absoluteX="0dp">
+        app:layout_constraintStart_toStartOf="parent">
+        <ImageView
+            android:id="@+id/ImageView1"
+            style="@style/FirebaseUI.Button"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:paddingTop="2dp"
+            android:background="@color/fui_bgFacebook"
+            app:srcCompat="@drawable/icon_drop"
+            android:scaleType="fitCenter" />
+        <ImageView
+            android:id="@+id/ImageView2"
+            style="@style/FirebaseUI.Button"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:paddingTop="2dp"
+            android:paddingBottom="0dp"
+            android:background="@color/fui_bgFacebook"
+            app:srcCompat="@drawable/icon_retake"
+            android:scaleType="fitCenter" />
+        <ImageView
+            android:id="@+id/ImageView3"
+            style="@style/FirebaseUI.Button"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:paddingTop="2dp"
+            android:paddingBottom="0dp"
+            android:background="@color/fui_bgFacebook"
+            app:srcCompat="@drawable/icon_send2"
+            android:scaleType="fitCenter"/>
+    </LinearLayout>
 
-        <Button
+    <LinearLayout
+        android:id="@+id/linearLayout11"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@color/fui_bgFacebook"
+        android:orientation="horizontal"
+        android:layout_marginTop="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="11dp"
+            style="@style/FirebaseUI.Button"
+            android:background="@color/fui_bgFacebook"
+            android:text="Drop"
+            android:textAllCaps="false"/>
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="11dp"
+            style="@style/FirebaseUI.Button"
+            android:background="@color/fui_bgFacebook"
+            android:text="Retake"
+            android:textAllCaps="false"/>
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="11dp"
+            style="@style/FirebaseUI.Button"
+            android:background="@color/fui_bgFacebook"
+            android:text="send"
+            android:textAllCaps="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout10"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@android:color/transparent"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <ImageButton
             android:onClick="onDropClick"
             android:id="@+id/dropBtn"
-            style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/FirebaseUI.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#707070"
-            android:text="Drop" />
-
-        <Button
+            android:paddingTop="2dp"
+            android:background="@android:color/transparent" />
+        <ImageButton
             android:onClick="onRetakeClick"
             android:id="@+id/reTakeBtn"
-            style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/FirebaseUI.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#707070"
-            android:text="Retake" />
-        <Button
+            android:paddingTop="2dp"
+            android:background="@android:color/transparent" />
+        <ImageButton
             android:onClick="onSendClick"
             android:id="@+id/sendBtn"
-            style="android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            style="@style/FirebaseUI.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#707070"
-            android:text="Send" />
-
+            android:paddingTop="2dp"
+            android:paddingBottom="0dp"
+            android:background="@android:color/transparent" />
     </LinearLayout>
+
+
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
