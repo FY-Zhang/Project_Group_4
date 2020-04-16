@@ -33,8 +33,8 @@
             android:layout_weight="1"
             android:paddingTop="2dp"
             style="@style/FirebaseUI.Button"
-            android:background="@color/fui_bgFacebook"
             app:srcCompat="@drawable/icon_gps"
+            android:background="@color/fui_bgFacebook"
             android:scaleType="fitCenter"/>
         <ImageView
             android:id="@+id/ImageView2"
