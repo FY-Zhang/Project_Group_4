@@ -170,6 +170,7 @@ public class new_post extends AppCompatActivity {
         System.out.println("-------------------------------------------");
         posts.document(time).set(post);
 
+        finish();
         Intent intent = new Intent();
         intent.putExtra("id", channel);
         intent.setClass(this, post.class);

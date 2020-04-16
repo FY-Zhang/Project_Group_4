@@ -18,100 +18,125 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:context=".map_main" />
 
+    <LinearLayout
+        android:id="@+id/linearLayout110"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/fui_bgFacebook"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <ImageView
+            android:id="@+id/ImageView1"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:paddingTop="2dp"
+            style="@style/FirebaseUI.Button"
+            android:background="@color/fui_bgFacebook"
+            app:srcCompat="@drawable/icon_gps"
+            android:scaleType="fitCenter"/>
+        <ImageView
+            android:id="@+id/ImageView2"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:paddingTop="2dp"
+            style="@style/FirebaseUI.Button"
+            android:background="@color/fui_bgFacebook"
+            app:srcCompat="@drawable/icon_track"
+            android:scaleType="fitCenter"/>
+        <ImageView
+            android:id="@+id/ImageView3"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:paddingTop="2dp"
+            style="@style/FirebaseUI.Button"
+            android:background="@color/fui_bgFacebook"
+            app:srcCompat="@drawable/icon_room"
+            android:scaleType="fitCenter"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout11"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@color/fui_bgFacebook"
+        android:orientation="horizontal"
+        android:layout_marginTop="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="11dp"
+            style="@style/FirebaseUI.Button"
+            android:background="@color/fui_bgFacebook"
+            android:text="Site"
+            android:textAllCaps="false"/>
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="11dp"
+            style="@style/FirebaseUI.Button"
+            android:background="@color/fui_bgFacebook"
+            android:text="Check"
+            android:textAllCaps="false"/>
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="11dp"
+            style="@style/FirebaseUI.Button"
+            android:background="@color/fui_bgFacebook"
+            android:text="List"
+            android:textAllCaps="false"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/fui_bgFacebook"
+        android:layout_height="40dp"
+        android:background="@android:color/transparent"
         android:orientation="horizontal"
-        android:layout_marginBottom="0dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-
         <ImageButton
             android:id="@+id/btn_current_map"
             style="@style/FirebaseUI.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingTop="5dp"
-            android:paddingBottom="30dp"
-            android:background="@color/fui_bgFacebook"
-            app:srcCompat="@drawable/icon_gps"
-            android:scaleType="fitCenter"
+            android:paddingTop="2dp"
+            android:background="@android:color/transparent"
             android:onClick="map_GetCurrentLocation" />
-
         <ImageButton
             android:id="@+id/btn_check_map"
             style="@style/FirebaseUI.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingTop="5dp"
-            android:paddingBottom="30dp"
-            android:background="@color/fui_bgFacebook"
-            android:onClick="map_CheckPoints"
-            app:srcCompat="@drawable/icon_track"
-            android:scaleType="fitCenter" />
-
+            android:paddingTop="2dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:onClick="map_CheckPoints"/>
         <ImageButton
             android:id="@+id/btn_pointsList"
             style="@style/FirebaseUI.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingTop="5dp"
-            android:paddingBottom="30dp"
-            android:background="@color/fui_bgFacebook"
-            android:onClick="map_listView"
-            app:srcCompat="@drawable/icon_room"
-            android:scaleType="fitCenter"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout11"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/fui_bgFacebook"
-        android:orientation="horizontal"
-        android:layout_marginTop="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/FirebaseUI.Button"
-            android:background="@color/fui_bgFacebook"
-            android:text="Site"
-            android:textAllCaps="false"/>
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/FirebaseUI.Button"
-            android:background="@color/fui_bgFacebook"
-            android:text="Check"
-            android:textAllCaps="false"/>
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/FirebaseUI.Button"
-            android:background="@color/fui_bgFacebook"
-            android:text="List"
-            android:textAllCaps="false"/>
+            android:paddingTop="2dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:onClick="map_listView"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
