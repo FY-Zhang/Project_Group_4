@@ -25,6 +25,7 @@
         android:layout_height="57dp"
         android:layout_marginTop="48dp"
         android:orientation="horizontal"
+        android:background="#3b5998"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
 
@@ -32,7 +33,7 @@
             android:id="@+id/text1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/fui_bgFacebook"
+            android:background="@android:color/transparent"
             android:layout_weight="1"
             android:text="Edit"
             android:textSize="20dp"
@@ -46,7 +47,7 @@
             android:id="@+id/text2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/fui_bgFacebook"
+            android:background="@android:color/transparent"
             android:layout_weight="7"
             android:src="@drawable/icon_next"
             android:scaleType="fitStart"
