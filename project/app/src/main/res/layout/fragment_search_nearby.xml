@@ -25,8 +25,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#71000000"
-            android:onClick="showFriendlist" />
+            android:background="#71000000" />
 </LinearLayout>
 
 </FrameLayout>
