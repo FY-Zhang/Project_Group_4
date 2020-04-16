@@ -286,7 +286,7 @@ public class fragment_modify_setting extends Fragment {
                 //get text user entered
                 EditText txt_username_txt = view.findViewById(R.id.txt_username_txt);
                 String user_name = txt_username_txt.getText().toString();
-                userRef.update("username", user_name);
+                userRef.update("username",user_name.substring(0,2) + "-"+user_name.substring(3,4)+"-"+user_name.substring(5));
                 appCookies.username = user_name;
 
                 EditText txt_phone_txt = view.findViewById(R.id.txt_phone_txt);

@@ -20,14 +20,14 @@
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
         <Button
             android:id="@+id/channel1"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:onClick="toPost1"
             android:background="@android:color/transparent"
@@ -36,7 +36,7 @@
         <Button
             android:id="@+id/channel2"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:onClick="toPost2"
             android:background="@android:color/transparent"
@@ -46,10 +46,10 @@
     <LinearLayout
         android:id="@+id/linearLayout41"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="32dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
         <ImageView
@@ -68,7 +68,7 @@
     <LinearLayout
         android:id="@+id/linearLayout42"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="20dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout41">
         <TextView
@@ -92,14 +92,14 @@
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
         <Button
             android:id="@+id/channel3"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:onClick="toPost3"
             android:background="@android:color/transparent"
@@ -108,7 +108,7 @@
         <Button
             android:id="@+id/channel4"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:onClick="toPost4"
             android:background="@android:color/transparent"
@@ -118,10 +118,10 @@
     <LinearLayout
         android:id="@+id/linearLayout31"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="32dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
         <ImageView
@@ -140,7 +140,7 @@
     <LinearLayout
         android:id="@+id/linearLayout32"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="20dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout31">
         <TextView
@@ -164,14 +164,14 @@
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
         <Button
             android:id="@+id/channel5"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:onClick="toPost5"
             android:background="@android:color/transparent"
@@ -180,7 +180,7 @@
         <Button
             android:id="@+id/channel6"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:onClick="toPost6"
             android:background="@android:color/transparent"
@@ -190,10 +190,10 @@
     <LinearLayout
         android:id="@+id/linearLayout51"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="32dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
         <ImageView
@@ -212,7 +212,7 @@
     <LinearLayout
         android:id="@+id/linearLayout52"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="20dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout51">
         <TextView
@@ -236,14 +236,14 @@
     <LinearLayout
         android:id="@+id/linearLayout6"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
         <Button
             android:id="@+id/channel7"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:onClick="toPost7"
             android:background="@android:color/transparent"
@@ -252,7 +252,7 @@
         <Button
             android:id="@+id/channel8"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:onClick="toPost8"
             android:background="@android:color/transparent"
@@ -262,10 +262,10 @@
     <LinearLayout
         android:id="@+id/linearLayout61"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="32dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
         <ImageView
@@ -284,7 +284,7 @@
     <LinearLayout
         android:id="@+id/linearLayout62"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="20dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout61">
         <TextView
@@ -308,14 +308,14 @@
     <LinearLayout
         android:id="@+id/linearLayout7"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
         <Button
             android:id="@+id/channel9"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:onClick="toPost9"
             android:background="@android:color/transparent"
@@ -324,7 +324,7 @@
         <Button
             android:id="@+id/channel10"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:onClick="toPost10"
             android:background="@android:color/transparent"
@@ -334,10 +334,10 @@
     <LinearLayout
         android:id="@+id/linearLayout71"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="32dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
         <ImageView
@@ -356,7 +356,7 @@
     <LinearLayout
         android:id="@+id/linearLayout72"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="20dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout71">
         <TextView

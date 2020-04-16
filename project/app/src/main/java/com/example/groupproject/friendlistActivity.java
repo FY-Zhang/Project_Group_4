@@ -369,12 +369,15 @@ public class friendlistActivity extends AppCompatActivity {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         String UID = document.getData().get("UID").toString();
                                         if (UID != null && UID.equals(userNotifications.get(i).get(2))) {
-                                            if(userNotifications.get(i).get(0).equals("0")){
+                                            String type = userNotifications.get(i).get(0);
+                                            if(type.equals("0")){
 
                                                 notificationContent.add("user " + document.getData().get("username").toString() + " sent you a friend request!");
-                                            }else if(userNotifications.get(i).get(0).equals("1")){
+                                            }else if(type.equals("1")){
 
                                                 notificationContent.add("Your friend " + document.getData().get("username").toString() + " sent you a chat Message!");
+                                            } else if (type.equals("2")) {
+                                                notificationContent.add(userNotifications.get(i).get(2));
                                             }
                                             break;
                                         }
@@ -420,7 +423,7 @@ public class friendlistActivity extends AppCompatActivity {
                 intent.setClass(this, map_main.class);
                 startActivity(intent);
                 return true;
-            case R.id.search:
+            case R.id.searchByEmail:
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.show(search);
                 fragmentTransaction.commit();
