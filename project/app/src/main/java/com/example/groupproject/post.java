@@ -72,7 +72,20 @@ public class post extends AppCompatActivity {
         listview = (ListView)findViewById(R.id.item);
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
-        getDeviceLocation();
+
+        if(getIntent().getStringExtra("id").equals("local")) { //local post request
+            if(isOpen(findViewById(R.id.newPost).getContext())) {
+                if(getLocationPermission()) {
+                    System.out.println("Now the lat ln is: " + cur_lat + " , " + cur_lng);
+                    cur_latLng = new LatLng(cur_lat, cur_lng);
+                }
+            }
+            getDeviceLocation();
+            System.out.println("Now the device is: " + cur_lat + " , " + cur_lng);
+        } else {
+            getData();
+        }
+
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -89,17 +102,7 @@ public class post extends AppCompatActivity {
 
     public void getData() {
         final String id = getIntent().getStringExtra("id");
-
         System.out.println("ID: ------- " + id);
-        assert id != null;
-        if(id.equals("local")) { //if - local post
-            if(isOpen(findViewById(R.id.newPost).getContext())) {
-                if(getLocationPermission()) {
-                    System.out.println("Now the lat ln is: " + cur_lat + " , " + cur_lng);
-                    cur_latLng = new LatLng(cur_lat, cur_lng);
-                }
-            }
-        }
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("post")
@@ -115,15 +118,16 @@ public class post extends AppCompatActivity {
                                 if(id.equals(channel)){ // !!! higher priority to normal channel
                                     list.add(temp);
                                 } else if(id.equals("local") && document.get("latitude") != null) { // local post
-                                    System.out.println("the ;ati: " + document.get("latitude"));
+                                    System.out.println("the post loc: " + document.get("latitude") + document.get("longitude"));
 
                                     String post_lat = document.get("latitude").toString();
                                     String post_lng = document.get("longitude").toString();
                                     if(!post_lat.equals("none") && !post_lng.equals("none")) {
                                         double p_lat = Double.parseDouble(post_lat);
                                         double p_lng = Double.parseDouble(post_lng);
-                                        if(isInBounds(p_lat, p_lng)) {
-                                            System.out.println("xian zaide weizhi : " + cur_latLng);
+                                        LatLng cur_loc = new LatLng(cur_lat, cur_lng);
+                                        if(isInBounds(p_lat, p_lng, cur_loc)) {
+                                            System.out.println("cur_loc: " + cur_loc);
                                             list.add(temp);
                                         }
                                     }
@@ -168,8 +172,11 @@ public class post extends AppCompatActivity {
         getLocationPermission();
         View view = findViewById(R.id.newPost);
         if(isOpen(view.getContext())) {
+            System.out.println("+++++++++ 1 ++++++++latlng: " + cur_lat + " --" + cur_lng);
             try {
+                System.out.println("+++++++++ 2 ++++++++latlng: " + cur_lat + " --" + cur_lng);
                 if (mLocationPermissionGranted) {
+                    System.out.println("+++++++++3++++++++latlng: " + cur_lat + " --" + cur_lng);
                     //Toast.makeText(this, "location permission granted", Toast.LENGTH_LONG).show();
                     Task location = mFusedLocationProviderClient.getLastLocation();
 
@@ -182,10 +189,11 @@ public class post extends AppCompatActivity {
                                 if(currentLocation != null) {
                                     cur_lat = currentLocation.getLatitude();
                                     cur_lng = currentLocation.getLongitude();
-                                    System.out.println("latlng: " + cur_lat + " --" + cur_lng);
+                                    System.out.println("+++++++++4++++++++latlng: " + cur_lat + " --  " + cur_lng);
                                 }
 
                                 getData();
+                                System.out.println("+++++++++5++++++++latlng: " + cur_lat + " --  " + cur_lng);
                             } else {
                                 Toast.makeText(post.this, "Unable to get the current location.", Toast.LENGTH_SHORT).show();
                             }
@@ -243,13 +251,10 @@ public class post extends AppCompatActivity {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     } //check gps open
 
-    public boolean isInBounds(double p_lat, double p_lng) {
-        double dist_lat = cur_lat - p_lat;
-        double dist_lng = cur_lng - p_lng;
-
+    public boolean isInBounds(double p_lat, double p_lng, LatLng cur_loc) {
         LatLng latLng = new LatLng(p_lat, p_lng);
-        double distance = SphericalUtil.computeDistanceBetween(latLng, cur_latLng);
-        System.out.println("distance: " + distance + "  loc: " + cur_latLng + "  po: " + latLng);
+        double distance = SphericalUtil.computeDistanceBetween(latLng, cur_loc);
+        System.out.println("distance: " + distance + "  loc: " + cur_loc + "  po: " + latLng);
         if(distance <= 1500)
             return true;
 
