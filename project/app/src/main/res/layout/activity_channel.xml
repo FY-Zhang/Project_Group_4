@@ -174,7 +174,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:gravity="center"
-            android:text="④ Film &#038; TV"
+            android:text="④ Media"
             android:textAllCaps="false" />
     </LinearLayout>
 
@@ -255,7 +255,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:gravity="center"
-            android:text="⑥Animation"
+            android:text="⑥ Animation"
             android:textAllCaps="false" />
     </LinearLayout>
 

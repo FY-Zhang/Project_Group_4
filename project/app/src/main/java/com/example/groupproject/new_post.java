@@ -80,6 +80,7 @@ public class new_post extends AppCompatActivity {
         imgButton = findViewById(R.id.openFile);
         mapButton = findViewById(R.id.openMap);
         imageView = findViewById(R.id.image);
+        mapButton.setAlpha((float) 0.3);
         storageReference = FirebaseStorage.getInstance().getReference("post_image");
 
         imgButton.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +93,7 @@ public class new_post extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openGPSLocator();
+                v.setAlpha(1);
             }
         });
     }
