@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_friendPosts"
         android:layout_width="match_parent"
-        android:layout_height="66dp"
+        android:layout_height="50dp"
         android:background="@color/fui_bgFacebook"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
