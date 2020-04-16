@@ -168,11 +168,4 @@ public class profile extends AppCompatActivity {
                     }
                 });*/
     }
-    public void update(ArrayList<String> arr){
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users")
-                .document(UID)
-                .update("notifications", arr);
-    }
 }
