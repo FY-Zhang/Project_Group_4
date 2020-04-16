@@ -27,7 +27,7 @@
         android:layout_marginBottom="60dp"
         android:layout_weight="4"
         android:keepScreenOn="false"
-        android:background="#e2cc5d"
+        android:background="#dddddd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="parent"
         android:textIsSelectable="true"

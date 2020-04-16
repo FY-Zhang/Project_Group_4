@@ -1,11 +1,13 @@
 package com.example.groupproject;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,15 +45,15 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         if(viewType == TEXT_MESSAGE){
-            view = getView(R.layout.chat_message);
+            view = LayoutInflater.from(context).inflate(R.layout.chat_message, parent, false);
             MessageViewHolder messageViewHolder = new MessageViewHolder(view);
             return messageViewHolder;
         }else if(viewType == IMAGE_MESSAGE){
-            view = getView(R.layout.chat_image);
+            view =  LayoutInflater.from(context).inflate(R.layout.chat_image, parent, false);
             ImageViewHolder imageViewHolder = new ImageViewHolder(view);
             return imageViewHolder;
         }else {
-            view = getView(R.layout.chat_location);
+            view = LayoutInflater.from(context).inflate(R.layout.chat_location, parent, false);
             LocationViewHolder locationViewHolder = new LocationViewHolder(view);
             return locationViewHolder;
         }
@@ -74,6 +76,9 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         if(holder instanceof ImageViewHolder){
             ImageViewHolder imageViewHolder = (ImageViewHolder)holder;
+            if(send_name.equals(username)) {
+                imageViewHolder.window.setGravity(Gravity.END);
+            }
 
             imageViewHolder.sendName.setText(send_name);
             imageViewHolder.time.setText(chatMessageCurrent.getTime());
@@ -82,6 +87,9 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     .into(imageViewHolder.imageView);
         }else if(holder instanceof MessageViewHolder){
             MessageViewHolder messageViewHolder = (MessageViewHolder)holder;
+            if(send_name.equals(username)) {
+                messageViewHolder.window.setGravity(Gravity.END);
+            }
 
             messageViewHolder.sendName.setText(send_name);
             messageViewHolder.time.setText(chatMessageCurrent.getTime());
@@ -89,6 +97,9 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         }else if(holder instanceof LocationViewHolder){
             LocationViewHolder locationViewHolder = (LocationViewHolder)holder;
+            if(send_name.equals(username)) {
+                locationViewHolder.window.setGravity(Gravity.END);
+            }
 
             locationViewHolder.sendName.setText(send_name);
             locationViewHolder.time.setText(chatMessageCurrent.getTime());
@@ -116,6 +127,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public TextView sendName;
         public TextView time;
         public ImageView imageView;
+        public LinearLayout window;
 
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -124,12 +136,14 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             time = itemView.findViewById(R.id.sendTime);
             imageView = itemView.findViewById(R.id.sendPicture);
             imageView.setAdjustViewBounds(true);
+            window = itemView.findViewById(R.id.imageWindow);
         }
     }
     public static class MessageViewHolder extends RecyclerView.ViewHolder{
         public TextView sendName;
         public TextView time;
         public TextView message;
+        public LinearLayout window;
 
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -137,12 +151,14 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             sendName = itemView.findViewById(R.id.sendName);
             time = itemView.findViewById(R.id.sendTime);
             message = itemView.findViewById(R.id.sendMessage);
+            window = itemView.findViewById(R.id.messageWindow);
         }
     }
     public static class LocationViewHolder extends RecyclerView.ViewHolder{
         public TextView sendName;
         public TextView time;
         public Button button;
+        public LinearLayout window;
 
         public LocationViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -150,6 +166,8 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             sendName = itemView.findViewById(R.id.sendName);
             time = itemView.findViewById(R.id.sendTime);
             button = itemView.findViewById(R.id.locationButton);
+            window = itemView.findViewById(R.id.locationWindow);
         }
+
     }
 }

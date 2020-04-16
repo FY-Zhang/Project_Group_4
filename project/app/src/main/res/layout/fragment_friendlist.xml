@@ -13,13 +13,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#DCD5CB"
         android:orientation="vertical">
 
         <ListView
             android:id="@+id/item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FFFFFF"
             android:listSelector="@drawable/friendlist_item">
 
         </ListView>

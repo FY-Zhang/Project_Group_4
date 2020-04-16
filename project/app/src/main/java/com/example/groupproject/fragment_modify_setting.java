@@ -256,7 +256,12 @@ public class fragment_modify_setting extends Fragment {
 
         txt_phone = view.findViewById(R.id.txt_phone_til);
         EditText txt_phone_txt = view.findViewById(R.id.txt_phone_txt);
-        txt_phone_txt.setText(user_phone);
+        String[] temp = user_phone.split("-");
+        if(temp.length>1) {
+            txt_phone_txt.setText(temp[0] + temp[1] + temp[2]);
+        }else {
+            txt_phone_txt.setText(temp[0]);
+        }
 
         EditText txt_birthday_txt = view.findViewById(R.id.txt_birthday_txt);
         txt_birthday_txt.setText(user_birthday);
@@ -286,12 +291,12 @@ public class fragment_modify_setting extends Fragment {
                 //get text user entered
                 EditText txt_username_txt = view.findViewById(R.id.txt_username_txt);
                 String user_name = txt_username_txt.getText().toString();
-                userRef.update("username",user_name.substring(0,2) + "-"+user_name.substring(3,4)+"-"+user_name.substring(5));
+                userRef.update("username",user_name);
                 appCookies.username = user_name;
 
                 EditText txt_phone_txt = view.findViewById(R.id.txt_phone_txt);
                 String user_phone = txt_phone_txt.getText().toString();
-                userRef.update("phone", user_phone);
+                userRef.update("phone", user_phone.substring(0,3) + "-"+user_phone.substring(3,5)+"-"+user_phone.substring(5));
                 appCookies.userPhone = user_phone;
 
                 EditText txt_password_txt = view.findViewById(R.id.txt_password_txt);

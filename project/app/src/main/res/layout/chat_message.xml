@@ -2,48 +2,55 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:Android="http://schemas.android.com/apk/res-auto"
     android:id="@+id/window"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:adjustViewBounds="true"
     android:orientation="vertical"
     android:textIsSelectable="true"
-    Android:cardBackgroundColor="#E2CC5D"
+    Android:cardBackgroundColor="#DDDDDD"
     Android:cardElevation="0dp"
     Android:cardMaxElevation="0dp">
 
-        <LinearLayout
+<LinearLayout
+android:id="@+id/messageWindow"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:gravity="start">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="15dp"
+    android:background="@drawable/message_bg"
+    android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/sendName"
+            style="@android:style/Widget.Holo.TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/message_bg"
-            android:orientation="vertical">
+            android:maxWidth="200dp"
+            android:text="Username"
+            android:textColor="#2941C8" />
 
-                <TextView
-                    android:id="@+id/sendName"
-                    style="@android:style/Widget.Holo.TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxWidth="200dp"
-                    android:text="Username"
-                    android:textColor="#2941C8" />
+        <TextView
+            android:id="@+id/sendMessage"
+            style="@android:style/Widget.Material.Light.TextView.SpinnerItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="200dp"
+            android:text="TextView"
+            android:textIsSelectable="true" />
 
-                <TextView
-                    android:id="@+id/sendMessage"
-                    style="@android:style/Widget.Material.Light.TextView.SpinnerItem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxWidth="200dp"
-                    android:text="TextView"
-                    android:textIsSelectable="true" />
-
-                <TextView
-                    android:id="@+id/sendTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxWidth="200dp"
-                    android:text="TextView"
-                    android:textColor="#7A7A7A" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/sendTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="200dp"
+            android:text="TextView"
+            android:textColor="#7A7A7A" />
+</LinearLayout>
+</LinearLayout>
 
 </androidx.cardview.widget.CardView>

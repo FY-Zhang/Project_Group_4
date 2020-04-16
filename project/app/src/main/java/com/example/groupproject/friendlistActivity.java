@@ -97,9 +97,15 @@ public class friendlistActivity extends AppCompatActivity {
     private TextInputEditText textInputEditText;
     private ArrayList<String> searchID = new ArrayList<>();
 
+    ListView nearbyList;
+    private ArrayAdapter<String> nearbyAdapter;
+    private ArrayList<String> nearbyResult = new ArrayList<>();
+    private ArrayList<String> nearbyID = new ArrayList<>();
+
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private Fragment search = new fragment_search();
     private Fragment friendList = new fragment_friendlist();
+    private Fragment nearby = new fragment_search_nearby();
 
 
     @Override
@@ -125,6 +131,9 @@ public class friendlistActivity extends AppCompatActivity {
 
         searchList = findViewById(R.id.result);
         searchAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
+
+        nearbyList = findViewById(R.id.nearby_result);
+        nearbyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         getUserInfo(user);
@@ -175,11 +184,23 @@ public class friendlistActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        nearbyList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent();
+                intent.setClass(friendlistActivity.this, profile.class);
+                intent.putExtra("UID", nearbyID.get(position));
+                intent.putExtra("type", "unknown");
+                startActivity(intent);
+            }
+        });
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         search = fragmentManager.findFragmentById(R.id.fragment_search);
         friendList = fragmentManager.findFragmentById(R.id.fragment_friendlist);
+        nearby = fragmentManager.findFragmentById(R.id.fragment_nearby);
         fragmentTransaction.hide(search);
+        fragmentTransaction.hide(nearby);
         fragmentTransaction.commit();
 
     }
@@ -202,7 +223,6 @@ public class friendlistActivity extends AppCompatActivity {
                 return false;
             }
         });
-
 
     }
 
@@ -228,13 +248,13 @@ public class friendlistActivity extends AppCompatActivity {
 
                             searchAdapter.clear();
                             searchAdapter.addAll(searchResult);
+                            textInputEditText.setText(null);
                         }else {
                             Toast.makeText(friendlistActivity.this, "Error doing search", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
         searchList.setAdapter(searchAdapter);
-        textInputEditText.setText("");
     }
 
     private void getUserInfo(FirebaseUser user){
@@ -425,11 +445,55 @@ public class friendlistActivity extends AppCompatActivity {
                 return true;
             case R.id.searchByEmail:
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.hide(nearby);
                 fragmentTransaction.show(search);
                 fragmentTransaction.commit();
+                return true;
+            case R.id.searchNearby:
+                FragmentTransaction fragmentTransaction2 = fragmentManager.beginTransaction();
+                fragmentTransaction2.hide(search);
+                fragmentTransaction2.show(nearby);
+                fragmentTransaction2.commit();
+                showNearbyResult();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    private void showNearbyResult(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            nearbyResult.clear();
+                            String[] userPhoneInfo = userPhone.split("-");
+                            for(QueryDocumentSnapshot document: task.getResult()){
+                                if(document.getData().get("phone") != null) {
+                                    String[] othersPhoneInfo = document.getData().get("phone").toString().split("-");
+
+                                    if (othersPhoneInfo.length >1 && userPhoneInfo.length >1 && othersPhoneInfo[1].equals(userPhoneInfo[1]) &&
+                                            othersPhoneInfo[0].equals(userPhoneInfo[0])) {
+
+                                        nearbyResult.add(document.getData().get("username").toString());
+                                        nearbyID.add(document.getData().get("UID").toString());
+                                    }
+                                }
+                            }
+                            if(nearbyResult.size() == 0)
+                                Toast.makeText(friendlistActivity.this, "Sorry, no matched user :(", Toast.LENGTH_LONG).show();
+
+                            nearbyAdapter.clear();
+                            nearbyAdapter.addAll(nearbyResult);
+                        }else {
+                            Toast.makeText(friendlistActivity.this, "Error doing search", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        nearbyList.setAdapter(nearbyAdapter);
     }
     public void toFriendlist(View view){
     }
@@ -464,6 +528,7 @@ public class friendlistActivity extends AppCompatActivity {
     public void showFriendlist(View view){
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.hide(search);
+        fragmentTransaction.hide(nearby);
         fragmentTransaction.commit();
     }
 }

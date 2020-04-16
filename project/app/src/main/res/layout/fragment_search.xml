@@ -44,7 +44,7 @@
             android:layout_height="match_parent"
             android:background="@color/fui_transparent"
             android:onClick="showFriendlist" />
-    </LinearLayout>
 
+</LinearLayout>
 
 </FrameLayout>

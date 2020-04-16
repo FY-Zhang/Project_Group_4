@@ -1,40 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:Android="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:id="@+id/window"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:adjustViewBounds="true"
+    android:orientation="vertical"
     Android:cardElevation="0dp"
+    Android:cardBackgroundColor="#DddddD"
     Android:cardMaxElevation="0dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/imageWindow"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/message_bg"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/sendName"
+        android:gravity="start">
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxWidth="200dp"
-            android:text="Username"
-            android:textColor="#2941C8" />
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/message_bg"
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/sendPicture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxWidth="200dp" />
+            <TextView
+                android:id="@+id/sendName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="200dp"
+                android:text="Username"
+                android:textColor="#2941C8" />
 
-        <TextView
-            android:id="@+id/sendTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxWidth="200dp"
-            android:text="TextView"
-            android:textColor="#7A7A7A" />
+            <ImageView
+                android:id="@+id/sendPicture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="200dp" />
+
+            <TextView
+                android:id="@+id/sendTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="200dp"
+                android:text="TextView"
+                android:textColor="#7A7A7A" />
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
