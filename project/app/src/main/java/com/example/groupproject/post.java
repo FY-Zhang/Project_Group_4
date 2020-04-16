@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -102,6 +103,10 @@ public class post extends AppCompatActivity {
 
     public void getData() {
         final String id = getIntent().getStringExtra("id");
+        if(id.equals("local")) {
+            ImageButton button = (ImageButton)findViewById(R.id.newPost);
+            button.setVisibility(View.GONE);
+        }
         System.out.println("ID: ------- " + id);
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
