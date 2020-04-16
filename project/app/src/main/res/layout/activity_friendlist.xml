@@ -51,11 +51,11 @@
 
     <fragment
         android:id="@+id/bottomBar"
+        android:name="com.example.groupproject.bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:name="com.example.groupproject.bottom_bar"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 

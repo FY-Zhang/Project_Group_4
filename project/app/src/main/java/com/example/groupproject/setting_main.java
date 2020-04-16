@@ -78,7 +78,15 @@ public class setting_main extends AppCompatActivity {
     }
 
     public void toChannel(View view) {
+        Intent intent = new Intent(this, channel.class);
+        startActivity(intent);
+    }
+
+    public void toFriendlist(View view) {
         Intent intent = new Intent(this, friendlistActivity.class);
         startActivity(intent);
+    }
+
+    public void toSetting(View view) {
     }
 }
