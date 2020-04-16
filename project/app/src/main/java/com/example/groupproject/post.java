@@ -181,7 +181,7 @@ public class post extends AppCompatActivity {
             try {
                 System.out.println("+++++++++ 2 ++++++++latlng: " + cur_lat + " --" + cur_lng);
                 if (mLocationPermissionGranted) {
-                    System.out.println("+++++++++3++++++++latlng: " + cur_lat + " --" + cur_lng);
+                    System.out.println("+++++++++ 3 ++++++++latlng: " + cur_lat + " --" + cur_lng);
                     //Toast.makeText(this, "location permission granted", Toast.LENGTH_LONG).show();
                     Task location = mFusedLocationProviderClient.getLastLocation();
 
