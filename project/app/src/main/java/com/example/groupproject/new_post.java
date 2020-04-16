@@ -3,12 +3,22 @@ package com.example.groupproject;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -17,6 +27,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -39,11 +53,18 @@ import static com.example.groupproject.appCookies.userID;
 
 public class new_post extends AppCompatActivity {
 
-    ImageButton button ;
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private static final int REQUEST_CODE_LOCATION_SETTINGS = 2;
+    private boolean mLocationPermissionGranted;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private String cur_lat = "none";
+    private String cur_lng = "none";
+    private ImageButton mapButton;
+
+    ImageButton imgButton;
     ImageView imageView ;
     private Uri imgUri;
     private static final int PICK_IMAGE_REQUEST = 852;
-
 
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
@@ -51,25 +72,52 @@ public class new_post extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        System.out.println("now create fuse: " + mFusedLocationProviderClient);
         setContentView(R.layout.activity_new_post);
 
-        button = findViewById(R.id.openFile);
-        imageView = findViewById(R.id.image);
+        imgButton = findViewById(R.id.openFile);
+        mapButton = findViewById(R.id.openMap);
         storageReference = FirebaseStorage.getInstance().getReference("post_image");
 
-        button.setOnClickListener(new View.OnClickListener() {
+        imgButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openFileChooser();
             }
         });
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGPSLocator();
+            }
+        });
     }
 
-    private  void openFileChooser(){
+    private void openFileChooser(){
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    private void openGPSLocator() {
+        View view = findViewById(R.id.openMap);
+        if(isOpen(view.getContext())) {     // get service
+            if(getLocationPermission()) {   // get permission
+                getDeviceLocation();
+                System.out.println("current: +++ " + cur_lat + " " + cur_lng);
+            }
+        } else {
+            System.out.println("Please turn on GPS.");
+            Toast.makeText(new_post.this, "Please turn on GPS", Toast.LENGTH_SHORT).show();
+            Intent locationIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivityForResult(locationIntent, REQUEST_CODE_LOCATION_SETTINGS);
+        }
+
+        getDeviceLocation();
+        System.out.println("current: +++ " + cur_lat + " " + cur_lng + "---");
     }
 
     @Override
@@ -89,6 +137,7 @@ public class new_post extends AppCompatActivity {
         intent.setClass(this, post.class);
         startActivity(intent);
     }
+
     public void toSubmit(String uri){
         EditText editText1 = (EditText)findViewById(R.id.post_title);
         EditText editText2 = (EditText)findViewById(R.id.post_content);
@@ -114,6 +163,11 @@ public class new_post extends AppCompatActivity {
         post.put("channel", channel);
         post.put("datetime", date);
         post.put("image", uri);
+        System.out.println("-------------------------------------------");
+        System.out.println("loc: " + cur_lat + ", " + cur_lng);
+        post.put("latitude", cur_lat); /** 获取全局 位置 **/
+        post.put("longitude", cur_lng);
+        System.out.println("-------------------------------------------");
         posts.document(time).set(post);
 
         Intent intent = new Intent();
@@ -121,11 +175,13 @@ public class new_post extends AppCompatActivity {
         intent.setClass(this, post.class);
         startActivity(intent);
     }
+
     private String getFileExtension(Uri uri){
         ContentResolver cr = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(cr.getType(uri));
     }
+
     public void toSubmit(View view){
         if(imgUri != null){
             StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(imgUri));
@@ -154,4 +210,86 @@ public class new_post extends AppCompatActivity {
             toSubmit("");
         }
     }
+
+    /* about map fun*/
+    private void getDeviceLocation() {
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        System.out.println("Now the get device: " + mFusedLocationProviderClient);
+
+        View view = findViewById(R.id.openMap);
+        if(isOpen(view.getContext())) {
+            try {
+                if (mLocationPermissionGranted) {
+                    //Toast.makeText(this, "location permission granted", Toast.LENGTH_LONG).show();
+                    Task location = mFusedLocationProviderClient.getLastLocation();
+                    System.out.println("The task loc: " + location);
+                    location.addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if (task.isSuccessful()) {
+                                Location currentLocation = (Location) task.getResult();
+
+                                System.out.println("====1===" + currentLocation);
+                                //cur_lat = String.valueOf(currentLocation.getLatitude());
+                                //cur_lng = String.valueOf(currentLocation.getLongitude());
+
+                                System.out.println("latlng: " + cur_lat + " --" + cur_lng);
+                                System.out.println("===2====" + currentLocation);
+
+                            } else {
+                                Toast.makeText(new_post.this, "Unable to get the current location.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            } catch (SecurityException e) {
+                Log.e("Location", "Error getting device location: " + e.getMessage());
+            }
+        }
+        else{
+            Toast.makeText(new_post.this, "Please turn on GPS", Toast.LENGTH_SHORT).show();
+            Intent locationIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivityForResult(locationIntent, REQUEST_CODE_LOCATION_SETTINGS);
+        }
+    }
+
+    //permission
+    private boolean getLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true;
+            //Toast.makeText(map_main.this, "Get location permission success.", Toast.LENGTH_SHORT).show();
+            System.out.println("get success");
+            return true;
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            Toast.makeText(new_post.this, "Get location permission fail.", Toast.LENGTH_SHORT).show();
+            System.out.println("get fail");
+            return false;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //Toast.makeText(map_main.this, "in the on request location.", Toast.LENGTH_SHORT).show();
+        System.out.println("in the request location");
+        mLocationPermissionGranted = false;
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mLocationPermissionGranted = true;
+                }
+            }
+        }
+    }
+
+    public static boolean isOpen(final Context context) {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    } //check gps open
 }

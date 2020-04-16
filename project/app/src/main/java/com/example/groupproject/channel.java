@@ -98,6 +98,14 @@ public class channel extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void toPostLocal(View view) {
+        Intent intent = new Intent();
+        String id = "Local"; // actually not existed in fb.db
+        intent.putExtra("id", id);
+        intent.setClass(this, post.class);
+        startActivity(intent);
+    }
+
     public void toFriendlist(View view){
         Intent intent = new Intent();
         intent.setClass(this, friendlistActivity.class);
@@ -105,6 +113,7 @@ public class channel extends AppCompatActivity {
     }
     public void toChannel(View view){
     }
+
     public void toSetting(View view) {
         Intent intent = new Intent();
         intent.setClass(this, setting_main.class);

@@ -143,7 +143,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
     public boolean map_GetCurrentLocation(View view) throws InterruptedException {
         if (mMap == null) { return false; }
 
-        if(isOPen(view.getContext())) {// if has open GPS
+        if(isOpen(view.getContext())) {// if has open GPS
             getDeviceLocation();
             if(mLocationPermissionGranted) { //if permission established
 
@@ -173,7 +173,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         View view = findViewById(R.id.map_check_frg);
-        if(isOPen(view.getContext())) {
+        if(isOpen(view.getContext())) {
             try {
                 if (mLocationPermissionGranted) {
                     //Toast.makeText(this, "location permission granted", Toast.LENGTH_LONG).show();
@@ -247,7 +247,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
 
     /* check & update */
 
-    public static boolean isOPen(final Context context) {
+    public static boolean isOpen(final Context context) {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     } //check gps open
