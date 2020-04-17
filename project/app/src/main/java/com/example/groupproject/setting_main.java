@@ -57,6 +57,7 @@ public class setting_main extends AppCompatActivity {
             case R.id.setting_logout:
                 intent = new Intent(setting_main.this, initial_page.class);
                 startActivity(intent);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -68,9 +69,11 @@ public class setting_main extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK) {
             /*if(Objects.equals(getIntent().getStringExtra("action"), "did"))*/ {
+                finish();
                 moveTaskToBack(false);
                 Intent intent_toFrd = new Intent(this, friendlistActivity.class);
                 startActivity(intent_toFrd);
+                finish();
                 return true;
             }
         }

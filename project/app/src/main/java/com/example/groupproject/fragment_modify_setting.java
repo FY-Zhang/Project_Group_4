@@ -116,7 +116,6 @@ public class fragment_modify_setting extends Fragment {
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
                     "(?=.*[a-zA-Z])" +
-                    "(?=.*[@#$%^&+=])" +
                     "(?=\\S+$)" +
                     ".{6,}" +
                     "$");
@@ -183,7 +182,7 @@ public class fragment_modify_setting extends Fragment {
                 int month = calendar.get(Calendar.MONTH);
                 int year = calendar.get(Calendar.YEAR);
 
-                System.out.println("Show ?  ------   22   --------- ");
+               // System.out.println("Show ?  ------   22   --------- ");
 
                 DatePickerDialog picker = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
@@ -193,7 +192,7 @@ public class fragment_modify_setting extends Fragment {
                             }
                         }, year, month, day);
 
-                System.out.println("Show ?  ------   33   --------- ");
+                //System.out.println("Show ?  ------   33   --------- ");
                 picker.show();
             }
         });
