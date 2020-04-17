@@ -40,6 +40,7 @@ public class profile extends AppCompatActivity {
     String user_gender;
     String user_email;
     String type;
+    String user_avatar;
     boolean showGender;
     ImageView avatar;
     Button button1;
@@ -76,6 +77,7 @@ public class profile extends AppCompatActivity {
                         user_name = documentSnapshot.getString("username");
                         user_gender = documentSnapshot.getString("gender");
                         showGender = documentSnapshot.getBoolean("display");
+                        user_avatar = documentSnapshot.getString("avatar");
 
                         setInfo();
                         infoAdapter.addAll(content);
@@ -146,7 +148,7 @@ public class profile extends AppCompatActivity {
             content.add("Gender: Secret:)");
         }
         Picasso.with(avatar.getContext())
-                .load(userAvatar)
+                .load(user_avatar)
                 .into(avatar);
     }
     private void addAsFriend(){

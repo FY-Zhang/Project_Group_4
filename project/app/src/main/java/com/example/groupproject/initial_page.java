@@ -29,9 +29,9 @@ public class initial_page extends AppCompatActivity {
         Log.d("Token-Firebase", ""+ FirebaseInstanceId.getInstance().getToken());
 
         Intent intent = getIntent();
-        Boolean newUser = intent.getBooleanExtra("new_user", false);
-        if(newUser != null && newUser){
-            Toast.makeText(this, "Register successfully! Please log in:)", Toast.LENGTH_SHORT);
+        String newUser = intent.getStringExtra("new_user");
+        if(newUser != null){
+            Toast.makeText(initial_page.this, "Register successfully! Please log in:)", Toast.LENGTH_LONG);
         }
     }
 

@@ -265,7 +265,7 @@ public class friendlistActivity extends AppCompatActivity {
         final DocumentReference documentReference = db.collection("users").document(userID);
 
         final Intent intent = new Intent();
-        intent.putExtra("new_user", true);
+        intent.putExtra("new_user", "true");
         intent.setClass(friendlistActivity.this, initial_page.class);
         documentReference
                 .get()
@@ -296,9 +296,9 @@ public class friendlistActivity extends AppCompatActivity {
         CollectionReference users = db.collection("users");
 
         ArrayList<String> tempFriends = new ArrayList<>();
-        tempFriends.add("wtJ5hG5fvtYdwVbeNfraG6lmpyY2");
+        tempFriends.add("aInNPneOJTPS4blXjSPPUh8iRnl2");
         ArrayList<String> tempNotifications = new ArrayList<>();
-        tempNotifications.add("2-0-Welcome to SupLink ;)");
+        tempNotifications.add("2-0-aInNPneOJTPS4blXjSPPUh8iRnl2-Welcome to SupLink ;)");
 
         Map<String, Object> newUser = new HashMap<>();
         newUser.put("UID", userID);
@@ -408,7 +408,7 @@ public class friendlistActivity extends AppCompatActivity {
 
                                                 notificationContent.add("Your friend " + document.getData().get("username").toString() + " sent you a chat Message!");
                                             } else if (type.equals("2")) {
-                                                notificationContent.add(userNotifications.get(i).get(2));
+                                                notificationContent.add("Welcome to SupLink :)");
                                             }
                                             break;
                                         }
