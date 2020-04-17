@@ -59,12 +59,12 @@ public class chat_location extends AppCompatActivity implements OnMapReadyCallba
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private boolean locationPermissionGranted;
     private GoogleMap mMap;
-    private double latitude, longitude;
+    private double latitude = 0, longitude = 0;//default
     FusedLocationProviderClient fusedLocationProviderClient;
 
     private String friendName, friendID, databaseName;
     private DatabaseReference dbMessage;
-    private String locationTitle = new String("CURRENT LOCATION");
+    private String locationTitle = new String("Current Location");
 
     private  EditText searchText;
 
@@ -251,6 +251,7 @@ public class chat_location extends AppCompatActivity implements OnMapReadyCallba
         intent.putExtra("friend_id", friendID);
         intent.setClass(this, chat_nav.class);
         startActivity(intent);
+        finish();
     }
     public void onSendClick(View view){
         String message = ""+latitude+" "+longitude;
@@ -280,6 +281,6 @@ public class chat_location extends AppCompatActivity implements OnMapReadyCallba
         intent.putExtra("friend_id", friendID);
         intent.setClass(this, chat_nav.class);
         startActivity(intent);
-
+        finish();
     }
 }

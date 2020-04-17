@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -153,6 +154,7 @@ public class post_display extends AppCompatActivity {
         intent.putExtra("post_id", postId);
         intent.setClass(this, post_display.class);
         startActivity(intent);
+        finish();
     }
     public void toDislike(View view) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -166,5 +168,18 @@ public class post_display extends AppCompatActivity {
         intent.putExtra("post_id", postId);
         intent.setClass(this, post_display.class);
         startActivity(intent);
+        finish();
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            /*if(Objects.equals(getIntent().getStringExtra("action"), "did"))*/ {
+                finish();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

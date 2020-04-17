@@ -12,7 +12,7 @@
         android:paddingBottom="20dp">
 
         <LinearLayout
-            android:layout_width="312dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="8"
             android:orientation="vertical">
@@ -23,8 +23,15 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="15dp"
                 android:text="Title"
-                android:textSize="24sp"
-                android:textStyle="normal" />
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tv_auth_fav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="15dp"
+                android:text="Author"
+                android:textSize="14sp" />
 
         </LinearLayout>
     </LinearLayout>

@@ -1,12 +1,14 @@
 package com.example.groupproject;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -14,6 +16,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,6 +37,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -41,6 +45,7 @@ import com.google.maps.android.SphericalUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class post extends AppCompatActivity {
@@ -60,6 +65,7 @@ public class post extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     public static ArrayList<String> arrayList = new ArrayList<>();
     private ArrayList<Map<String,Object>> list = new ArrayList<>();
+   private List<String> docId = new ArrayList<>();// array for id of documents
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +105,37 @@ public class post extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                System.out.println("--------The index: " + position);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(post.this);
+                dialog.setTitle("Favorites");
+                dialog.setMessage("Do you want to favorite this post?");
+                dialog.setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                FirebaseFirestore ff = FirebaseFirestore.getInstance();
+                                ff.collection("users")
+                                        .document(appCookies.userID)//store into own
+                                        .update("favorite", FieldValue.arrayUnion(docId.get(position)));//store post id
+                                Toast.makeText(post.this, "Favorites successfully!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                dialog.setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) { }
+                        });
+                dialog.show();
+                return true;
+            }
+        });
+
+
+
     }
 
     public void getData() {
@@ -122,6 +159,7 @@ public class post extends AppCompatActivity {
                                 Map<String, Object> temp = new HashMap<>(document.getData());
                                 if(id.equals(channel)){ // !!! higher priority to normal channel
                                     list.add(temp);
+                                    docId.add(document.getId());
                                 } else if(id.equals("local") && document.get("latitude") != null) { // local post
                                     System.out.println("the post loc: " + document.get("latitude") + document.get("longitude"));
 
@@ -134,6 +172,7 @@ public class post extends AppCompatActivity {
                                         if(isInBounds(p_lat, p_lng, cur_loc)) {
                                             System.out.println("cur_loc: " + cur_loc);
                                             list.add(temp);
+                                            docId.add(document.getId());
                                         }
                                     }
                                 }
@@ -141,6 +180,8 @@ public class post extends AppCompatActivity {
                         }
                         arrayList = setListAdapter();
                         adapter.addAll(arrayList);
+                        System.out.println("Doc is: " + docId);
+
                     }
                 });
     }
@@ -264,5 +305,17 @@ public class post extends AppCompatActivity {
             return true;
 
         return false;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(false);
+            Intent intent_cnl_frd = new Intent(post.this, channel.class);
+            startActivity(intent_cnl_frd);
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

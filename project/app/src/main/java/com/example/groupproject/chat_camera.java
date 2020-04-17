@@ -134,6 +134,7 @@ public class chat_camera extends AppCompatActivity {
 
         if(cameraUse.resolveActivity(getPackageManager()) != null){
             startActivityForResult(cameraUse, REQUEST_IMAGE_CAPTURE);
+            finish();
         }else {
             Toast.makeText(this, "Error opening camera", Toast.LENGTH_LONG).show();
         }

@@ -3,6 +3,7 @@ package com.example.groupproject;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -33,8 +34,8 @@ public class post_favorite extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_favorite);
 
-        final String[] form = new String[]{"title"};
-        final int[] to = new int[]{R.id.tv_title_fav};
+        final String[] form = new String[]{"title", "author"};
+        final int[] to = new int[]{R.id.tv_title_fav, R.id.tv_auth_fav};
         final List<String> docId = new ArrayList<>();// array for id of documents
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -64,9 +65,11 @@ public class post_favorite extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                                 Map<String, Object> post = new HashMap<>();
-                                                post.put("title", documentSnapshot.getString("title") + " by: " + documentSnapshot.getString("author"));
+                                                post.put("title", documentSnapshot.getString("title"));
+                                                post.put("author", "by: " + documentSnapshot.getString("author"));
                                                 System.out.println("The post item: " + post);
                                                 postList.add(post);
+                                                docId.add(documentSnapshot.getId());
                                                 //System.out.println("1: " + postList);
                                                 j++;
                                                 System.out.println("J val: " + j);
@@ -83,6 +86,7 @@ public class post_favorite extends AppCompatActivity {
                                                         public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                                                             AlertDialog.Builder dialog = new AlertDialog.Builder(post_favorite.this);
                                                             dialog.setTitle("Delete");
+                                                            //dialog.setMessage("Current i is: " + position);
                                                             dialog.setMessage("Do you want to delete this favorite?");
                                                             dialog.setPositiveButton("Yes",
                                                                     new DialogInterface.OnClickListener() {
@@ -117,7 +121,7 @@ public class post_favorite extends AppCompatActivity {
                                                             System.out.println("fav post id is: " + docId.get(position));
                                                             intent_to_display.putExtra("post_id", docId.get(position));
                                                             System.out.println("on click");
-                                                            //startActivity(intent_to_display);
+                                                            startActivity(intent_to_display);
                                                         }
                                                     });
                                                 }
@@ -127,5 +131,16 @@ public class post_favorite extends AppCompatActivity {
                     }
                     }
                 });
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            /*if(Objects.equals(getIntent().getStringExtra("action"), "did"))*/ {
+                finish();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -49,10 +49,12 @@ public class setting_main extends AppCompatActivity {
             case R.id.setting_post:
                 intent = new Intent(setting_main.this, post_my.class);
                 startActivity(intent);
+                //finish();
                 return true;
             case R.id.setting_fav:
                 intent = new Intent(setting_main.this, post_favorite.class);
                 startActivity(intent);
+                //finish();
                 return true;
             case R.id.setting_logout:
                 intent = new Intent(setting_main.this, initial_page.class);
@@ -64,12 +66,26 @@ public class setting_main extends AppCompatActivity {
         }
     }
 
+    public void toChannel(View view) {
+        Intent intent = new Intent(this, channel.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void toFriendlist(View view) {
+        Intent intent = new Intent(this, friendlistActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void toSetting(View view) {
+    }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK) {
             /*if(Objects.equals(getIntent().getStringExtra("action"), "did"))*/ {
-                finish();
                 moveTaskToBack(false);
                 Intent intent_toFrd = new Intent(this, friendlistActivity.class);
                 startActivity(intent_toFrd);
@@ -78,18 +94,5 @@ public class setting_main extends AppCompatActivity {
             }
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    public void toChannel(View view) {
-        Intent intent = new Intent(this, channel.class);
-        startActivity(intent);
-    }
-
-    public void toFriendlist(View view) {
-        Intent intent = new Intent(this, friendlistActivity.class);
-        startActivity(intent);
-    }
-
-    public void toSetting(View view) {
     }
 }

@@ -107,7 +107,7 @@ public class profile extends AppCompatActivity {
                         break;
                     case "request":
                         addAsFriend();
-                        button1.setText("SEND MESSAGE");
+                        button1.setText("Send Messages");
                         break;
                     case "unknown":
                         sendRequest();

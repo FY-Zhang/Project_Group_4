@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -289,4 +290,16 @@ public class new_post extends AppCompatActivity {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     } //check gps open
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            /*if(Objects.equals(getIntent().getStringExtra("action"), "did"))*/ {
+                finish();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

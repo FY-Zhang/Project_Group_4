@@ -329,9 +329,11 @@ public class fragment_modify_setting extends Fragment {
                     Intent intent_store = new Intent(getActivity(), setting_main.class);
                     intent_store.putExtra("action", "did");
                     getActivity().startActivity(intent_store);
+                    uploadFile();
                     Toast.makeText(getActivity(), "Submitted Successfully!", Toast.LENGTH_SHORT).show();
+                    getActivity().finish();
                 }
-                uploadFile();
+
             }
         });
 

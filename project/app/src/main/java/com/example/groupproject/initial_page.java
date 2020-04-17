@@ -74,18 +74,11 @@ public class initial_page extends AppCompatActivity {
         if(keyCode == KeyEvent.KEYCODE_BACK) {
             //Toast.makeText(this, "Exiting", Toast.LENGTH_SHORT).show();
             System.out.println("to exit");
+            //finish();
             moveTaskToBack(false);
+            /*finish();
+            System.exit(0); */
             System.out.println("------------");
-
-            System.out.println("---");
-            //System.exit(0);
-            Intent intent = new Intent(this, initial_page.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
-            startActivity(intent);
-            finish();
-            System.exit(0);
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.out.println("------***------");
             return true;
         }
         return super.onKeyDown(keyCode, event);
