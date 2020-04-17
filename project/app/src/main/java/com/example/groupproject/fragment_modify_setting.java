@@ -55,6 +55,7 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import io.opencensus.internal.StringUtils;
@@ -119,6 +120,25 @@ public class fragment_modify_setting extends Fragment {
                     "(?=\\S+$)" +
                     ".{6,}" +
                     "$");
+
+
+    private boolean validatePhone(String phone){
+        Pattern pattern = Pattern.compile("^-?[0-9]+");
+        Matcher matcher = pattern.matcher(phone);
+        if(phone == null || phone == ""){
+            txt_phone.setError("Phone number can't be none");
+            return false;
+        }
+        if(phone.length() < 5){
+            txt_phone.setError("Phone number too short");
+            return false;
+        }
+        if(!matcher.matches()){
+            txt_phone.setError("Invalid characters");
+            return false;
+        }
+            return true;
+    }
 
     private boolean validatePassword(String psw) {
         if(psw.equals("000000")) {
@@ -291,7 +311,9 @@ public class fragment_modify_setting extends Fragment {
 
                 EditText txt_phone_txt = view.findViewById(R.id.txt_phone_txt);
                 String user_phone = txt_phone_txt.getText().toString();
-                userRef.update("phone", user_phone.substring(0,3) + "-"+user_phone.substring(3,5)+"-"+user_phone.substring(5));
+                if(validatePhone(user_phone)) {
+                    userRef.update("phone", user_phone.substring(0, 3) + "-" + user_phone.substring(3, 5) + "-" + user_phone.substring(5));
+                }
                 appCookies.userPhone = user_phone;
 
                 EditText txt_password_txt = view.findViewById(R.id.txt_password_txt);
@@ -324,7 +346,7 @@ public class fragment_modify_setting extends Fragment {
                     appCookies.userGender = "Female";
                 }
 
-                if(validateUsername(user_name) && validateEmail(user_email) && validatePassword(user_psw)) {
+                if(validateUsername(user_name) && validateEmail(user_email) && validatePassword(user_psw) && validatePhone(user_phone)) {
                     //Navigation.findNavController(v).navigate(R.id.action_modify_to_setting);
                     Intent intent_store = new Intent(getActivity(), setting_main.class);
                     intent_store.putExtra("action", "did");
@@ -380,7 +402,7 @@ public class fragment_modify_setting extends Fragment {
                             db.collection("users")
                                     .document(userID)
                                     .update("avatar", photoStringLink);
-                            userAvatar = photoStringLink;
+                            appCookies.userAvatar = photoStringLink;
                         }
                     });
                 }

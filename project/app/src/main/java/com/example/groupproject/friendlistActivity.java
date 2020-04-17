@@ -265,7 +265,7 @@ public class friendlistActivity extends AppCompatActivity {
         final DocumentReference documentReference = db.collection("users").document(userID);
 
         final Intent intent = new Intent();
-        intent.putExtra("new_user", true);
+        intent.putExtra("new_user", "true");
         intent.setClass(friendlistActivity.this, initial_page.class);
         documentReference
                 .get()
@@ -296,9 +296,9 @@ public class friendlistActivity extends AppCompatActivity {
         CollectionReference users = db.collection("users");
 
         ArrayList<String> tempFriends = new ArrayList<>();
-        tempFriends.add("wtJ5hG5fvtYdwVbeNfraG6lmpyY2");
+        tempFriends.add("aInNPneOJTPS4blXjSPPUh8iRnl2");
         ArrayList<String> tempNotifications = new ArrayList<>();
-        tempNotifications.add("2-0-Welcome to SupLink ;)");
+        tempNotifications.add("2-0-aInNPneOJTPS4blXjSPPUh8iRnl2-Welcome to SupLink ;)");
 
         Map<String, Object> newUser = new HashMap<>();
         newUser.put("UID", userID);
@@ -408,7 +408,7 @@ public class friendlistActivity extends AppCompatActivity {
 
                                                 notificationContent.add("Your friend " + document.getData().get("username").toString() + " sent you a chat Message!");
                                             } else if (type.equals("2")) {
-                                                notificationContent.add(userNotifications.get(i).get(2));
+                                                notificationContent.add("Welcome to SupLink :)");
                                             }
                                             break;
                                         }
@@ -422,7 +422,7 @@ public class friendlistActivity extends AppCompatActivity {
                         ArrayList<String> list = setListAdapter();
                         friendlistAdapter.addAll(list);
 
-                        notificationContent.add(0,"\uD83D\uDC48Friends List");
+                        notificationContent.add(0,"\uD83D\uDC48 Friends List");
                         notificationAdapter.addAll(notificationContent);
                         storeData(username, userID, userEmail, userGender, userBirthday,
                                 userDisplay, userFriends, userCheckedPoints, userFriendsID,
@@ -433,7 +433,7 @@ public class friendlistActivity extends AppCompatActivity {
 
     private ArrayList<String> setListAdapter(){
         ArrayList<String> list = new ArrayList<>();
-        list.add("Notifications\uD83D\uDC49");
+        list.add("Notifications \uD83D\uDC49");
         for(int i=0; i<userFriends.size(); i++){
             System.out.println(" "+i);
             String temp = new String(userFriends.get(i).get("username").toString());

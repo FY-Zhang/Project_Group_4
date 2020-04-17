@@ -107,7 +107,7 @@ public class fragment_setting_setting extends Fragment {
                                 TextView tv5 = view.findViewById(R.id.dis_phone);
                                 String[] temp = document.getString("phone").split("-");
                                 if(temp.length>1) {
-                                    tv5.setText("+353" + temp[0] + temp[1] + temp[2]);
+                                    tv5.setText(temp[0] + temp[1] + temp[2]);
                                 }else {
                                     tv5.setText(temp[0]);
                                 }
