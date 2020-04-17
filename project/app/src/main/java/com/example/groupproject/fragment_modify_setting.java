@@ -56,6 +56,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import io.opencensus.internal.StringUtils;
@@ -245,6 +246,8 @@ public class fragment_modify_setting extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        appCookies.frgState = 1;
+
         //modify - setting
             //show current info
         String user_id = appCookies.userID;
@@ -347,13 +350,9 @@ public class fragment_modify_setting extends Fragment {
                 }
 
                 if(validateUsername(user_name) && validateEmail(user_email) && validatePassword(user_psw) && validatePhone(user_phone)) {
-                    //Navigation.findNavController(v).navigate(R.id.action_modify_to_setting);
-                    Intent intent_store = new Intent(getActivity(), setting_main.class);
-                    intent_store.putExtra("action", "did");
-                    getActivity().startActivity(intent_store);
                     uploadFile();
                     Toast.makeText(getActivity(), "Submitted Successfully!", Toast.LENGTH_SHORT).show();
-                    getActivity().finish();
+                    Navigation.findNavController(v).navigate(R.id.action_modify_to_setting);
                 }
 
             }
