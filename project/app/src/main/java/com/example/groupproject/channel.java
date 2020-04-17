@@ -89,6 +89,7 @@ public class channel extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setClass(this, friendlistActivity.class);
         startActivity(intent);
+        finish();
     }
     public void toChannel(View view){
     }
@@ -97,6 +98,7 @@ public class channel extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setClass(this, setting_main.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
@@ -105,7 +107,7 @@ public class channel extends AppCompatActivity {
             moveTaskToBack(false);
             Intent intent_cnl_frd = new Intent(channel.this, friendlistActivity.class);
             startActivity(intent_cnl_frd);
-
+            finish();
             return true;
         }
         return super.onKeyDown(keyCode, event);

@@ -49,18 +49,36 @@ public class setting_main extends AppCompatActivity {
             case R.id.setting_post:
                 intent = new Intent(setting_main.this, post_my.class);
                 startActivity(intent);
+                //finish();
                 return true;
             case R.id.setting_fav:
                 intent = new Intent(setting_main.this, post_favorite.class);
                 startActivity(intent);
+                //finish();
                 return true;
             case R.id.setting_logout:
                 intent = new Intent(setting_main.this, initial_page.class);
                 startActivity(intent);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void toChannel(View view) {
+        Intent intent = new Intent(this, channel.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void toFriendlist(View view) {
+        Intent intent = new Intent(this, friendlistActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void toSetting(View view) {
     }
 
 
@@ -71,14 +89,10 @@ public class setting_main extends AppCompatActivity {
                 moveTaskToBack(false);
                 Intent intent_toFrd = new Intent(this, friendlistActivity.class);
                 startActivity(intent_toFrd);
+                finish();
                 return true;
             }
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    public void toChannel(View view) {
-        Intent intent = new Intent(this, friendlistActivity.class);
-        startActivity(intent);
     }
 }

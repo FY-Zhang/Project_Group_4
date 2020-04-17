@@ -323,26 +323,36 @@ public class friendlistActivity extends AppCompatActivity {
 
         if(data.getString("email") != null){
             userEmail = data.getString("email");
+        } else { /* just in order to promise no null - check again*/
+            userEmail = "default@suplink.com";
         }
         if(data.getString("gender") != null){
             userGender = data.getString("gender");
+        } else {
+            userGender = "Female";
         }
         if(data.getString("username") != null){
             username = data.getString("username");
+        } else {
+            username = "User";
         }
         if(data.getString("birthday") != null){
             userBirthday = data.getString("birthday");
+        } else {
+            userBirthday = "1/1/1900";
         }
         if(data.getBoolean("display") != null){
             userDisplay = data.getBoolean("display");
+        } else {
+            userDisplay = false;
         }
-        if((ArrayList<String>)data.get("friends") != null){
+        if(data.get("friends") != null){
             userFriendsID = (ArrayList<String>)data.get("friends");
         }
         if(data.getString("phone") != null){
             userPhone = data.getString("phone");
         }
-        if((ArrayList<GeoPoint>) data.get("checkPoint") != null) {
+        if(data.get("checkPoint") != null) {
             userCheckedPoints = (ArrayList<GeoPoint>) data.get("checkPoint");
         }
         if(data.get("notifications") != null){
@@ -443,6 +453,7 @@ public class friendlistActivity extends AppCompatActivity {
             case R.id.map_check:
                 intent.setClass(this, map_main.class);
                 startActivity(intent);
+                //finish(); do not use it
                 return true;
             case R.id.searchByEmail:
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -502,11 +513,13 @@ public class friendlistActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setClass(this, channel.class);
         startActivity(intent);
+        finish();
     }
     public void toSetting(View view){
         Intent intent = new Intent();
         intent.setClass(this, setting_main.class);
         startActivity(intent);
+        finish();
     }
 
     private long mExitTime = 0;
@@ -519,7 +532,6 @@ public class friendlistActivity extends AppCompatActivity {
                 Toast.makeText(friendlistActivity.this, "Press again to exit", Toast.LENGTH_SHORT).show();
             } else {
                 finish();
-                System.exit(0);
             }
             return true;
         }

@@ -16,6 +16,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -507,5 +508,17 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(cus_loc));
             }
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(false);
+            Intent intent_cnl_frd = new Intent(map_main.this, friendlistActivity.class);
+            startActivity(intent_cnl_frd);
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

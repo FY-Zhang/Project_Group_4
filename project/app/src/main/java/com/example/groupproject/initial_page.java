@@ -78,12 +78,13 @@ public class initial_page extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK) {
-            Toast.makeText(this, "Exiting", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Exiting", Toast.LENGTH_SHORT).show();
+            System.out.println("to exit");
+            //finish();
             moveTaskToBack(false);
+            /*finish();
+            System.exit(0); */
             System.out.println("------------");
-            //super.onDestroy();
-            android.os.Process.killProcess(android.os.Process.myPid());
-
             return true;
         }
         return super.onKeyDown(keyCode, event);

@@ -101,7 +101,7 @@ public class fragment_modify_setting extends Fragment {
     }
 
     private boolean validateEmail(String user_email) {
-        if(user_email.isEmpty()) {
+        if(user_email.equals("")) {
             txt_email.setError("Email cannot be empty!");
             return false;
         } else if(!Patterns.EMAIL_ADDRESS.matcher(user_email).matches()) {
@@ -116,7 +116,6 @@ public class fragment_modify_setting extends Fragment {
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
                     "(?=.*[a-zA-Z])" +
-                    "(?=.*[@#$%^&+=])" +
                     "(?=\\S+$)" +
                     ".{6,}" +
                     "$");
@@ -146,13 +145,9 @@ public class fragment_modify_setting extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
-
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_modify, container, false);
     }
-
-
 
 
     private  void openFileChooser(){
@@ -183,7 +178,7 @@ public class fragment_modify_setting extends Fragment {
                 int month = calendar.get(Calendar.MONTH);
                 int year = calendar.get(Calendar.YEAR);
 
-                System.out.println("Show ?  ------   22   --------- ");
+               // System.out.println("Show ?  ------   22   --------- ");
 
                 DatePickerDialog picker = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
@@ -193,7 +188,7 @@ public class fragment_modify_setting extends Fragment {
                             }
                         }, year, month, day);
 
-                System.out.println("Show ?  ------   33   --------- ");
+                //System.out.println("Show ?  ------   33   --------- ");
                 picker.show();
             }
         });
@@ -310,7 +305,6 @@ public class fragment_modify_setting extends Fragment {
                 EditText txt_email_txt = view.findViewById(R.id.txt_email_txt);
                 String user_email = txt_email_txt.getText().toString();
                 userRef.update("email", user_email);
-                user_set.updateEmail(user_email);
                 appCookies.userEmail = user_email;
 
                 System.out.println("Show ?  ------   1   --------- ");
@@ -335,9 +329,11 @@ public class fragment_modify_setting extends Fragment {
                     Intent intent_store = new Intent(getActivity(), setting_main.class);
                     intent_store.putExtra("action", "did");
                     getActivity().startActivity(intent_store);
+                    uploadFile();
                     Toast.makeText(getActivity(), "Submitted Successfully!", Toast.LENGTH_SHORT).show();
+                    getActivity().finish();
                 }
-                uploadFile();
+
             }
         });
 
@@ -355,6 +351,7 @@ public class fragment_modify_setting extends Fragment {
         Picasso.with(avatar.getContext())
                 .load(userAvatar)
                 .into(avatar);
+        System.out.println(userAvatar);
     }
 
     private  void uploadFile(){

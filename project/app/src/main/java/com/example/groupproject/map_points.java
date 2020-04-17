@@ -136,6 +136,7 @@ public class map_points extends AppCompatActivity {
                                                     intent_toMap.putExtra("from", "map_points");
 
                                                     startActivity(intent_toMap);
+                                                    finish();
                                                 }
                                             });
                                     dialog.setNegativeButton("No",

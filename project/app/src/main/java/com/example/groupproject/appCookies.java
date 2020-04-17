@@ -13,7 +13,8 @@ public class appCookies {
     public static String userGender = new String();
     public static String userBirthday = new String();
     public static ArrayList userFavorite = new ArrayList();
-    public static String userAvatar = new String();
+    public static String userAvatar /*initial to avoid null object, pls retain it*/
+            = "https://firebasestorage.googleapis.com/v0/b/groupproject-ffdc4.appspot.com/o/user_avatar%2Favatar_default.jpg?alt=media&token=852659d8-aa5a-4022-a53f-abfb3c268aa6";
     public static String userPhone = new String();
     public static boolean userDisplay;
     public static ArrayList<Map<String,Object>> userFriends = new ArrayList<>();
