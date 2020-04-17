@@ -73,6 +73,7 @@ public class fragment_setting_setting extends Fragment {
         Picasso.with(avatar.getContext())
                 .load(userAvatar)
                 .into(avatar);
+        System.out.println("The avatar:" + avatar);
     }
 
     private void showInfo_setting(final View view){

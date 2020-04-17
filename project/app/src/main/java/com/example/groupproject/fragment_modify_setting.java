@@ -101,7 +101,7 @@ public class fragment_modify_setting extends Fragment {
     }
 
     private boolean validateEmail(String user_email) {
-        if(user_email.isEmpty()) {
+        if(user_email.equals("")) {
             txt_email.setError("Email cannot be empty!");
             return false;
         } else if(!Patterns.EMAIL_ADDRESS.matcher(user_email).matches()) {
@@ -145,13 +145,9 @@ public class fragment_modify_setting extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
-
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_modify, container, false);
     }
-
-
 
 
     private  void openFileChooser(){
@@ -309,7 +305,6 @@ public class fragment_modify_setting extends Fragment {
                 EditText txt_email_txt = view.findViewById(R.id.txt_email_txt);
                 String user_email = txt_email_txt.getText().toString();
                 userRef.update("email", user_email);
-                user_set.updateEmail(user_email);
                 appCookies.userEmail = user_email;
 
                 System.out.println("Show ?  ------   1   --------- ");
@@ -354,6 +349,7 @@ public class fragment_modify_setting extends Fragment {
         Picasso.with(avatar.getContext())
                 .load(userAvatar)
                 .into(avatar);
+        System.out.println(userAvatar);
     }
 
     private  void uploadFile(){

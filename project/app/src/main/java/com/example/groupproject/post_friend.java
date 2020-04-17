@@ -1,9 +1,5 @@
 package com.example.groupproject;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +9,10 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FieldValue;
@@ -21,15 +21,14 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class post_friend extends AppCompatActivity {
 
     private List<Map<String, Object>> postList = new ArrayList<>();
-    private String friendId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +36,7 @@ public class post_friend extends AppCompatActivity {
         setContentView(R.layout.activity_post_friend);
 
         Intent intent = getIntent();
+        String friendId;
         if (intent != null) {
             friendId = intent.getStringExtra("friendId");
             System.out.println(friendId);
@@ -44,8 +44,8 @@ public class post_friend extends AppCompatActivity {
             friendId = "FKuYZ5lRhYb0bGTT4bVtefiVoSs2";
         }
 
-        final String[] form = new String[]{"title","content","dtc"};
-        final int[] to = new int[]{R.id.tv_title_frd,R.id.tv_content_frd,R.id.tv_dtc_frd};
+        final String[] form = new String[]{"title"};
+        final int[] to = new int[]{R.id.tv_title_frd};
         final List<String> docId = new ArrayList<>();// array for id of documents
 
         System.out.println("-------------------------------------Friend post");
@@ -58,18 +58,12 @@ public class post_friend extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
-                            for(QueryDocumentSnapshot document : task.getResult()) {
+                            for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Map<String, Object> post= new HashMap<>();
-
                                 post.put("title", document.getString("title"));
-                                post.put("content", document.getString("content"));
-                                Date date = document.getDate("datetime");
-                                post.put("dtc", document.getString("channel") + " / " + date);
-
-                                System.out.println("Post: " + post);
-
                                 postList.add(post);
                                 docId.add(document.getId());
+                                System.out.println("Post: " + post);
                             }
 
                             System.out.println("postlist: " + postList);
@@ -103,6 +97,16 @@ public class post_friend extends AppCompatActivity {
                                             });
                                     dialog.show();
                                     return true;
+                                }
+                            });
+
+                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    Intent intent_to_display = new Intent(post_friend.this, post_display.class);
+                                    System.out.println("Frd post id is: " + docId.get(position));
+                                    intent_to_display.putExtra("post_id", docId.get(position));
+                                    startActivity(intent_to_display);
                                 }
                             });
 

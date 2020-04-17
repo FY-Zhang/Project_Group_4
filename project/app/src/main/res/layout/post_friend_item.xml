@@ -21,26 +21,6 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="15dp"
                 android:text="Title"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tv_dtc_frd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:text="dtc" />
-
-            <EditText
-                android:id="@+id/tv_content_frd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:minHeight="81dp"
-                android:paddingLeft="15dp"
                 android:textSize="24sp" />
 
         </LinearLayout>
