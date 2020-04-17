@@ -422,7 +422,7 @@ public class friendlistActivity extends AppCompatActivity {
                         ArrayList<String> list = setListAdapter();
                         friendlistAdapter.addAll(list);
 
-                        notificationContent.add(0,"\uD83D\uDC48Friends List");
+                        notificationContent.add(0,"Friends List\uD83D\uDC65");
                         notificationAdapter.addAll(notificationContent);
                         storeData(username, userID, userEmail, userGender, userBirthday,
                                 userDisplay, userFriends, userCheckedPoints, userFriendsID,
@@ -433,7 +433,7 @@ public class friendlistActivity extends AppCompatActivity {
 
     private ArrayList<String> setListAdapter(){
         ArrayList<String> list = new ArrayList<>();
-        list.add("Notifications\uD83D\uDC49");
+        list.add("Notifications\uD83D\uDCAC");
         for(int i=0; i<userFriends.size(); i++){
             System.out.println(" "+i);
             String temp = new String(userFriends.get(i).get("username").toString());

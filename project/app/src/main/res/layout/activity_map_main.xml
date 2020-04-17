@@ -32,30 +32,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="18dp"
+            android:textSize="14dp"
             style="@style/FirebaseUI.Button"
             android:background="@color/fui_bgFacebook"
-            android:text="Site"
+            android:text="@string/nsite"
             android:textAllCaps="false"/>
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="18dp"
+            android:textSize="14dp"
             style="@style/FirebaseUI.Button"
             android:background="@color/fui_bgFacebook"
-            android:text="Check"
+            android:text="@string/ncheck"
             android:textAllCaps="false"/>
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="18dp"
+            android:textSize="14dp"
             style="@style/FirebaseUI.Button"
             android:background="@color/fui_bgFacebook"
-            android:text="List"
+            android:text="@string/nlist"
             android:textAllCaps="false"/>
     </LinearLayout>
 

@@ -4,23 +4,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="Picture"
+        android:title="@string/picture"
         android:id="@+id/chat_picture">
         <menu>
             <item
                 android:id="@+id/chat_camera"
-                android:title="Camera" />
+                android:title="@string/camera" />
             <item
                 android:id="@+id/chat_album"
-                android:title="Choose from album" />
+                android:title="@string/choose_from_album" />
         </menu>
     </item>
     <item
-        android:title="Location"
+        android:title="@string/locate"
         android:id="@+id/chat_location"
         android:icon="@drawable/icon_location"/>
     <item
-        android:title="profile"
+        android:title="@string/profile"
         android:id="@+id/chat_friend_info"
         android:icon="@drawable/icon_profile"/>
 </menu>

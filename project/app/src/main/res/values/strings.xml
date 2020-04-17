@@ -116,4 +116,18 @@
     <string name="myInfo">My Info</string>
     <string name="modify">Modify</string>
     <string name="suplink">Suplink</string>
+    <string name="all_posts">All Posts</string>
+    <string name="log_out">Log Out</string>
+    <string name="map">Map</string>
+    <string name="search">Search</string>
+    <string name="search_by_email">Search by Email</string>
+    <string name="search_nearby">Search Nearby</string>
+    <string name="picture">Picture</string>
+    <string name="camera">Camera</string>
+    <string name="choose_from_album">Choose from album</string>
+    <string name="locate">Location</string>
+    <string name="profile">Profile</string>
+    <string name="nsite">📍\nSite</string>
+    <string name="ncheck">🚩\nCheck</string>
+    <string name="nlist">🎫\nList</string>
 </resources>

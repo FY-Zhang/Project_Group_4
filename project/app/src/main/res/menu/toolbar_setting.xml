@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="All Post"
+        android:title="@string/all_posts"
         android:id="@+id/setting_post"/>
     <item
-        android:title="Favorite"
+        android:title="@string/favorites"
         android:id="@+id/setting_fav"/>
     <item
-        android:title="Log Out"
+        android:title="@string/log_out"
         android:id="@+id/setting_logout"/>
 </menu>
