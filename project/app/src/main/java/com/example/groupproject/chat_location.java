@@ -257,7 +257,7 @@ public class chat_location extends AppCompatActivity implements OnMapReadyCallba
         String message = ""+latitude+" "+longitude;
         System.out.println("location now: 4 " + latitude + " ; " + longitude);
         SimpleDateFormat sdf = new SimpleDateFormat();
-        sdf.applyPattern("yyyy-MM-dd_HH:mm_ss_a");
+        sdf.applyPattern("yyyy-MM-dd_HH:mm");
         Date date = new Date();
 
         if(!TextUtils.isEmpty(message)){
@@ -274,13 +274,8 @@ public class chat_location extends AppCompatActivity implements OnMapReadyCallba
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users")
                 .document(friendID)
-                .update("notifications", FieldValue.arrayUnion("1-0-"+userID));
+                .update("notifications", FieldValue.arrayUnion("1-0-"+userID +"-"+sdf.format(date)));
 
-        Intent intent = new Intent();
-        intent.putExtra("friend_name", friendName);
-        intent.putExtra("friend_id", friendID);
-        intent.setClass(this, chat_nav.class);
-        startActivity(intent);
         finish();
     }
 }

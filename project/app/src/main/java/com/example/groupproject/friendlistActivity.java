@@ -265,6 +265,7 @@ public class friendlistActivity extends AppCompatActivity {
         final DocumentReference documentReference = db.collection("users").document(userID);
 
         final Intent intent = new Intent();
+        intent.putExtra("new_user", true);
         intent.setClass(friendlistActivity.this, initial_page.class);
         documentReference
                 .get()
@@ -421,7 +422,7 @@ public class friendlistActivity extends AppCompatActivity {
                         ArrayList<String> list = setListAdapter();
                         friendlistAdapter.addAll(list);
 
-                        notificationContent.add(0,"<-Friends List");
+                        notificationContent.add(0,"\uD83D\uDC48Friends List");
                         notificationAdapter.addAll(notificationContent);
                         storeData(username, userID, userEmail, userGender, userBirthday,
                                 userDisplay, userFriends, userCheckedPoints, userFriendsID,
@@ -432,7 +433,7 @@ public class friendlistActivity extends AppCompatActivity {
 
     private ArrayList<String> setListAdapter(){
         ArrayList<String> list = new ArrayList<>();
-        list.add("Notifications->");
+        list.add("Notifications\uD83D\uDC49");
         for(int i=0; i<userFriends.size(); i++){
             System.out.println(" "+i);
             String temp = new String(userFriends.get(i).get("username").toString());

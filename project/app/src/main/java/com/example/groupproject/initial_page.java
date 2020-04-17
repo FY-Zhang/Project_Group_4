@@ -27,6 +27,12 @@ public class initial_page extends AppCompatActivity {
         setContentView(R.layout.activity_initial_page);
 
         Log.d("Token-Firebase", ""+ FirebaseInstanceId.getInstance().getToken());
+
+        Intent intent = getIntent();
+        Boolean newUser = intent.getBooleanExtra("new_user", false);
+        if(newUser != null && newUser){
+            Toast.makeText(this, "Register successfully! Please log in:)", Toast.LENGTH_SHORT);
+        }
     }
 
     public void onClickSignIn(View view){

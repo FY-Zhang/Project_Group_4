@@ -112,7 +112,7 @@ public class chat_camera extends AppCompatActivity {
                                 String photoStringLink = uri.toString();
 
                                 SimpleDateFormat sdf = new SimpleDateFormat();
-                                sdf.applyPattern("yyyy-MM-dd_HH:mm_ss_a");
+                                sdf.applyPattern("yyyy-MM-dd_HH:mm");
                                 Date date = new Date();
 
                                 ChatMessage chatMessage = new ChatMessage(userID, sdf.format(date), 0, "",photoStringLink, "", 200, 200);
@@ -123,10 +123,15 @@ public class chat_camera extends AppCompatActivity {
                     }
                 });
 
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        sdf.applyPattern("yyyy-MM-dd_HH:mm_ss_a");
+        Date date = new Date();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users")
                 .document(friendID)
-                .update("notifications", FieldValue.arrayUnion("1-0-"+userID));
+                .update("notifications", FieldValue.arrayUnion("1-0-"+userID +"-"+sdf.format(date)));
+
+        finish();
     }
 
     public void onRetakeClick(View view){

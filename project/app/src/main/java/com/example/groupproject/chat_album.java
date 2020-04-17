@@ -68,25 +68,21 @@ public class chat_album extends AppCompatActivity {
 
 
     public void onDropClick(View view){
-        Intent intent = new Intent();
-        intent.putExtra("friend_name", friendName);
-        intent.putExtra("friend_id", friendID);
-        intent.setClass(this, chat_nav.class);
-        startActivity(intent);
+        finish();
     }
     public void onSendClick(View view){
         uploadFile();
 
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        sdf.applyPattern("yyyy-MM-dd_HH:mm");
+        Date date = new Date();
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users")
                 .document(friendID)
-                .update("notifications", FieldValue.arrayUnion("1-0-"+userID));
+                .update("notifications", FieldValue.arrayUnion("1-0-"+userID +"-"+sdf.format(date)));
 
-        Intent intent = new Intent();
-        intent.putExtra("friend_name", friendName);
-        intent.putExtra("friend_id", friendID);
-        intent.setClass(this, chat_nav.class);
-        startActivity(intent);
+        finish();
     }
     public void onRepickClick(View view){
         openFileChooser();

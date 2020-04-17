@@ -18,7 +18,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <ImageView
-        android:id="@+id/icon"
+        android:id="@+id/avatar"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="100dp"
@@ -68,13 +68,6 @@
     </LinearLayout>
 
 
-    <fragment
-        android:id="@+id/bottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:name="com.example.groupproject.bottom_bar"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
