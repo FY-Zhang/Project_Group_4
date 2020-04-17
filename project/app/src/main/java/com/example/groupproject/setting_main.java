@@ -85,7 +85,7 @@ public class setting_main extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK) {
-            /*if(Objects.equals(getIntent().getStringExtra("action"), "did"))*/ {
+           if(appCookies.frgState == 0) { //jump from set -/ not edit
                 moveTaskToBack(false);
                 Intent intent_toFrd = new Intent(this, friendlistActivity.class);
                 startActivity(intent_toFrd);

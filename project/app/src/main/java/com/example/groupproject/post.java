@@ -310,9 +310,6 @@ public class post extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK) {
-            moveTaskToBack(false);
-            Intent intent_cnl_frd = new Intent(post.this, channel.class);
-            startActivity(intent_cnl_frd);
             finish();
             return true;
         }

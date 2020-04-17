@@ -513,9 +513,6 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK) {
-            moveTaskToBack(false);
-            Intent intent_cnl_frd = new Intent(map_main.this, friendlistActivity.class);
-            startActivity(intent_cnl_frd);
             finish();
             return true;
         }

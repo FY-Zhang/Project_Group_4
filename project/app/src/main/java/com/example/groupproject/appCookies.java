@@ -22,6 +22,8 @@ public class appCookies {
     public static ArrayList<Map<String,Object>> userChecked = new ArrayList<>();
     public static ArrayList<GeoPoint> userCheckedPoints = new ArrayList<>();
 
+    public static int frgState = 0;//frg change
+
     public static void storeData(String name, String ID, String email, String gender, String birthday,
                                  boolean display, ArrayList<Map<String, Object>> Friends,
                                  ArrayList<GeoPoint>checkedPoints, ArrayList<String> friendsID,

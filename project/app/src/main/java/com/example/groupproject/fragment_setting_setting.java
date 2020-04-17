@@ -59,6 +59,8 @@ public class fragment_setting_setting extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        appCookies.frgState = 0;
+
         Button btn_modify = view.findViewById(R.id.btn_modify); //modify
         btn_modify.setOnClickListener(new View.OnClickListener() {
             @Override
