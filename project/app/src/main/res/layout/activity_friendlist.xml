@@ -19,8 +19,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/chats" />
 
-
-
     <fragment
         android:id="@+id/fragment_friendlist"
         android:name="com.example.groupproject.fragment_friendlist"

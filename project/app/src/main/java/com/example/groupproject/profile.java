@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -20,11 +21,13 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firestore.v1.WriteResult;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.groupproject.appCookies.userAvatar;
 import static com.example.groupproject.appCookies.userFriends;
 import static com.example.groupproject.appCookies.userFriendsID;
 import static com.example.groupproject.appCookies.userID;
@@ -38,6 +41,7 @@ public class profile extends AppCompatActivity {
     String user_email;
     String type;
     boolean showGender;
+    ImageView avatar;
     Button button1;
     Button button2;
 
@@ -57,6 +61,7 @@ public class profile extends AppCompatActivity {
 
         button1 = findViewById(R.id.button1);
         button2 = findViewById(R.id.button2);
+        avatar = findViewById(R.id.avatar);
 
         information = findViewById(R.id.information);
         infoAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
@@ -86,7 +91,7 @@ public class profile extends AppCompatActivity {
         information.setAdapter(infoAdapter);
 
         if(type.equals("friends") || userFriendsID.contains(UID)){
-
+            type = "friends";
         }else if(type.equals("request")){
             button1.setText("Accept Request");
 
@@ -104,6 +109,7 @@ public class profile extends AppCompatActivity {
                         intent.putExtra("friend_name", user_name);
                         intent.setClass(profile.this, chat_nav.class);
                         startActivity(intent);
+                        finish();
                         break;
                     case "request":
                         addAsFriend();
@@ -127,6 +133,8 @@ public class profile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
     private void setInfo(){
 
@@ -137,6 +145,9 @@ public class profile extends AppCompatActivity {
         }else {
             content.add("Gender: Secret:)");
         }
+        Picasso.with(avatar.getContext())
+                .load(userAvatar)
+                .into(avatar);
     }
     private void addAsFriend(){
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -150,6 +161,9 @@ public class profile extends AppCompatActivity {
                 .update("friends", FieldValue.arrayUnion(userID));
 
         userFriendsID.add(UID);
+
+        button1.setText("SEND MESSAGE");
+        type = "friends";
     }
     private void sendRequest(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();

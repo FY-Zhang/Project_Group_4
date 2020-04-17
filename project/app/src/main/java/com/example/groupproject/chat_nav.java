@@ -129,8 +129,9 @@ public class chat_nav extends AppCompatActivity {
 
     private void addToRealtimeDatabase(){
         String message = messageSend.getText().toString();
+        messageSend.setText(null);
         SimpleDateFormat sdf = new SimpleDateFormat();
-        sdf.applyPattern("yyyy-MM-dd_HH:mm_ss_a");
+        sdf.applyPattern("yyyy-MM-dd HH:mm");
         Date date = new Date();
 
         if(!TextUtils.isEmpty(message)){
@@ -144,7 +145,7 @@ public class chat_nav extends AppCompatActivity {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("users")
                     .document(friendID)
-                    .update("notifications", FieldValue.arrayUnion("1-0-"+userID));
+                    .update("notifications", FieldValue.arrayUnion("1-0-"+userID +"-"+sdf.format(date)));
 
             HashMap<String, String> parama = new HashMap<>();
             parama.put("regid", FirebaseInstanceId.getInstance().getToken());
