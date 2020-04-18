@@ -30,8 +30,11 @@ public class initial_page extends AppCompatActivity {
 
         Intent intent = getIntent();
         String newUser = intent.getStringExtra("new_user");
-        if(newUser != null){
-            Toast.makeText(initial_page.this, "Register successfully! Please log in:)", Toast.LENGTH_LONG);
+        System.out.println("user value: " + newUser);
+        if(newUser != null) {
+            if(newUser.equals("true")){
+                Toast.makeText(initial_page.this, "You can log in now :)", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

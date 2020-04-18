@@ -150,7 +150,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
 
                 getDeviceLocation();
                 cur_loc = new LatLng(cur_lat, cur_lng);
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(cur_loc));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cur_loc, 10));
 
                 Toast.makeText(map_main.this, "Lat: " + cur_lat + ". Lng: " + cur_lng, Toast.LENGTH_SHORT).show();
 
@@ -187,6 +187,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
 
                                 cur_lat = currentLocation.getLatitude();
                                 cur_lng = currentLocation.getLongitude();
+                               // updateLocationUI();
 
                                 System.out.println("latlng: " + cur_lat + " --" + cur_lng);
 
@@ -417,9 +418,10 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
         mkrSydney = mMap.addMarker(new MarkerOptions().position(Sydney).title("Sydney, Capital of Australia. \uD83C\uDDE6\uD83C\uDDFA"));
         mkrBerlin = mMap.addMarker(new MarkerOptions().position(Berlin).title("Berlin, Capital of Germany \uD83C\uDDE9\uD83C\uDDEA."));
 
-        mkrDrag = mMap.addMarker(new MarkerOptions().position(new LatLng(51.5, 0.1)).title("Drag me to get the position!"));
+        mkrDrag = mMap.addMarker(new MarkerOptions().position(new LatLng(51.5, 0.1)).title("Drag me to any position ✈️!"));
         //修改logo mkrDrag.setIcon();
         mkrDrag.setDraggable(true);
+        mkrDrag.setAlpha((float) 0.8);
 
         markerList.add(mkrBeijing);
         markerList.add(mkrUL);
