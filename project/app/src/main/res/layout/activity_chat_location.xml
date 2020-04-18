@@ -11,10 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/fui_bgFacebook"
-        app:title="Camera"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent"
+        app:title="Location"
         tools:layout_editor_absoluteX="0dp" />
 
     <fragment
