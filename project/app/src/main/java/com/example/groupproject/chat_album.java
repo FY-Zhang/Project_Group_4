@@ -136,7 +136,7 @@ public class chat_album extends AppCompatActivity {
                                     String photoStringLink = uri.toString();
 
                                     SimpleDateFormat sdf = new SimpleDateFormat();
-                                    sdf.applyPattern("yyyy-MM-dd_HH:mm_ss_a");
+                                    sdf.applyPattern("yyyy-MM-dd HH:mm");
                                     Date date = new Date();
 
                                     ChatMessage chatMessage = new ChatMessage(userID, sdf.format(date), 0, "",photoStringLink, "", 200, 200);
