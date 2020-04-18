@@ -144,7 +144,7 @@ public class fragment_modify_setting extends Fragment {
     private boolean validatePassword(String psw) {
         if(psw.equals("000000")) {
             return true; //default - not change
-        } else if(psw.isEmpty()){
+        } else if(psw.equals("")){
             txt_password.setError("Password cannot be empty!");
             return false;
         } else if(!PASSWORD_PATTERN.matcher(psw).matches()) {
@@ -321,7 +321,7 @@ public class fragment_modify_setting extends Fragment {
 
                 EditText txt_password_txt = view.findViewById(R.id.txt_password_txt);
                 String user_psw = txt_password_txt.getText().toString();
-                if(user_psw.equals("000000")){
+                if(user_psw.equals("000000") || user_psw.equals("") ){
                     // not change
                 } else {
                     user_set.updatePassword(user_psw);
@@ -388,7 +388,7 @@ public class fragment_modify_setting extends Fragment {
                         @Override
                         public void run() {
                         }
-                    }, 50000);
+                    }, 100);
 
 
                     Task<Uri> result = taskSnapshot.getMetadata().getReference().getDownloadUrl();
