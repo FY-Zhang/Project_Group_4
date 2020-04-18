@@ -54,13 +54,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_username_modify"
             tools:layout_editor_absoluteY="250dp" />
-
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp" />
-
     </LinearLayout>
 
     <Button
@@ -78,6 +71,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout55"
         android:layout_width="wrap_content"
         android:layout_height="52dp"
         android:layout_marginTop="29dp"
@@ -108,5 +102,21 @@
             app:srcCompat="@drawable/icon_room" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
