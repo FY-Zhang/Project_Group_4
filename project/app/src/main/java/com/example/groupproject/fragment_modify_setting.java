@@ -309,48 +309,50 @@ public class fragment_modify_setting extends Fragment {
                 //get text user entered
                 EditText txt_username_txt = view.findViewById(R.id.txt_username_txt);
                 String user_name = txt_username_txt.getText().toString();
-                userRef.update("username",user_name);
-                appCookies.username = user_name;
 
                 EditText txt_phone_txt = view.findViewById(R.id.txt_phone_txt);
                 String user_phone = txt_phone_txt.getText().toString();
-                if(validatePhone(user_phone)) {
-                    userRef.update("phone", user_phone.substring(0, 3) + "-" + user_phone.substring(3, 5) + "-" + user_phone.substring(5));
-                }
-                appCookies.userPhone = user_phone;
 
                 EditText txt_password_txt = view.findViewById(R.id.txt_password_txt);
                 String user_psw = txt_password_txt.getText().toString();
-                if(user_psw.equals("000000") || user_psw.equals("") ){
-                    // not change
-                } else {
-                    user_set.updatePassword(user_psw);
-                }
 
                 EditText txt_email_txt = view.findViewById(R.id.txt_email_txt);
                 String user_email = txt_email_txt.getText().toString();
-                userRef.update("email", user_email);
-                appCookies.userEmail = user_email;
 
-                System.out.println("Show ?  ------   1   --------- ");
                 EditText txt_birthday_txt = view.findViewById(R.id.txt_birthday_txt);
-                //setBirthday(previously)
                 String user_birthday = txt_birthday_txt.getText().toString();
-                userRef.update("birthday", user_birthday);
-                appCookies.userBirthday = user_birthday;
 
                 RadioGroup rg_sex = view.findViewById(R.id.rg_sex);//RadioGroup
                 int sex = rg_sex.getCheckedRadioButtonId();
-                if(sex == R.id.rb1){
-                    userRef.update("gender","Male");
-                    appCookies.userGender = "Male";
-                } else {
-                    userRef.update("gender","Female");
-                    appCookies.userGender = "Female";
-                }
 
+
+                //validate and then submit
                 if(validateUsername(user_name) && validateEmail(user_email) && validatePassword(user_psw) && validatePhone(user_phone)) {
+                    userRef.update("username",user_name);
+                    appCookies.username = user_name;
+
+                    userRef.update("phone", user_phone.substring(0, 3) + "-" + user_phone.substring(3, 5) + "-" + user_phone.substring(5));
+                    appCookies.userPhone = user_phone;
+
+                    if(user_psw.equals("000000") || user_psw.equals("") ){/* not change */}
+                    else { user_set.updatePassword(user_psw); }
+
+                    userRef.update("email", user_email);
+                    appCookies.userEmail = user_email;
+
+                    userRef.update("birthday", user_birthday);
+                    appCookies.userBirthday = user_birthday;
+
+                    if(sex == R.id.rb1){
+                        userRef.update("gender","Male");
+                        appCookies.userGender = "Male";
+                    } else {
+                        userRef.update("gender","Female");
+                        appCookies.userGender = "Female";
+                    }
+
                     uploadFile();
+
                     Toast.makeText(getActivity(), "Submitted Successfully!", Toast.LENGTH_SHORT).show();
                     Navigation.findNavController(v).navigate(R.id.action_modify_to_setting);
                 }

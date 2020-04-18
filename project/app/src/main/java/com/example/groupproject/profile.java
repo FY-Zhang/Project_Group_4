@@ -1,8 +1,10 @@
 package com.example.groupproject;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -95,10 +97,10 @@ public class profile extends AppCompatActivity {
         if(type.equals("friends") || userFriendsID.contains(UID)){
             type = "friends";
         }else if(type.equals("request")){
-            button1.setText("Accept Request");
+            button1.setText(R.string.ar);
 
         }else if(type.equals("unknown")) {
-            button1.setText("Send Friend Request");
+            button1.setText(R.string.sfr);
         }
 
         button1.setOnClickListener(new View.OnClickListener() {
@@ -115,10 +117,20 @@ public class profile extends AppCompatActivity {
                         break;
                     case "request":
                         addAsFriend();
-                        button1.setText("Send Messages");
+                        button1.setText(R.string.sm);
                         break;
                     case "unknown":
                         sendRequest();
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(profile.this);
+                        dialog.setTitle("");
+                        dialog.setMessage("Send Successfully :) ");
+                        dialog.setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                });
+                        dialog.show();
                         break;
                 }
 

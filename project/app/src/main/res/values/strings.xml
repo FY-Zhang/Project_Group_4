@@ -130,4 +130,7 @@
     <string name="nsite">📍\nSite</string>
     <string name="ncheck">🚩\nCheck</string>
     <string name="nlist">🎫\nList</string>
+    <string name="sfr">Send Friend Request</string>
+    <string name="ar">Accept Request</string>
+    <string name="sm">Send Messages</string>
 </resources>
