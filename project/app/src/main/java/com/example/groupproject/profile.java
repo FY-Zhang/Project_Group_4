@@ -94,7 +94,7 @@ public class profile extends AppCompatActivity {
 
         information.setAdapter(infoAdapter);
 
-        if(type.equals("friends") || userFriendsID.contains(UID)){
+        if(userFriendsID.contains(UID) || type.equals("friends") ){
             type = "friends";
         }else if(type.equals("request")){
             button1.setText(R.string.ar);

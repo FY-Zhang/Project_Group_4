@@ -311,6 +311,7 @@ public class friendlistActivity extends AppCompatActivity {
         newUser.put("checkPoint",new ArrayList<String>());
         newUser.put("friends", tempFriends);
         newUser.put("favorite", new ArrayList<String>());
+        //newUser.put("curUserLoc", "none-none");
         newUser.put("notifications",tempNotifications);
         newUser.put("avatar", "https://firebasestorage.googleapis.com/v0/b/groupproject-ffdc4.appspot.com/o/user_avatar%2Favatar_default.jpg?alt=media&token=852659d8-aa5a-4022-a53f-abfb3c268aa6");
 
@@ -461,12 +462,16 @@ public class friendlistActivity extends AppCompatActivity {
                 fragmentTransaction.show(search);
                 fragmentTransaction.commit();
                 return true;
-            case R.id.searchNearby:
+            case R.id.searchByPhone:
                 FragmentTransaction fragmentTransaction2 = fragmentManager.beginTransaction();
                 fragmentTransaction2.hide(search);
                 fragmentTransaction2.show(nearby);
                 fragmentTransaction2.commit();
                 showNearbyResult();
+                return true;
+            case R.id.searchNearby:
+                intent.setClass(this, search_nearby_loc.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

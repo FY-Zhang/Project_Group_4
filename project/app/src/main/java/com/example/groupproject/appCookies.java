@@ -21,6 +21,7 @@ public class appCookies {
     public static ArrayList<String> userFriendsID = new ArrayList<>();
     public static ArrayList<Map<String,Object>> userChecked = new ArrayList<>();
     public static ArrayList<GeoPoint> userCheckedPoints = new ArrayList<>();
+    public static String curUserLoc = "null-null";
 
     public static int frgState = 0;//frg change
 

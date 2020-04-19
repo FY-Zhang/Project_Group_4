@@ -133,4 +133,5 @@
     <string name="sfr">Send Friend Request</string>
     <string name="ar">Accept Request</string>
     <string name="sm">Send Messages</string>
+    <string name="prgNearby">Nearby</string>
 </resources>

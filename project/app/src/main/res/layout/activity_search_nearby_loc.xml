@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".search_nearby_loc">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_prgNear"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/fui_bgFacebook"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="@string/prgNearby" />
+
+    <ListView
+        android:id="@+id/lv_nearby"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:minHeight="300dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ProgressBar
+            android:id="@+id/nearby_prg"
+            android:layout_width="179dp"
+            android:layout_height="119dp"
+            android:minWidth="179dp"
+            android:minHeight="119dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/nearby_btn"
+            android:layout_width="140dp"
+            android:layout_height="113dp"
+            android:background="@color/fui_transparent"
+            android:minWidth="140dp"
+            android:minHeight="113dp"
+            android:text="@string/search"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="@id/nearby_prg"
+            app:layout_constraintEnd_toEndOf="@id/nearby_prg"
+            app:layout_constraintStart_toStartOf="@id/nearby_prg"
+            app:layout_constraintTop_toTopOf="@id/nearby_prg" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
