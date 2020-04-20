@@ -83,6 +83,7 @@ public class initial_page extends AppCompatActivity {
         if(keyCode == KeyEvent.KEYCODE_BACK) {
             //Toast.makeText(this, "Exiting", Toast.LENGTH_SHORT).show();
             System.out.println("to exit");
+            appCookies.curUserLoc = "null-null";
             //finish();
             moveTaskToBack(false);
             /*finish();

@@ -55,6 +55,7 @@ public class search_nearby_loc extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_nearby_loc);
 
+
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         mapButton = findViewById(R.id.nearby_btn);
         mapButton.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +71,7 @@ public class search_nearby_loc extends AppCompatActivity {
 
 
     }
+
 
 
     //location gps

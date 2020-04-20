@@ -532,6 +532,7 @@ public class friendlistActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount()==0) {
 
+            appCookies.curUserLoc = "null-null";
             if(System.currentTimeMillis() - mExitTime > 2000) {
                 mExitTime = System.currentTimeMillis();
                 Toast.makeText(friendlistActivity.this, "Press again to exit", Toast.LENGTH_SHORT).show();
