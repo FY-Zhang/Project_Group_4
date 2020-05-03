@@ -26,7 +26,7 @@
         android:roundIcon="@drawable/logo1"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".search_nearby_loc"></activity>
+        <activity android:name=".search_nearby_loc" />
         <activity android:name=".SplashScreen" />
         <activity android:name=".map_points" />
         <activity android:name=".post_favorite" />

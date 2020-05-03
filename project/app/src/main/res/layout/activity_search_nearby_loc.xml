@@ -43,11 +43,10 @@
 
         <Button
             android:id="@+id/nearby_btn"
-            android:layout_width="140dp"
-            android:layout_height="113dp"
-            android:background="@color/fui_transparent"
-            android:minWidth="140dp"
-            android:minHeight="113dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/fui_bgFacebook"
+
             android:text="@string/search"
             android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="@id/nearby_prg"

@@ -145,9 +145,10 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
         if (mMap == null) { return false; }
 
         if(isOpen(view.getContext())) {// if has open GPS
+            System.out.println("before get device----------------");
             getDeviceLocation();
+            System.out.println("after get device----------------");
             if(mLocationPermissionGranted) { //if permission established
-
                 getDeviceLocation();
                 cur_loc = new LatLng(cur_lat, cur_lng);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cur_loc, 10));
@@ -158,7 +159,6 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
             } else {
                 Log.i(TAG, "Please grant location permission.");
                 Toast.makeText(map_main.this, "Please grant location permission", Toast.LENGTH_SHORT).show();
-
                 getLocationPermission();
             }
         }
@@ -184,16 +184,16 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
                         public void onComplete(@NonNull Task task) {
                             if (task.isSuccessful()) {
                                 Location currentLocation = (Location) task.getResult();
-
-                                cur_lat = currentLocation.getLatitude();
-                                cur_lng = currentLocation.getLongitude();
-                               // updateLocationUI();
-
-                                System.out.println("latlng: " + cur_lat + " --" + cur_lng);
-
-                            } else {
-                                Toast.makeText(map_main.this, "Unable to get the current location.", Toast.LENGTH_SHORT).show();
-                            }
+                                if(currentLocation != null){
+                                    cur_lat = currentLocation.getLatitude();
+                                    cur_lng = currentLocation.getLongitude();
+                                    // updateLocationUI();
+                                    System.out.println("latlng: " + cur_lat + " --" + cur_lng);
+                                }
+                                else
+                                    Toast.makeText(map_main.this, "Please try again", Toast.LENGTH_SHORT).show();
+                            } else
+                                Toast.makeText(map_main.this, "Unable to get the current location", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -251,7 +251,17 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
 
     public static boolean isOpen(final Context context) {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        System.out.println("open fun is in");
+        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+        {
+            System.out.println("yes open a");
+            return true;
+        }
+        else {
+            System.out.println("no open a");
+            return false;
+        }
+        //return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     } //check gps open
 
     public boolean checkBounds(LatLng cur_location, Circle checkpoint) {

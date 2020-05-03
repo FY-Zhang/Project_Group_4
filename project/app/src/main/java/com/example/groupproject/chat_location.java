@@ -104,16 +104,16 @@ public class chat_location extends AppCompatActivity implements OnMapReadyCallba
                         public void onComplete(@NonNull Task task) {
                             if (task.isSuccessful()) {
                                 Location currentLocation = (Location) task.getResult();
-
-                                latitude = currentLocation.getLatitude();
-                                longitude = currentLocation.getLongitude();
-
-                                moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
-                                        DEFAULT_ZOOM,
-                                        "My Location");
-                            } else {
-                                Toast.makeText(chat_location.this, "Unable to get the current location.", Toast.LENGTH_SHORT).show();
-                            }
+                                if(currentLocation != null){
+                                    latitude = currentLocation.getLatitude();
+                                    longitude = currentLocation.getLongitude();
+                                    moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
+                                            DEFAULT_ZOOM,
+                                            "My Location");
+                                } else
+                                    Toast.makeText(chat_location.this, "Please try again", Toast.LENGTH_SHORT).show();
+                            } else
+                                Toast.makeText(chat_location.this, "Unable to get the current location", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
