@@ -18,6 +18,8 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -50,6 +52,7 @@ import java.util.Objects;
 public class map_main extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
+    private int flagLocState = 0;
     private static final String TAG = map_main.class.getSimpleName();
     private static final int DEFAULT_ZOOM = 15;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
@@ -62,7 +65,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
     private final LatLng mDefaultLocation = new LatLng(-33.8523341, 151.2106085);
     private double cur_lat = 52.601238; //default
     private double cur_lng = -8.123021;
-    private LatLng cur_loc = new LatLng(cur_lat, cur_lng);
+    private LatLng cur_loc = null; //new LatLng(cur_lat, cur_lng);
 
     private double cus_lat;
     private double cus_lng;
@@ -122,6 +125,39 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map_check_frg);
         mapFragment.getMapAsync(this);
+
+        //up bar
+        //nearby users
+        Button btn_near = findViewById(R.id.bt_near);
+        btn_near.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isOpen(v.getContext())){
+                    findViewById(R.id.btn_current_map).performClick();
+                    System.out.println("the llllllllll: " + cur_loc.longitude);
+                    Intent intent_toSearchNearBy = new Intent(map_main.this, search_nearby_loc.class);
+                    startActivity(intent_toSearchNearBy);
+                } else {
+                    Toast.makeText(map_main.this, "Please turn on GPS", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        //nearby post
+        Button btn_post = findViewById(R.id.bt_post);
+        btn_post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isOpen(v.getContext())){
+                    findViewById(R.id.btn_current_map).performClick();
+                    Intent intent_toLocalPost = new Intent(map_main.this, post.class);
+                    String id = "local"; // actually not existed in fb.db
+                    intent_toLocalPost.putExtra("id", id);
+                    startActivity(intent_toLocalPost);
+                } else {
+                    Toast.makeText(map_main.this, "Please turn on GPS", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
@@ -187,6 +223,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
                                 if(currentLocation != null){
                                     cur_lat = currentLocation.getLatitude();
                                     cur_lng = currentLocation.getLongitude();
+                                    flagLocState = 1;
                                     // updateLocationUI();
                                     System.out.println("latlng: " + cur_lat + " --" + cur_lng);
                                 }
@@ -357,7 +394,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
             }
 
             if(cur_loc == null) {
-                Toast.makeText(map_main.this, "Please try again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(map_main.this, "Please try later", Toast.LENGTH_SHORT).show();
             }
             else if(num == 0) {
                 Toast.makeText(map_main.this, "No nearby check points", Toast.LENGTH_SHORT).show();

@@ -19,10 +19,6 @@
             <item
                 android:id="@+id/searchByPhone"
                 android:title="Search by Phone"/>
-            <item
-                android:id="@+id/searchNearby"
-                android:title="@string/search_nearby"/>
-
         </menu>
     </item>
 </menu>

@@ -3,13 +3,19 @@ package com.example.groupproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.DataSetObserver;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Layout;
 import android.util.Log;
 import android.view.Display;
@@ -64,6 +70,10 @@ public class friendlistActivity extends AppCompatActivity {
     Toolbar toolbar;
     private int currentAdapter = 1;
     private boolean isNewUser = false;
+
+    private boolean mLocationPermissionGranted;
+    private static final int REQUEST_CODE_LOCATION_SETTINGS = 2;
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
     private ListView listview;
     private ArrayList<String> list = new ArrayList<String>();
@@ -452,10 +462,16 @@ public class friendlistActivity extends AppCompatActivity {
         Intent intent = new Intent();
         switch (item.getItemId()) {
             case R.id.map_check:
-                intent.setClass(this, map_main.class);
-                startActivity(intent);
-                //finish(); do not use it
-                return true;
+                if(isOpen(this)){
+                    intent.setClass(this, map_main.class);
+                    startActivity(intent);
+                    return true;
+                } else {
+                    Toast.makeText(this, "Please turn on GPS", Toast.LENGTH_SHORT).show();
+                    Intent locationIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivityForResult(locationIntent, REQUEST_CODE_LOCATION_SETTINGS);
+                    return false;
+                }
             case R.id.searchByEmail:
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.hide(nearby);
@@ -468,10 +484,6 @@ public class friendlistActivity extends AppCompatActivity {
                 fragmentTransaction2.show(nearby);
                 fragmentTransaction2.commit();
                 showNearbyResult();
-                return true;
-            case R.id.searchNearby:
-                intent.setClass(this, search_nearby_loc.class);
-                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -511,7 +523,7 @@ public class friendlistActivity extends AppCompatActivity {
                     }
                 });
         nearbyList.setAdapter(nearbyAdapter);
-    }
+    } //by phone num
     public void toFriendlist(View view){
     }
     public void toChannel(View view){
@@ -532,7 +544,6 @@ public class friendlistActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount()==0) {
 
-            appCookies.curUserLoc = "null-null";
             if(System.currentTimeMillis() - mExitTime > 2000) {
                 mExitTime = System.currentTimeMillis();
                 Toast.makeText(friendlistActivity.this, "Press again to exit", Toast.LENGTH_SHORT).show();
@@ -549,5 +560,42 @@ public class friendlistActivity extends AppCompatActivity {
         fragmentTransaction.hide(search);
         fragmentTransaction.hide(nearby);
         fragmentTransaction.commit();
+    }
+
+    public boolean isOpen(final Context context) {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        System.out.println("open fun is in");
+        if(mLocationPermissionGranted){
+            if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+            {
+                System.out.println("yes open a");
+                return true;
+            }
+            else {
+                System.out.println("no open a");
+                return false;
+            }
+        } else {
+            getLocationPermission();
+            return false;
+        }
+    } //check gps open
+
+    private boolean getLocationPermission() {
+        if (ContextCompat.checkSelfPermission(friendlistActivity.this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true;
+            //Toast.makeText(map_main.this, "Get location permission success.", Toast.LENGTH_SHORT).show();
+            System.out.println("get success");
+            return true;
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            Toast.makeText(this, "Get location permission fail.", Toast.LENGTH_SHORT).show();
+            System.out.println("get fail");
+            return false;
+        }
     }
 }
