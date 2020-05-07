@@ -167,12 +167,11 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
         addOfficialMarkers();
         addObjectsToMap();
 
-        showEurope(null); //or chat loc
-
         getLocationPermission();
         updateLocationUI();
         mMap.setOnMarkerClickListener(this);
-        getDeviceLocation();
+        //getDeviceLocation();
+        showEurope(null); //or chat loc
 
         updateMarkers();
     }
@@ -228,7 +227,7 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
                                     System.out.println("latlng: " + cur_lat + " --" + cur_lng);
                                 }
                                 else
-                                    Toast.makeText(map_main.this, "Please try again", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(map_main.this, "Please try later", Toast.LENGTH_SHORT).show();
                             } else
                                 Toast.makeText(map_main.this, "Unable to get the current location", Toast.LENGTH_SHORT).show();
                         }

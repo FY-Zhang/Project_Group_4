@@ -565,20 +565,11 @@ public class friendlistActivity extends AppCompatActivity {
     public boolean isOpen(final Context context) {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         System.out.println("open fun is in");
-        if(mLocationPermissionGranted){
-            if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-            {
-                System.out.println("yes open a");
-                return true;
-            }
-            else {
-                System.out.println("no open a");
-                return false;
-            }
-        } else {
-            getLocationPermission();
-            return false;
+        if(getLocationPermission()){//1st - get permission
+            assert locationManager != null;
+            return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         }
+        return false;
     } //check gps open
 
     private boolean getLocationPermission() {
