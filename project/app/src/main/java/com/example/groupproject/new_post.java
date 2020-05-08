@@ -113,7 +113,7 @@ public class new_post extends AppCompatActivity {
                 Intent intentToMap = new Intent(new_post.this, map_main.class);
                 intentToMap.putExtra("sitePost", "src");
                 startActivity(intentToMap);
-                Toast.makeText(new_post.this, "Please site your location", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(new_post.this, "Please site your location", Toast.LENGTH_SHORT).show();
                 getDeviceLocation();
                 System.out.println("current: +++ " + cur_lat + " " + cur_lng);
                 mapButton.setAlpha((float) 1.0);
