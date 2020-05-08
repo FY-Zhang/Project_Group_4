@@ -169,6 +169,7 @@ public class friendlistActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 }else if(currentAdapter == 0){
+                    System.out.println("-------notify------");
                     if (position == 0) {
                         listview.setAdapter(friendlistAdapter);
                         currentAdapter = 1;
@@ -467,6 +468,7 @@ public class friendlistActivity extends AppCompatActivity {
                     startActivity(intent);
                     return true;
                 } else {
+                    System.out.println("Now the open state - ");
                     Toast.makeText(this, "Please turn on GPS", Toast.LENGTH_SHORT).show();
                     Intent locationIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     startActivityForResult(locationIntent, REQUEST_CODE_LOCATION_SETTINGS);

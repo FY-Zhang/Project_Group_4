@@ -173,6 +173,14 @@ public class map_main extends FragmentActivity implements OnMapReadyCallback, Go
         //getDeviceLocation();
         showEurope(null); //or chat loc
 
+        Intent intentFrom = getIntent();
+        if(intentFrom.getStringExtra("sitePost") != null) {
+            if(Objects.equals(intentFrom.getStringExtra("sitePost"), "src")){
+                onBackPressed();
+                finish();
+            }
+        }
+
         updateMarkers();
     }
 

@@ -94,7 +94,7 @@ public class new_post extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openGPSLocator();
-                v.setAlpha(1);
+                //v.setAlpha(1);
             }
         });
     }
@@ -110,14 +110,19 @@ public class new_post extends AppCompatActivity {
         View view = findViewById(R.id.openMap);
         if(isOpen(view.getContext())) {     // get service
             if(getLocationPermission()) {   // get permission
+                Intent intentToMap = new Intent(new_post.this, map_main.class);
+                intentToMap.putExtra("sitePost", "src");
+                startActivity(intentToMap);
+                Toast.makeText(new_post.this, "Please site your location", Toast.LENGTH_SHORT).show();
                 getDeviceLocation();
                 System.out.println("current: +++ " + cur_lat + " " + cur_lng);
+                mapButton.setAlpha((float) 1.0);
             }
         } else {
             System.out.println("Please turn on GPS.");
-            Toast.makeText(new_post.this, "Please turn on GPS", Toast.LENGTH_SHORT).show();
-            Intent locationIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivityForResult(locationIntent, REQUEST_CODE_LOCATION_SETTINGS);
+            //Toast.makeText(new_post.this, "Please turn on GPS", Toast.LENGTH_SHORT).show();
+            //Intent locationIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            //startActivityForResult(locationIntent, REQUEST_CODE_LOCATION_SETTINGS);
         }
 
         getDeviceLocation();
@@ -230,10 +235,12 @@ public class new_post extends AppCompatActivity {
                         public void onComplete(@NonNull Task task) {
                             if (task.isSuccessful()) {
                                 Location currentLocation = (Location) task.getResult();
-
-                                cur_lat = String.valueOf(currentLocation.getLatitude());
-                                cur_lng = String.valueOf(currentLocation.getLongitude());
-                                System.out.println("latlng: " + cur_lat + " --" + cur_lng);
+                                if(currentLocation != null){
+                                    cur_lat = String.valueOf(currentLocation.getLatitude());
+                                    cur_lng = String.valueOf(currentLocation.getLongitude());
+                                    System.out.println("latlng: " + cur_lat + " --" + cur_lng);
+                                }else
+                                    Toast.makeText(new_post.this, "Please try later", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(new_post.this, "Unable to get the current location.", Toast.LENGTH_SHORT).show();
                             }

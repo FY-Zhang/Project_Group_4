@@ -142,8 +142,7 @@ public class search_nearby_loc extends AppCompatActivity {
                                     System.out.println("latlng: " + cur_lat + " --" + cur_lng);
 
                                     searchNearbyUsers();
-                                }
-                                else
+                                } else
                                     Toast.makeText(search_nearby_loc.this, "Please try again", Toast.LENGTH_SHORT).show();
                             } else
                                 Toast.makeText(search_nearby_loc.this, "Unable to get the current location", Toast.LENGTH_SHORT).show();

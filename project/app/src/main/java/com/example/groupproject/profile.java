@@ -118,6 +118,9 @@ public class profile extends AppCompatActivity {
                     case "request":
                         addAsFriend();
                         button1.setText(R.string.sm);
+                        Intent intentToFrd = new Intent();
+                        intentToFrd.setClass(profile.this, friendlistActivity.class);
+                        startActivity(intentToFrd);
                         break;
                     case "unknown":
                         sendRequest();

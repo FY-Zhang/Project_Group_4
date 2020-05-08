@@ -119,6 +119,8 @@ public class map_points extends AppCompatActivity {
                                                     System.out.println("position: " + pointId.get(position));
                                                     Toast.makeText(map_points.this, "Cancel Successfully!", Toast.LENGTH_SHORT).show();
                                                     myList.remove(position);
+                                                    points_lat_my.remove(position);
+                                                    points_lng_my.remove(position);
                                                     simpleAdapter_my.notifyDataSetChanged();
                                                     listView_my.invalidate();
                                                 }
