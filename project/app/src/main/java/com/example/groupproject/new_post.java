@@ -61,7 +61,7 @@ public class new_post extends AppCompatActivity {
     private String cur_lat = "none";
     private String cur_lng = "none";
     private ImageButton mapButton;
-
+    
     ImageButton imgButton;
     ImageView imageView ;
     private Uri imgUri;
