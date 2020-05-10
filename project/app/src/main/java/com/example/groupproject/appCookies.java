@@ -7,15 +7,15 @@ import java.util.Map;
 
 
 public class appCookies {
-    public static String username = new String();
-    public static String userID = new String();
-    public static String userEmail = new String();
-    public static String userGender = new String();
-    public static String userBirthday = new String();
+    public static String username = "";
+    public static String userID = "";
+    public static String userEmail = "";
+    public static String userGender = "";
+    public static String userBirthday = "";
     public static ArrayList userFavorite = new ArrayList();
     public static String userAvatar /*initial to avoid null object, pls retain it*/
             = "https://firebasestorage.googleapis.com/v0/b/groupproject-ffdc4.appspot.com/o/user_avatar%2Favatar_default.jpg?alt=media&token=852659d8-aa5a-4022-a53f-abfb3c268aa6";
-    public static String userPhone = new String();
+    public static String userPhone = "";
     public static boolean userDisplay;
     public static ArrayList<Map<String,Object>> userFriends = new ArrayList<>();
     public static ArrayList<String> userFriendsID = new ArrayList<>();
