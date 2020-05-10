@@ -23,38 +23,36 @@
         android:id="@+id/linearLayout12"
         android:layout_width="match_parent"
         android:layout_height="57dp"
-        android:layout_marginTop="28dp"
-        android:orientation="horizontal"
+        android:layout_marginTop="18dp"
         android:background="#3b5998"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
 
         <TextView
             android:id="@+id/text1"
+            style="@style/FirebaseUI.Button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/transparent"
             android:layout_weight="1"
-            android:text="Edit"
-            android:textSize="20dp"
+            android:background="@android:color/transparent"
             android:gravity="center_vertical|right"
             android:paddingRight="10dp"
-            style="@style/FirebaseUI.Button"
+            android:text="Edit"
             android:textAllCaps="false"
-            />
+            android:textSize="20dp" />
 
         <ImageView
             android:id="@+id/text2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/transparent"
             android:layout_weight="7"
-            android:src="@drawable/icon_next"
-            android:scaleType="fitStart"
+            android:background="@android:color/transparent"
+            android:paddingLeft="5dp"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
-            android:paddingLeft="5dp"
-            />
+            android:scaleType="fitStart"
+            android:src="@drawable/icon_next" />
 
     </LinearLayout>
 
@@ -63,7 +61,7 @@
         style="@style/FirebaseUI.Button"
         android:layout_width="match_parent"
         android:layout_height="57dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="18dp"
         android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
