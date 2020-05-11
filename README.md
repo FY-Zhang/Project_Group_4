@@ -64,7 +64,7 @@ Enter your email and have a password validation. If you have already registered,
 
 
 
-#### <span id="introStart">Getting Started</span>
+### <span id="introStart">Getting Started </span>
 
 ## <span id="introRunDev">How to get the app running on your device?</span>
 
