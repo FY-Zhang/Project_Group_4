@@ -1,6 +1,8 @@
 # Navigation Structure of Suplink
 
-> This document will describe the structure of the app.
+> This document will describe the structure of the app. 
+>
+> To view the graphical version, please check: <a href="https://github.com/FY-Zhang/Project_Group_4/blob/master/guidance/structure.pdf" style="text-decoration:none">graphical structure diagram</a>.
 
 - <a href="#navOver" style="text-decoration:none">Overview</a>
 - <a href="#navFrd" style="text-decoration:none">Friendlist</a>
