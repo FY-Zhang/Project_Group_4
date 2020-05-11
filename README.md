@@ -13,7 +13,7 @@
 
 
 
-**<span id="introDescp" style="font-size: 38px">Description of the app</span>**
+### <span id="introDescp">Description of the app</span>
 
 ## <span id="introCan">What can you do on this app?</span>
 
@@ -64,7 +64,7 @@ Enter your email and have a password validation. If you have already registered,
 
 
 
-**<span id="introStart" style="font-size: 38px">Getting Started</span>**
+#### <span id="introStart">Getting Started</span>
 
 ## <span id="introRunDev">How to get the app running on your device?</span>
 
