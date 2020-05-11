@@ -4,7 +4,7 @@
 
 - <a href="#techUsing" style="text-decoration:none">Technologies using</a>
 - <a href="#techUsing" style="text-decoration:none">Technologies design</a>
-- <a href="#techUsing" style="text-decoration:none">Lessons</a>
+- <a href="#techLessons" style="text-decoration:none">Lessons</a>
 
 
 
