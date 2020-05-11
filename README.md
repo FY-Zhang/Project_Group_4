@@ -49,8 +49,8 @@ Enter your email and have a password validation. If you have already registered,
 
 #### 3. In Discover page
 
-- ***Channel:*** You can see eight different types of channels, select the channel you are interested in and click in, you can see posts on related topics.
-- ***Post:*** Find the post you are interested in, then click to view the details, or click + in the lower right corner to send a new post. You can also save a post to favourite by long pressing.
+- **Channel:** You can see eight different types of channels, select the channel you are interested in and click in, you can see posts on related topics.
+- **Post:** Find the post you are interested in, then click to view the details, or click + in the lower right corner to send a new post. You can also save a post to favourite by long pressing.
   - ***New Post:*** Write the title and content, you can choose to add a picture and your own location, and then click Submit to send the post to the corresponding channel.
 
 #### 4. In Me page
