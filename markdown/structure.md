@@ -1,5 +1,16 @@
 # Navigation Structure of Suplink
 
+> This document will describe the structure of the app.
+
+- <a href="#navOver" style="text-decoration:none">Overview</a>
+- <a href="#navFrd" style="text-decoration:none">Friendlist</a>
+- <a href="#navDis" style="text-decoration:none">Discover</a>
+- <a href="#navMe" style="text-decoration:none">Me</a>
+
+
+
+## <span id="navOver">Overview</span>
+
 ```mermaid
 graph TD
 start[Start] --> |Install app| launch(Launch App)
@@ -10,6 +21,10 @@ nav -->friendlist
 nav --> discover[Discover]
 nav --> me[Me]
 ```
+
+
+
+## <span id="navFrd">Friendlist</span>
 
 ```mermaid
 graph TD
@@ -84,6 +99,10 @@ message --> chat(Chat Page)
 
 ```
 
+
+
+## <span id="navDis">Discover</span>
+
 ```mermaid
 graph TD
 discover[Discover] --> |Choose a channel|channels(All Posts)
@@ -103,6 +122,10 @@ post --> |If you liked the post before|dislike(Dislike)
 
 ```
 
+
+
+## <span id="navMe">Me</span>
+
 ```mermaid
 graph TD
 me(Me) --> edit(Edit)
@@ -117,3 +140,11 @@ fill --> save(Save)
 avator --> save
 
 ```
+
+
+
+
+
+<div style="text-align:right">
+    <a href="#navOver" style="text-decoration:none"><button>Back to top</button></a>
+</div>
