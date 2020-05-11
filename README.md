@@ -1,6 +1,6 @@
 # Introduction
 
-> This document only provides a simple application introduction and instructions, please refer to <a href="https://instruction.pdf" style="text-decoration:none">Instruction</a> for detailed usage steps.
+> This document only provides a simple application introduction and instructions, please refer to <a href="https://instruction.pdf" style="text-decoration:none">Guidance</a> for detailed usage steps.
 
 - <a href="#introDescp" style="text-decoration:none">Description</a>
   - <a href="#introCan" style="text-decoration:none">What can you do</a>
